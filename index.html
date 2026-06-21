@@ -208,6 +208,7 @@
   body.recruiter-mode .cinematic-shell{display:none}
   body.recruiter-mode .recruiter-shell{display:block}
   body.recruiter-mode .mobile-nav{display:none}
+  body.recruiter-mode .drill-pill{display:none}
 
   .recruiter-shell{
     display:none;
@@ -465,6 +466,7 @@
     width:82px;
     height:112px;
     filter:drop-shadow(0 0 22px rgba(255,179,71,.62));
+    overflow:visible;
   }
 
   .stem{
@@ -480,15 +482,7 @@
     animation:drillShake .1s infinite alternate;
   }
 
-  .bit-glow{
-    width:74px;height:16px;margin:-4px auto 0;
-    border-radius:50%;
-    background:rgba(255,179,71,.64);
-    animation:bitGlow .48s infinite alternate;
-  }
-
   @keyframes drillShake{from{transform:translateX(-1px)}to{transform:translateX(1px)}}
-  @keyframes bitGlow{from{opacity:.55;transform:scaleX(.92)}to{opacity:1;transform:scaleX(1.08)}}
 
   .depth-badge{
     position:absolute;
@@ -506,13 +500,61 @@
     letter-spacing:.08em;
   }
 
+  .drill-pill{
+    display:none;
+    position:absolute;
+    left:50%;
+    top:calc(100% + 2px);
+    z-index:3;
+    padding:6px 8px;
+    border-radius:999px;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    text-align:center;
+    white-space:nowrap;
+    transform:translateX(-50%);
+    border:1px solid rgba(255,179,71,.42);
+    background:rgba(5,10,15,.76);
+    color:#fff;
+    box-shadow:0 10px 24px rgba(0,0,0,.34), 0 0 18px rgba(255,179,71,.16);
+    backdrop-filter:blur(14px);
+    cursor:default;
+    pointer-events:auto;
+    transition:opacity .18s ease, transform .18s ease, border-color .18s ease;
+  }
+
+  .drill-pill:hover,
+  .drill-pill:focus-visible{
+    border-color:rgba(255,179,71,.78);
+    outline:none;
+  }
+
+  .drill-pill .date{
+    display:block;
+    font-weight:800;
+    line-height:1;
+    font-size:12px;
+  }
+
+  .drill-pill .layer-label{
+    display:block;
+    margin-top:0;
+    color:var(--amber2);
+    font-size:7px;
+    line-height:1;
+    text-transform:none;
+    letter-spacing:.06em;
+  }
+
   .year-nav{
     position:fixed;
     right:18px;
     top:50%;
     transform:translateY(-50%);
     z-index:22;
-    display:none;
+    display:none !important;
     gap:10px;
     clip-path:inset(0 0 var(--year-clip-inset-bottom) 0);
   }
@@ -545,7 +587,16 @@
     box-shadow:0 0 20px rgba(255,179,71,.22);
   }
 
-  .mobile-nav{display:none}
+  .mobile-nav{display:none !important}
+
+  body.in-cv:not(.recruiter-mode) .drill-pill{
+    display:inline-flex;
+  }
+
+  body.past-cv:not(.recruiter-mode) .drill-pill{
+    opacity:0;
+    pointer-events:none;
+  }
 
   .layers{
     position:absolute;
@@ -887,9 +938,7 @@
 
   @media (min-width:901px){
     body.in-cv:not(.recruiter-mode) .year-nav{
-      left:18px;
-      right:auto;
-      display:grid;
+      display:none !important;
     }
 
     .bore{
@@ -953,29 +1002,19 @@
     .contact-grid{grid-template-columns:1fr 1fr}
     .year-nav{display:none}
 
-    .cv{min-height:585svh}
+    .cv{min-height:0}
 
-    body.in-cv:not(.recruiter-mode) .mobile-nav{
-      position:fixed;
-      left:10px;
-      right:10px;
-      bottom:calc(var(--safe-bottom) + 8px);
-      z-index:160;
-      display:flex;
-      gap:6px;
-      overflow:auto;
-      padding:5px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(5,10,15,.76);
-      backdrop-filter:blur(14px);
-      box-shadow:0 12px 42px rgba(0,0,0,.32);
-      pointer-events:auto;
-      clip-path:inset(0 0 var(--mobile-nav-clip-inset-bottom) 0);
-      transition:opacity .18s ease;
+    .layers{
+      position:relative;
+      inset:auto;
+      margin-top:-100svh;
     }
 
-    body.past-cv:not(.recruiter-mode) .mobile-nav{
+    body.in-cv:not(.recruiter-mode) .drill-pill{
+      padding:6px 8px;
+    }
+
+    body.past-cv:not(.recruiter-mode) .drill-pill{
       opacity:0;
       pointer-events:none;
     }
@@ -1022,12 +1061,13 @@
     .layer{
       min-height:94svh;
       grid-template-columns:112px minmax(0,1fr) 10px;
-      padding:112px 12px 106px 0;
+      align-items:start;
+      padding:64px 12px 106px 0;
     }
 
     .card,.layer:nth-child(even) .card{
       grid-column:2;
-      padding-bottom:calc(26px + 92px);
+      padding-bottom:26px;
     }
 
     .corridor-mask{
@@ -1038,6 +1078,7 @@
 
     .fracture{
       left:42px;
+      top:min(42%, 330px);
       width:75px;
       height:62px;
       z-index:6;
@@ -1045,6 +1086,7 @@
 
     .impact{
       left:42px;
+      top:min(42%, 330px);
       width:68px;
       height:68px;
     }
@@ -1052,10 +1094,10 @@
     .drill{width:64px;height:90px}
     .stem{width:8px;height:40px}
     .bit{width:36px;height:47px}
-    .bit-glow{width:58px;height:12px}
 
     .formation-tag{
       left:112px;
+      top:38px;
       transform:none;
     }
 
@@ -1078,7 +1120,7 @@
     .hero-stats{grid-template-columns:1fr}
     .contact-grid{grid-template-columns:1fr}
 
-    .cv{min-height:640svh}
+    .cv{min-height:0}
 
     .view-switch button{
       padding:9px 12px;
@@ -1087,33 +1129,38 @@
 
     .layer{
       grid-template-columns:84px minmax(0,1fr) 8px;
-      padding:106px 10px 132px 0;
+      padding:60px 10px 118px 0;
     }
 
     .bore{left:0;width:70px}
     .corridor-mask{left:35px;width:70px}
-    .fracture{left:35px;width:65px;height:54px}
-    .impact{left:35px;width:56px;height:56px}
+    .fracture{left:35px;top:min(38%, 286px);width:65px;height:54px}
+    .impact{left:35px;top:min(38%, 286px);width:56px;height:56px}
     .drill{width:52px;height:76px}
     .stem{width:7px;height:34px}
     .bit{width:30px;height:40px}
-    .bit-glow{width:48px;height:11px}
+    body.in-cv:not(.recruiter-mode) .drill-pill{
+      padding:6px 8px;
+    }
+
+    .drill-pill .date{font-size:11px}
+    .drill-pill .layer-label{font-size:6px}
 
     .formation-tag{
       left:84px;
-      top:18px;
+      top:36px;
       font-size:10px;
       padding:7px 10px;
       letter-spacing:.11em;
     }
 
     .card{
-      padding:18px 18px calc(18px + 108px);
+      padding:18px;
       border-radius:22px;
       background:rgba(9,15,22,.90);
       backdrop-filter:none;
       scroll-margin-top:56px;
-      scroll-margin-bottom:96px;
+      scroll-margin-bottom:124px;
     }
 
     .card h2{
@@ -1132,8 +1179,8 @@
     .period{flex-direction:column;align-items:flex-start;gap:5px}
 
     .mobile-nav button{
-      font-size:12px;
-      padding:8px 9px;
+      font-size:11px;
+      padding:8px 8px;
     }
   }
 
@@ -1155,7 +1202,7 @@
 
 <section class="hero" id="top">
   <div class="hero-inner">
-    <div class="badge">AI Embedment CV · Upstream Digital & AI</div>
+    <div class="badge">Interactive CV · Geoscience, Analytics &amp; AI</div>
     <div class="hero-portrait">
       <img src="Rafael.png" alt="Rafael Navarro" loading="eager" onerror="this.style.visibility='hidden'" />
     </div>
@@ -1318,14 +1365,17 @@
         <div class="drill">
           <div class="stem"></div>
           <div class="bit"></div>
-          <div class="bit-glow"></div>
+          <div id="drillPill" class="drill-pill" role="status" aria-live="polite">
+            <span id="drillPillDate" class="date">2025</span>
+            <span id="drillPillLayer" class="layer-label">Layer-1</span>
+          </div>
         </div>
       </div>
       <div id="depthBadge" class="depth-badge">Career depth · 2025–Present</div>
     </div>
 
     <div class="layers">
-      <section class="layer l1 active" id="layer-1" data-label="Career depth · 2025–Present">
+      <section class="layer l1" id="layer-1" data-label="Career depth · 2025–Present">
         <div class="corridor-mask"></div>
         <div class="formation-tag">Shell US · 2025–Present</div>
         <div class="fossil" aria-hidden="true">✦</div>
@@ -1525,12 +1575,15 @@
   const fixedRig = document.querySelector('.fixed-rig');
   const yearNav = document.querySelector('.year-nav');
   const mobileNav = document.querySelector('.mobile-nav');
+  const drillPill = document.getElementById('drillPill');
+  const drillPillDate = document.getElementById('drillPillDate');
+  const drillPillLayer = document.getElementById('drillPillLayer');
   const layers = Array.from(document.querySelectorAll('.layer'));
   const navTriggers = Array.from(document.querySelectorAll('.nav-trigger'));
   const yearBtns = Array.from(document.querySelectorAll('.year-btn'));
   const mobileBtns = Array.from(document.querySelectorAll('.mobile-nav .nav-trigger'));
 
-  let activeIndex = 0;
+  let activeIndex = -1;
   let lastCinematicTarget = 'layer-1';
 
   function setMode(mode){
@@ -1563,6 +1616,11 @@
   function syncNav(index){
     yearBtns.forEach((b,i)=>b.classList.toggle('active', i===index));
     mobileBtns.forEach((b,i)=>b.classList.toggle('active', i===index));
+    const activeYear = yearBtns[index]?.textContent.trim() || mobileBtns[index]?.textContent.trim() || '';
+    const activeDepth = layers[index]?.querySelector('.period .depth')?.textContent.trim() || '';
+    const compactDepth = activeDepth.replace(/Depth\s+0*/i, 'Layer-');
+    if(drillPillDate && activeYear) drillPillDate.textContent = activeYear;
+    if(drillPillLayer && compactDepth) drillPillLayer.textContent = compactDepth;
   }
 
   function activate(index){
@@ -1584,7 +1642,8 @@
 
     const rect = cv.getBoundingClientRect();
     const lastLayerRect = layers[layers.length - 1]?.getBoundingClientRect();
-    const pastLastLayer = lastLayerRect ? lastLayerRect.bottom < window.innerHeight * 0.18 : false;
+    const pastLastLayerThreshold = window.matchMedia('(max-width: 600px)').matches ? 0.36 : 0.18;
+    const pastLastLayer = lastLayerRect ? lastLayerRect.bottom < window.innerHeight * pastLastLayerThreshold : false;
     const layerInView = layers.some((layer) => {
       const layerRect = layer.getBoundingClientRect();
       return layerRect.top < window.innerHeight * 0.92 && layerRect.bottom > window.innerHeight * 0.08;
@@ -1624,6 +1683,12 @@
     let best = Infinity;
     let nextIndex = 0;
 
+    if(!layerInView){
+      layers.forEach((layer)=>layer.classList.remove('active'));
+      activeIndex = -1;
+      return;
+    }
+
     layers.forEach((layer,i)=>{
       const r = layer.getBoundingClientRect();
       const center = r.top + r.height / 2;
@@ -1648,7 +1713,14 @@
     lastCinematicTarget = id;
     const mobileLayout = window.matchMedia('(max-width: 600px)').matches;
     const scrollTarget = mobileLayout ? target.querySelector('.card') || target : target;
-    scrollTarget.scrollIntoView({behavior:'smooth', block: mobileLayout ? 'start' : 'center'});
+    if(mobileLayout){
+      const navRect = mobileNav?.getBoundingClientRect();
+      const offset = Math.max(82, (navRect?.bottom || 0) + 18);
+      const top = window.scrollY + scrollTarget.getBoundingClientRect().top - offset;
+      window.scrollTo({top:Math.max(0, top), behavior:'smooth'});
+    } else {
+      scrollTarget.scrollIntoView({behavior:'smooth', block:'center'});
+    }
     setTimeout(updateScroll, 260);
     setTimeout(updateScroll, 900);
   }
