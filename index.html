@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Rafael Navarro – AI Embedment Interactive CV</title>
+<style>
+  :root{
+    --bg:#061018;
+    --bg2:#0b1722;
+    --text:#f6efe7;
+    --muted:#b9ada1;
+    --amber:#ffb347;
+    --amber2:#ffd28a;
+    --cyan:#6bd5ff;
+    --line:rgba(255,255,255,.14);
+    --panel:rgba(9,15,22,.82);
+    --panel-solid:#0b141d;
+    --safe-top:max(14px, env(safe-area-inset-top));
+    --safe-bottom:max(14px, env(safe-area-inset-bottom));
+    --scroll:0;
+    --drill-y:16svh;
+    --rig-clip-inset-bottom:0px;
+    --year-clip-inset-bottom:0px;
+    --mobile-nav-clip-inset-bottom:0px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-x:hidden;
+  }
+
+  button{font:inherit}
+
+  .view-switch{
+    position:fixed;
+    top:calc(var(--safe-top) + 8px);
+    right:16px;
+    z-index:120;
+    display:flex;
+    gap:6px;
+    padding:6px;
+    border:1px solid var(--line);
+    background:rgba(5,10,15,.72);
+    backdrop-filter:blur(16px);
+    border-radius:999px;
+    box-shadow:0 14px 44px rgba(0,0,0,.30);
+    transition:opacity .18s ease, transform .18s ease;
+  }
+
+  .view-switch button{
+    border:0;
+    cursor:pointer;
+    border-radius:999px;
+    padding:10px 14px;
+    color:rgba(255,255,255,.62);
+    background:transparent;
+    transition:.18s ease;
+  }
+
+  .view-switch button.active{
+    color:#fff;
+    background:rgba(255,179,71,.16);
+    box-shadow:inset 0 0 0 1px rgba(255,179,71,.46);
+  }
+
+  .hero{
+    min-height:100svh;
+    display:grid;
+    place-items:center;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 25% 18%, rgba(255,179,71,.17), transparent 30%),
+      radial-gradient(circle at 80% 24%, rgba(107,213,255,.12), transparent 30%),
+      linear-gradient(180deg,#081722 0%,#061018 70%,#24170f 100%);
+  }
+
+  .hero:before{
+    content:"";
+    position:absolute;
+    inset:-20%;
+    opacity:.72;
+    background:
+      repeating-linear-gradient(102deg, transparent 0 42px, rgba(255,255,255,.045) 43px, transparent 44px),
+      repeating-linear-gradient(0deg, transparent 0 54px, rgba(255,255,255,.03) 55px, transparent 56px);
+    transform:rotate(-3deg);
+  }
+
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    width:min(1120px,92vw);
+    padding:70px 0 88px;
+    text-align:center;
+  }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 13px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.05);
+    color:var(--muted);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.13em;
+    margin-bottom:22px;
+  }
+
+  .badge:before{
+    content:"";
+    width:8px;height:8px;border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 18px var(--amber);
+  }
+
+  .hero-portrait{
+    width:clamp(104px,10vw,148px);
+    aspect-ratio:1;
+    margin:0 auto 16px;
+    border-radius:50%;
+    padding:4px;
+    border:1px solid rgba(255,255,255,.18);
+    background:
+      linear-gradient(135deg,rgba(255,179,71,.86),rgba(107,213,255,.72)) border-box;
+    box-shadow:0 18px 46px rgba(0,0,0,.34), 0 0 34px rgba(255,179,71,.16);
+  }
+
+  .hero-portrait img{
+    display:block;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:50% 36%;
+    border:3px solid rgba(6,16,24,.92);
+  }
+
+  h1{
+    margin:0;
+    font-size:clamp(48px,8.4vw,118px);
+    line-height:.88;
+    letter-spacing:-.08em;
+  }
+
+  .subtitle{
+    max-width:900px;
+    margin:18px auto 0;
+    color:var(--muted);
+    font-size:clamp(18px,2.1vw,27px);
+    line-height:1.45;
+  }
+
+  .hero-stats{
+    margin:26px auto 0;
+    max-width:1000px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  }
+
+  .stat{
+    padding:16px 15px;
+    text-align:left;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:rgba(0,0,0,.24);
+    backdrop-filter:blur(12px);
+  }
+
+  .stat strong{display:block;font-size:21px;color:#fff;margin-bottom:6px}
+  .stat span{color:var(--muted);font-size:13px;line-height:1.35}
+
+  .scroll-cue{
+    position:relative;
+    width:max-content;
+    margin:18px auto 0;
+    z-index:2;
+    color:var(--muted);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+  }
+
+  .scroll-cue:after{
+    content:"";
+    display:block;
+    width:1px;height:28px;
+    margin:8px auto 0;
+    background:linear-gradient(180deg,transparent,var(--amber));
+    animation:pulse 1.4s infinite;
+  }
+
+  @keyframes pulse{
+    0%,100%{opacity:.25;transform:scaleY(.5)}
+    50%{opacity:1;transform:scaleY(1)}
+  }
+
+  /* View mode */
+  body.recruiter-mode .cinematic-shell{display:none}
+  body.recruiter-mode .recruiter-shell{display:block}
+  body.recruiter-mode .mobile-nav{display:none}
+
+  .recruiter-shell{
+    display:none;
+    width:min(1140px,92vw);
+    margin:0 auto;
+    padding:64px 0 96px;
+  }
+
+  .recruiter-grid{
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    align-items:start;
+    gap:18px;
+  }
+
+  .panel{
+    border:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(11,20,29,.95),rgba(10,16,24,.90));
+    border-radius:26px;
+    padding:24px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+  }
+
+  .panel h2{
+    margin:0 0 14px;
+    font-size:30px;
+    letter-spacing:-.04em;
+  }
+
+  .panel h3{
+    margin:24px 0 12px;
+    font-size:18px;
+  }
+
+  .summary{
+    color:var(--muted);
+    line-height:1.6;
+    font-size:15px;
+  }
+
+  .inline-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
+  }
+
+  .inline-tags span{
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);
+    color:#efe8de;
+    font-size:12.5px;
+  }
+
+  .exp-list{display:grid;gap:12px;margin-top:12px}
+  .exp{
+    padding:15px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(255,255,255,.04);
+  }
+
+  .exp .top{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:7px;
+  }
+
+  .exp .top strong{font-size:16px}
+  .exp .top span{
+    color:var(--amber);
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+
+  .exp p{
+    margin:0;
+    color:var(--muted);
+    line-height:1.5;
+    font-size:14px;
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+
+  .callout{
+    padding:16px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(255,255,255,.04);
+  }
+
+  .callout strong{display:block;font-size:24px;color:#fff}
+  .callout span{font-size:13px;color:var(--muted)}
+
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:12px;
+  }
+
+  .contact-pill{
+    padding:14px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.05);
+    font-size:13px;
+    color:#efe8de;
+  }
+
+  a.contact-pill{
+    text-decoration:none;
+    color:#efe8de;
+    transition:.18s ease;
+  }
+
+  a.contact-pill:hover{
+    border-color:rgba(255,179,71,.45);
+    background:rgba(255,179,71,.08);
+  }
+
+  .delivery-stack{
+    display:grid;
+    gap:10px;
+    margin-top:12px;
+  }
+
+  .delivery-step{
+    display:grid;
+    grid-template-columns:36px 1fr;
+    gap:12px;
+    align-items:start;
+    padding:14px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.11);
+    background:linear-gradient(135deg,rgba(255,179,71,.08),rgba(107,213,255,.04));
+  }
+
+  .delivery-step .num{
+    width:36px;
+    aspect-ratio:1;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    border:1px solid rgba(255,179,71,.36);
+    background:rgba(255,179,71,.10);
+    color:var(--amber2);
+    font-weight:800;
+    font-size:13px;
+  }
+
+  .delivery-step strong{display:block;font-size:14px;color:#fff}
+  .delivery-step span{
+    display:block;
+    margin-top:3px;
+    color:var(--amber);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .delivery-step p{
+    margin:6px 0 0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.45;
+  }
+
+  /* Cinematic */
+  .cinematic-shell{display:block}
+
+  .cv{
+    position:relative;
+    min-height:540svh;
+    isolation:isolate;
+  }
+
+  .fixed-rig{
+    position:sticky;
+    top:0;
+    height:100svh;
+    z-index:12;
+    pointer-events:none;
+    transition:opacity .22s ease;
+    clip-path:inset(0 0 var(--rig-clip-inset-bottom) 0);
+  }
+
+  body.past-cv:not(.recruiter-mode) .fixed-rig{
+    opacity:0;
+  }
+
+  .bore{
+    position:absolute;
+    left:50%;
+    top:0;
+    width:220px;
+    height:100%;
+    transform:translateX(-50%);
+  }
+
+  .clean-corridor{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(90deg, transparent 0%, rgba(4,8,12,.20) 18%, rgba(4,8,12,.34) 50%, rgba(4,8,12,.20) 82%, transparent 100%);
+    border-left:1px solid rgba(255,255,255,.045);
+    border-right:1px solid rgba(255,255,255,.045);
+  }
+
+  .tunnel{
+    position:absolute;
+    left:50%;
+    top:0;
+    width:20px;
+    height:var(--drill-y);
+    transform:translateX(-50%);
+    border-radius:0 0 999px 999px;
+    background:linear-gradient(90deg,rgba(255,232,173,.18),rgba(255,179,71,.92),rgba(255,232,173,.18));
+    box-shadow:0 0 34px rgba(255,179,71,.34), inset 0 0 18px rgba(0,0,0,.28);
+  }
+
+  .tunnel:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:repeating-linear-gradient(180deg,rgba(255,255,255,.28) 0 2px,transparent 2px 18px);
+    opacity:.55;
+  }
+
+  .burn-zone{
+    position:absolute;
+    left:50%;
+    top:var(--drill-y);
+    transform:translate(-50%,-40%);
+    width:78px;
+    height:150px;
+    border-radius:60px;
+    background:radial-gradient(ellipse at center,rgba(255,179,71,.24),rgba(255,179,71,.06) 45%,transparent 72%);
+    filter:blur(8px);
+  }
+
+  .drill{
+    position:absolute;
+    left:50%;
+    top:var(--drill-y);
+    transform:translate(-50%,-18%);
+    width:82px;
+    height:112px;
+    filter:drop-shadow(0 0 22px rgba(255,179,71,.62));
+  }
+
+  .stem{
+    width:10px;height:50px;margin:0 auto;
+    border-radius:999px;
+    background:linear-gradient(90deg,#d9dde0,#798086,#f5f8f8);
+  }
+
+  .bit{
+    width:46px;height:60px;margin:-4px auto 0;
+    background:linear-gradient(90deg,#f0f5f5,#7c848b,#fff);
+    clip-path:polygon(16% 0,84% 0,72% 62%,50% 100%,28% 62%);
+    animation:drillShake .1s infinite alternate;
+  }
+
+  .bit-glow{
+    width:74px;height:16px;margin:-4px auto 0;
+    border-radius:50%;
+    background:rgba(255,179,71,.64);
+    animation:bitGlow .48s infinite alternate;
+  }
+
+  @keyframes drillShake{from{transform:translateX(-1px)}to{transform:translateX(1px)}}
+  @keyframes bitGlow{from{opacity:.55;transform:scaleX(.92)}to{opacity:1;transform:scaleX(1.08)}}
+
+  .depth-badge{
+    position:absolute;
+    top:calc(var(--drill-y) + 78px);
+    left:calc(50% + 70px);
+    white-space:nowrap;
+    padding:8px 11px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(0,0,0,.25);
+    color:rgba(255,255,255,.82);
+    backdrop-filter:blur(10px);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+
+  .year-nav{
+    position:fixed;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:22;
+    display:none;
+    gap:10px;
+    clip-path:inset(0 0 var(--year-clip-inset-bottom) 0);
+  }
+
+  .year-btn{
+    width:82px;
+    padding:9px 7px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(0,0,0,.22);
+    color:rgba(255,255,255,.48);
+    font-size:12px;
+    cursor:pointer;
+    transition:.2s ease;
+  }
+
+  body.past-cv:not(.recruiter-mode) .depth-badge{
+    opacity:0;
+  }
+
+  body.past-cv:not(.recruiter-mode) .year-nav{
+    opacity:0;
+    pointer-events:none;
+  }
+
+  .year-btn.active{
+    color:#fff;
+    background:rgba(255,179,71,.15);
+    border-color:rgba(255,179,71,.5);
+    box-shadow:0 0 20px rgba(255,179,71,.22);
+  }
+
+  .mobile-nav{display:none}
+
+  .layers{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+
+  .layer{
+    min-height:88svh;
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(24px,1fr) minmax(320px,540px) 260px minmax(320px,540px) minmax(24px,1fr);
+    align-items:center;
+    padding:90px 0;
+    overflow:hidden;
+    scroll-margin-top:76px;
+    border-top:1px solid rgba(255,255,255,.07);
+  }
+
+  .layer:before{
+    content:"";
+    position:absolute;
+    inset:-30px;
+    opacity:.52;
+    background:
+      repeating-linear-gradient(178deg,rgba(255,255,255,.085) 0 2px,transparent 2px 31px),
+      radial-gradient(circle at 16% 40%,rgba(255,255,255,.12),transparent 17%),
+      radial-gradient(circle at 82% 62%,rgba(0,0,0,.24),transparent 22%);
+    transform:translateY(calc(var(--scroll) * -40px));
+  }
+
+  .layer:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    opacity:.65;
+    background:
+      repeating-linear-gradient(90deg,transparent 0 40px,rgba(255,255,255,.035) 41px,transparent 42px),
+      repeating-linear-gradient(0deg,transparent 0 54px,rgba(255,255,255,.026) 55px,transparent 56px);
+    mix-blend-mode:screen;
+  }
+
+  .l1{background:linear-gradient(180deg,#132232,#061018)}
+  .l2{background:linear-gradient(180deg,#1e3847,#152c39)}
+  .l3{background:linear-gradient(180deg,#32504b,#213d3d)}
+  .l4{background:linear-gradient(180deg,#445964,#2b414d)}
+  .l5{background:linear-gradient(180deg,#6a563f,#4d453b)}
+  .l6{background:linear-gradient(180deg,#845f35,#704a2a)}
+
+  .formation-tag{
+    position:absolute;
+    top:22px;
+    left:50%;
+    z-index:4;
+    transform:translateX(-50%);
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(0,0,0,.24);
+    backdrop-filter:blur(10px);
+    color:rgba(255,255,255,.82);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+  }
+
+  .fossil{
+    position:absolute;
+    top:14%;
+    right:7vw;
+    z-index:1;
+    opacity:.09;
+    font-size:clamp(100px,18vw,230px);
+    transform:rotate(-13deg);
+  }
+
+  .layer:nth-child(even) .fossil{left:7vw;right:auto;transform:rotate(14deg)}
+
+  .corridor-mask{
+    position:absolute;
+    left:50%;
+    top:0;
+    bottom:0;
+    width:260px;
+    transform:translateX(-50%);
+    z-index:5;
+    pointer-events:none;
+    background:linear-gradient(90deg,transparent 0%,rgba(5,10,15,.18) 18%,rgba(5,10,15,.30) 50%,rgba(5,10,15,.18) 82%,transparent 100%);
+    border-left:1px solid rgba(255,255,255,.035);
+    border-right:1px solid rgba(255,255,255,.035);
+  }
+
+  .fracture{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:150px;
+    height:115px;
+    z-index:11;
+    pointer-events:none;
+  }
+
+  .fracture svg{width:100%;height:100%;overflow:visible}
+  .crack{
+    fill:none;
+    stroke:rgba(255,226,158,.9);
+    stroke-width:2.4;
+    stroke-linecap:round;
+    stroke-dasharray:340;
+    stroke-dashoffset:340;
+    filter:drop-shadow(0 0 8px rgba(255,179,71,.84));
+  }
+
+  .impact{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:92px;height:92px;
+    transform:translate(-50%,-50%);
+    z-index:10;
+    pointer-events:none;
+  }
+
+  .impact:before,.impact:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border:1px solid rgba(255,209,132,.55);
+    opacity:0;
+    transform:scale(.4);
+  }
+
+  .dust{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:7px;height:7px;
+    border-radius:50%;
+    background:rgba(255,226,158,.88);
+    opacity:0;
+  }
+
+  .d1{--x:-72px;--y:-28px}
+  .d2{--x:74px;--y:-24px;animation-delay:.04s}
+  .d3{--x:-52px;--y:44px;animation-delay:.08s}
+  .d4{--x:58px;--y:50px;animation-delay:.12s}
+  .d5{--x:4px;--y:74px;animation-delay:.15s}
+
+  .card{
+    position:relative;
+    z-index:8;
+    grid-column:2;
+    width:100%;
+    padding:26px;
+    border-radius:26px;
+    border:1px solid rgba(255,255,255,.16);
+    background:var(--panel);
+    backdrop-filter:blur(16px);
+    box-shadow:0 28px 80px rgba(0,0,0,.30);
+    opacity:1;
+    transform:none;
+    transition:.22s ease;
+  }
+
+  .layer:nth-child(even) .card{grid-column:4}
+
+  .layer.active .card{
+    border-color:rgba(255,179,71,.45);
+    transform:translateY(-2px);
+    box-shadow:0 32px 90px rgba(0,0,0,.34);
+  }
+
+  .layer.active .crack{animation:draw .7s ease forwards}
+  .layer.active .impact:before{animation:impact1 .7s ease}
+  .layer.active .impact:after{animation:impact2 .9s ease}
+  .layer.active .dust{animation:dust .85s ease forwards}
+
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes impact1{0%{opacity:.9;transform:scale(.25)}100%{opacity:0;transform:scale(1.2)}}
+  @keyframes impact2{10%{opacity:.8;transform:scale(.2)}100%{opacity:0;transform:scale(1.8)}}
+  @keyframes dust{
+    0%{opacity:0;transform:translate(0,0) scale(.55)}
+    18%{opacity:.9}
+    100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.15)}
+  }
+
+  .period{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    color:var(--amber);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    margin-bottom:12px;
+  }
+
+  .period .lead{display:inline-flex;align-items:center;gap:8px}
+  .period .lead:before{
+    content:"";
+    width:9px;height:9px;border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 16px var(--amber);
+  }
+  .period .depth{color:rgba(255,255,255,.48)}
+
+  .card h2{
+    margin:0 0 8px;
+    font-size:clamp(28px,3.4vw,42px);
+    line-height:1;
+    letter-spacing:-.045em;
+  }
+
+  .role{
+    margin-bottom:15px;
+    font-weight:650;
+    color:#fff;
+    line-height:1.35;
+  }
+
+  .card p{
+    margin:0;
+    color:var(--muted);
+    line-height:1.56;
+    font-size:15.5px;
+  }
+
+  .evidence{
+    margin-top:12px;
+    color:#efe8de;
+    font-size:14px;
+    line-height:1.45;
+  }
+
+  .evidence strong{
+    color:var(--amber2);
+    font-weight:750;
+  }
+
+  .matrix{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:18px 0;
+  }
+
+  .box{
+    padding:12px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(0,0,0,.23);
+  }
+
+  .box strong{
+    display:block;
+    margin-bottom:5px;
+    color:var(--cyan);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+  }
+
+  .box span{font-size:13.5px;color:#efe7dc;line-height:1.35}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .chip{
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.06);
+    color:#efe8de;
+    font-size:12.5px;
+  }
+
+  .kpis{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:18px;
+  }
+
+  .kpi{
+    padding:13px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(0,0,0,.23);
+  }
+
+  .kpi strong{display:block;font-size:23px;color:#fff}
+  .kpi span{font-size:12px;color:var(--muted)}
+
+  .end{
+    min-height:100svh;
+    position:relative;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(96px,14svh,136px) 44px clamp(64px,10svh,96px);
+    text-align:center;
+    background:radial-gradient(circle at center,rgba(255,179,71,.16),transparent 34%),#061018;
+  }
+
+  .end h2{
+    max-width:900px;
+    margin:0;
+    font-size:clamp(34px,5vw,64px);
+    line-height:1.07;
+    letter-spacing:-.04em;
+  }
+
+  .end p{
+    max-width:760px;
+    margin:22px auto 0;
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.55;
+  }
+
+  .end-actions{
+    margin-top:24px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .end-actions a{
+    padding:12px 16px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);
+    color:#efe8de;
+    font-size:13px;
+  }
+
+  @media (min-width:901px){
+    body.in-cv:not(.recruiter-mode) .year-nav{
+      left:18px;
+      right:auto;
+      display:grid;
+    }
+
+    .bore{
+      left:118px;
+      width:210px;
+      transform:none;
+    }
+
+    .depth-badge{display:none}
+
+    .layer{
+      grid-template-columns:minmax(300px,340px) minmax(560px,1fr);
+      column-gap:22px;
+      padding-right:32px;
+    }
+
+    .card,
+    .layer:nth-child(even) .card{
+      grid-column:2;
+      max-width:none;
+    }
+
+    .corridor-mask{
+      left:118px;
+      width:210px;
+      transform:translateX(-50%);
+    }
+
+    .fracture{
+      left:223px;
+      width:130px;
+      height:103px;
+    }
+
+    .impact{
+      left:223px;
+    }
+
+    .formation-tag{
+      left:236px;
+      transform:none;
+    }
+
+    .layer:nth-child(even) .fossil{
+      left:auto;
+      right:7vw;
+      transform:rotate(-13deg);
+    }
+  }
+
+  @media (max-width:900px){
+    .layer{
+      grid-template-columns:minmax(18px,1fr) minmax(300px,520px) 240px minmax(300px,520px) minmax(18px,1fr);
+    }
+    .corridor-mask{width:240px}
+  }
+
+  @media (max-width:900px){
+    .hero-stats{grid-template-columns:1fr 1fr}
+    .recruiter-grid,.two-col{grid-template-columns:1fr}
+    .contact-grid{grid-template-columns:1fr 1fr}
+    .year-nav{display:none}
+
+    .cv{min-height:585svh}
+
+    body.in-cv:not(.recruiter-mode) .mobile-nav{
+      position:fixed;
+      left:10px;
+      right:10px;
+      bottom:calc(var(--safe-bottom) + 8px);
+      z-index:160;
+      display:flex;
+      gap:6px;
+      overflow:auto;
+      padding:5px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(5,10,15,.76);
+      backdrop-filter:blur(14px);
+      box-shadow:0 12px 42px rgba(0,0,0,.32);
+      pointer-events:auto;
+      clip-path:inset(0 0 var(--mobile-nav-clip-inset-bottom) 0);
+      transition:opacity .18s ease;
+    }
+
+    body.past-cv:not(.recruiter-mode) .mobile-nav{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .mobile-nav button{
+      flex:1 0 auto;
+      border:0;
+      padding:9px 11px;
+      border-radius:999px;
+      background:transparent;
+      color:rgba(255,255,255,.56);
+      font-size:12px;
+      cursor:pointer;
+      touch-action:manipulation;
+    }
+
+    .mobile-nav button.active{
+      color:#fff;
+      background:rgba(255,179,71,.16);
+      box-shadow:inset 0 0 0 1px rgba(255,179,71,.45);
+    }
+
+    .view-switch{
+      left:14px;
+      right:14px;
+      justify-content:center;
+    }
+
+    body.in-cv:not(.recruiter-mode) .view-switch{
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(calc(-100% - 24px));
+    }
+
+    .bore{
+      left:0;
+      transform:none;
+      width:84px;
+    }
+
+    .tunnel,.burn-zone,.drill{left:50%}
+    .depth-badge{display:none}
+
+    .layer{
+      min-height:94svh;
+      grid-template-columns:112px minmax(0,1fr) 10px;
+      padding:112px 12px 106px 0;
+    }
+
+    .card,.layer:nth-child(even) .card{
+      grid-column:2;
+      padding-bottom:calc(26px + 92px);
+    }
+
+    .corridor-mask{
+      left:42px;
+      transform:translateX(-50%);
+      width:84px;
+    }
+
+    .fracture{
+      left:42px;
+      width:75px;
+      height:62px;
+      z-index:6;
+    }
+
+    .impact{
+      left:42px;
+      width:68px;
+      height:68px;
+    }
+
+    .drill{width:64px;height:90px}
+    .stem{width:8px;height:40px}
+    .bit{width:36px;height:47px}
+    .bit-glow{width:58px;height:12px}
+
+    .formation-tag{
+      left:112px;
+      transform:none;
+    }
+
+    .fossil{right:5vw;top:9%;opacity:.07}
+  }
+
+  @media (max-width:600px){
+    .hero-inner{
+      width:min(100% - 22px,1120px);
+      padding-top:92px;
+    }
+
+    .hero-portrait{
+      width:96px;
+      margin-bottom:18px;
+    }
+
+    .scroll-cue{display:none}
+
+    .hero-stats{grid-template-columns:1fr}
+    .contact-grid{grid-template-columns:1fr}
+
+    .cv{min-height:640svh}
+
+    .view-switch button{
+      padding:9px 12px;
+      font-size:14px;
+    }
+
+    .layer{
+      grid-template-columns:84px minmax(0,1fr) 8px;
+      padding:106px 10px 132px 0;
+    }
+
+    .bore{left:0;width:70px}
+    .corridor-mask{left:35px;width:70px}
+    .fracture{left:35px;width:65px;height:54px}
+    .impact{left:35px;width:56px;height:56px}
+    .drill{width:52px;height:76px}
+    .stem{width:7px;height:34px}
+    .bit{width:30px;height:40px}
+    .bit-glow{width:48px;height:11px}
+
+    .formation-tag{
+      left:84px;
+      top:18px;
+      font-size:10px;
+      padding:7px 10px;
+      letter-spacing:.11em;
+    }
+
+    .card{
+      padding:18px 18px calc(18px + 108px);
+      border-radius:22px;
+      background:rgba(9,15,22,.90);
+      backdrop-filter:none;
+      scroll-margin-top:56px;
+      scroll-margin-bottom:96px;
+    }
+
+    .card h2{
+      font-size:clamp(27px,8vw,34px);
+      line-height:1.04;
+    }
+
+    .role{margin-bottom:12px}
+    .card p{font-size:15px;line-height:1.5}
+    .matrix{margin:16px 0}
+    .box{padding:11px}
+    .chips{gap:7px;margin-top:14px}
+    .chip{padding:7px 9px;font-size:12px}
+
+    .matrix,.kpis{grid-template-columns:1fr}
+    .period{flex-direction:column;align-items:flex-start;gap:5px}
+
+    .mobile-nav button{
+      font-size:12px;
+      padding:8px 9px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation:none !important;
+      transition:none !important;
+      scroll-behavior:auto !important;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="view-switch" aria-label="View mode">
+  <button id="cinematicBtn" type="button" class="active" aria-pressed="true">Cinematic View</button>
+  <button id="recruiterBtn" type="button" aria-pressed="false">Recruiter View</button>
+</div>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="badge">AI Embedment CV · Upstream Digital & AI</div>
+    <div class="hero-portrait">
+      <img src="Rafael.png" alt="Rafael Navarro" loading="eager" onerror="this.style.visibility='hidden'" />
+    </div>
+    <h1>Rafael Navarro</h1>
+    <p class="subtitle">
+      Senior Geoscience Analyst &amp; Subsurface Analytics AI · Product Owner.
+      Domain depth, hands-on digital delivery and agentic AI concepts translated into decision-ready workflows for upstream assets.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><strong>15+ years</strong><span>Deep upstream domain expertise across asset workflows, decisions and value drivers.</span></div>
+      <div class="stat"><strong>AI embedment</strong><span>LLM/MCP concepts, agentic workflows, retrieval, orchestration and automation.</span></div>
+      <div class="stat"><strong>Hands-on stack</strong><span>Spotfire CAP, Databricks SQL/Python, ArcGIS, Figma, Azure DevOps, VS Code and GitHub.</span></div>
+      <div class="stat"><strong>Community impact</strong><span>Led Nigeria air-quality initiative reaching thousands of users — covered by <a href="https://undark.org/2018/10/22/air-pollution-lagos" target="_blank" rel="noopener noreferrer" style="color:var(--amber2);text-decoration:none">Undark</a>, <a href="https://www.iqair.com/blog/success-stories/air-quality-in-africa" target="_blank" rel="noopener noreferrer" style="color:var(--amber2);text-decoration:none">IQAir</a> and <a href="https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears" target="_blank" rel="noopener noreferrer" style="color:var(--amber2);text-decoration:none">France24</a>.</span></div>
+    </div>
+    <div class="scroll-cue">Drill down</div>
+  </div>
+</section>
+
+<section class="recruiter-shell" id="recruiterView">
+  <div class="recruiter-grid">
+    <div class="panel">
+      <h2>Professional Summary</h2>
+      <p class="summary">
+        Subsurface domain expert positioned for AI Embedment roles: 15+ years across geoscience, asset workflows, prospect maturation,
+        reservoir evaluation and digital product delivery, with hands-on exposure to AI-augmented analytics, Python-enabled workflows,
+        Databricks, Spotfire CAP and enterprise data integrations. Translates ambiguous business needs into governed, adopted solutions that
+        reduce manual effort, increase decision consistency and deliver measurable operational value.
+      </p>
+      <div class="inline-tags">
+        <span>AI Embedment</span><span>Generative AI</span><span>Agentic Workflows</span><span>Python</span>
+        <span>Databricks</span><span>Spotfire CAP</span><span>Figma</span><span>VS Code</span><span>GitHub</span>
+        <span>Design Thinking</span><span>Product Owner</span><span>Risk &amp; Volumetrics</span><span>Upstream Assets</span>
+      </div>
+
+      <h3>AI Embedment Match</h3>
+      <div class="exp-list">
+        <div class="exp">
+          <div class="top"><strong>Domain + AI translation</strong><span>10+ year requirement</span></div>
+          <p>Combines deep geoscience experience with AI/NLP concepts, analytics products and practical understanding of asset decision points.</p>
+        </div>
+        <div class="exp">
+          <div class="top"><strong>Live operational delivery</strong><span>Beyond prototype</span></div>
+          <p>Delivered workflows for WRFM/LTRO, PSI reservoir evaluation, Monagas production diagnostics, VSP operations and drilling support.</p>
+        </div>
+        <div class="exp">
+          <div class="top"><strong>Data architecture & deployment</strong><span>Enterprise-ready</span></div>
+          <p>Built governed Spotfire integrations with ESRI, Oracle DB, Databricks and Denodo, including sandbox performance and scalability testing.</p>
+        </div>
+      </div>
+
+      <h3>Selected Experience</h3>
+      <div class="exp-list">
+        <div class="exp">
+          <div class="top"><strong>Senior Geoscience Analyst &amp; Subsurface Analytics AI</strong><span>Jun 2025–Present</span></div>
+          <p>Embeds advanced analytics, Spotfire CAP use cases, custom connectors and AI/NLP concepts into exploration, WRFM/LTRO, DCA, ISCM and reservoir evaluation workflows.</p>
+        </div>
+        <div class="exp">
+          <div class="top"><strong>Senior X-Digi Geoscientist, Product Owner</strong><span>Jun 2020–Feb 2025</span></div>
+          <p>Owned roadmap, backlog, stakeholder alignment and PoC-led delivery for secure exploration products including XStation and ARMPlay.</p>
+        </div>
+        <div class="exp">
+          <div class="top"><strong>Technical Lead, Nigeria Shallow Water</strong><span>Oct 2018–Jun 2020</span></div>
+          <p>Revitalized portfolio workflows and built analytics covering 90,000+ reservoirs and 5,000 wells.</p>
+        </div>
+        <div class="exp">
+          <div class="top"><strong>Exploration & Seismic Interpretation</strong><span>2007–2018</span></div>
+          <p>Built a foundation across Qatar, Nigeria, Mexico, Colombia and Venezuela in seismic interpretation, VSP, acquisition QC, velocity modeling and prospect generation. During the Nigeria posting, also led a real-time air-quality transparency initiative that gained international coverage: <a href="https://undark.org/2018/10/22/air-pollution-lagos" target="_blank" rel="noopener noreferrer" style="color:var(--amber2)">Undark</a> · <a href="https://www.iqair.com/blog/success-stories/air-quality-in-africa" target="_blank" rel="noopener noreferrer" style="color:var(--amber2)">IQAir</a> · <a href="https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears" target="_blank" rel="noopener noreferrer" style="color:var(--amber2)">France24</a>.</p>
+        </div>
+        <div class="exp">
+          <div class="top"><strong>EmpathyAI</strong><span>Side venture · Founded</span></div>
+          <p>Founded a side AI venture exploring empathetic human-AI interaction, combining geoscience domain expertise with applied generative AI and agentic workflow design.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Impact Snapshot</h2>
+      <div class="two-col">
+        <div class="callout"><strong>~$1B</strong><span>scale referenced in WRFM Gap-to-Potential diagnostics</span></div>
+        <div class="callout"><strong>90K+</strong><span>reservoirs represented in reusable analytics workflows</span></div>
+        <div class="callout"><strong>5K</strong><span>wells integrated into screening and distribution analytics</span></div>
+        <div class="callout"><strong>22.8</strong><span>mmboe handover to Development in Nigeria in 2017</span></div>
+        <div class="callout"><strong>4K</strong><span>channels in battery-less fiber optic seismic technology trial</span></div>
+        <div class="callout"><strong>60 km²</strong><span>3D seismic acquisition survey designed and managed early career</span></div>
+      </div>
+
+      <h3>Capabilities</h3>
+      <div class="inline-tags">
+        <span>AI/ML Analytics</span><span>Generative AI Concepts</span><span>Agentic AI</span>
+        <span>Data Pipelines</span><span>Deployment Considerations</span><span>Visualization</span>
+        <span>Seismic-to-Well Integration</span><span>Petrophysical Workflows</span><span>Prospect Maturation</span>
+        <span>Statistics &amp; Analytics</span><span>Stakeholder Influence</span><span>Matrix Delivery</span>
+      </div>
+
+      <h3>Profile</h3>
+      <div class="contact-grid">
+        <div class="contact-pill">AI Embedment target profile</div>
+        <a href="mailto:r.navarroluna@shell.com" class="contact-pill">r.navarroluna@shell.com</a>
+        <a href="mailto:rafaelalejandro.n@gmail.com" class="contact-pill">rafaelalejandro.n@gmail.com</a>
+        <a href="https://www.linkedin.com/in/onepalo/" target="_blank" rel="noopener noreferrer" class="contact-pill">LinkedIn · Rafael Navarro Luna</a>
+        <div class="contact-pill">TCA-TIBCO Spotfire certificate</div>
+      </div>
+
+      <h3>Embedment Delivery Model</h3>
+      <div class="delivery-stack">
+        <div class="delivery-step">
+          <div class="num">01</div>
+          <div>
+            <strong>Frame the decision</strong>
+            <span>Asset workflow first</span>
+            <p>Clarify the business decision, data sources, users and adoption barriers before selecting the AI or analytics pattern.</p>
+          </div>
+        </div>
+        <div class="delivery-step">
+          <div class="num">02</div>
+          <div>
+            <strong>Build with governed data</strong>
+            <span>Spotfire · Databricks · Python</span>
+            <p>Connect enterprise sources, prototype quickly and keep lineage, performance and security visible from the start.</p>
+          </div>
+        </div>
+        <div class="delivery-step">
+          <div class="num">03</div>
+          <div>
+            <strong>Embed into daily use</strong>
+            <span>Adoption and scale</span>
+            <p>Translate prototypes into decision-ready workflows, train users and measure whether the solution changes action.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cinematic-shell" id="cinematicView">
+  <aside class="year-nav" aria-label="Timeline navigation">
+    <button class="year-btn nav-trigger active" type="button" data-target="layer-1">2025</button>
+    <button class="year-btn nav-trigger" type="button" data-target="layer-2">2020</button>
+    <button class="year-btn nav-trigger" type="button" data-target="layer-3">2018</button>
+    <button class="year-btn nav-trigger" type="button" data-target="layer-4">2014</button>
+    <button class="year-btn nav-trigger" type="button" data-target="layer-5">2012</button>
+    <button class="year-btn nav-trigger" type="button" data-target="layer-6">2007</button>
+  </aside>
+
+  <nav class="mobile-nav" aria-label="Mobile timeline navigation">
+    <button class="nav-trigger active" type="button" data-target="layer-1">2025</button>
+    <button class="nav-trigger" type="button" data-target="layer-2">2020</button>
+    <button class="nav-trigger" type="button" data-target="layer-3">2018</button>
+    <button class="nav-trigger" type="button" data-target="layer-4">2014</button>
+    <button class="nav-trigger" type="button" data-target="layer-5">2012</button>
+    <button class="nav-trigger" type="button" data-target="layer-6">2007</button>
+  </nav>
+
+  <main class="cv" id="cv">
+    <div class="fixed-rig">
+      <div class="bore">
+        <div class="clean-corridor"></div>
+        <div class="tunnel"></div>
+        <div class="burn-zone"></div>
+        <div class="drill">
+          <div class="stem"></div>
+          <div class="bit"></div>
+          <div class="bit-glow"></div>
+        </div>
+      </div>
+      <div id="depthBadge" class="depth-badge">Career depth · 2025–Present</div>
+    </div>
+
+    <div class="layers">
+      <section class="layer l1 active" id="layer-1" data-label="Career depth · 2025–Present">
+        <div class="corridor-mask"></div>
+        <div class="formation-tag">Shell US · 2025–Present</div>
+        <div class="fossil" aria-hidden="true">✦</div>
+        <div class="impact"></div>
+        <div class="fracture">
+          <svg viewBox="0 0 300 230">
+            <path class="crack" d="M148 20 L132 58 L156 88 L122 120 L148 154 L116 210"/>
+            <path class="crack" d="M156 88 L198 66 L242 42"/>
+            <path class="crack" d="M122 120 L74 112 L34 138"/>
+            <path class="crack" d="M148 154 L196 170 L258 164"/>
+          </svg>
+          <i class="dust d1"></i><i class="dust d2"></i><i class="dust d3"></i><i class="dust d4"></i><i class="dust d5"></i>
+        </div>
+        <article class="card">
+          <div class="period"><span class="lead">Jun 2025–Present · Analytics layer</span><span class="depth">Depth 01</span></div>
+          <h2>Senior Geoscience Analyst &amp; Subsurface Analytics AI</h2>
+          <div class="role">Shell US Hosting Company · governed analytics / Spotfire CAP / AI-NLP concepts</div>
+          <p>Scales subsurface decision-making through advanced analytics, governed workflows and enterprise-ready data products that connect users to trusted datasets.</p>
+          <div class="evidence"><strong>Proof:</strong> Spotfire CAP representative; connects Spotfire to ESRI, Oracle DB, Databricks and Denodo while delivering Yet2Find, Historical GoA Production, BPA2 QC and PSI workflows.</div>
+          <div class="matrix">
+            <div class="box"><strong>Solutions</strong><span>Yet2Find · Historical GoA Production · BPA2 QC · PSI petrophysical workflows</span></div>
+            <div class="box"><strong>Integration</strong><span>Spotfire connectors for ESRI, Oracle DB, Databricks and Denodo</span></div>
+          </div>
+          <div class="chips"><span class="chip">WRFM/LTRO</span><span class="chip">LLM/MCP concepts</span><span class="chip">DCA</span><span class="chip">ISCM diagnostics</span><span class="chip">Monagas analytics</span></div>
+        </article>
+      </section>
+
+      <section class="layer l2" id="layer-2" data-label="Career depth · 2020–2025">
+        <div class="corridor-mask"></div>
+        <div class="formation-tag">Shell US · 2020–2025</div>
+        <div class="fossil" aria-hidden="true">≈</div>
+        <div class="impact"></div>
+        <div class="fracture">
+          <svg viewBox="0 0 300 230">
+            <path class="crack" d="M152 18 L164 56 L139 88 L170 124 L144 160 L184 214"/>
+            <path class="crack" d="M139 88 L92 65 L48 42"/>
+            <path class="crack" d="M170 124 L216 112 L264 132"/>
+            <path class="crack" d="M144 160 L98 180 L66 214"/>
+          </svg>
+          <i class="dust d1"></i><i class="dust d2"></i><i class="dust d3"></i><i class="dust d4"></i><i class="dust d5"></i>
+        </div>
+        <article class="card">
+          <div class="period"><span class="lead">Jun 2020–Feb 2025 · Product layer</span><span class="depth">Depth 02</span></div>
+          <h2>Senior X-Digi Geoscientist</h2>
+          <div class="role">Product Owner · exploration applications / geospatial platforms / AI and NLP approaches</div>
+          <p>Bridged geoscience expertise with digital product delivery, owning roadmap, backlog and PoC-led experimentation to validate value early and scale what works.</p>
+          <div class="evidence"><strong>Proof:</strong> Delivered XStation and ARMPlay while aligning UX, developers and stakeholders around decision transparency and opportunity screening.</div>
+          <div class="matrix">
+            <div class="box"><strong>Products</strong><span>XStation · ARMPlay · integrated datasets · tailored dashboards</span></div>
+            <div class="box"><strong>AI angle</strong><span>AI/NLP on large subsurface datasets to democratize insights and reduce screening effort</span></div>
+          </div>
+          <div class="chips"><span class="chip">Design thinking</span><span class="chip">UX + dev teams</span><span class="chip">Adoption & scale</span></div>
+        </article>
+      </section>
+
+      <section class="layer l3" id="layer-3" data-label="Career depth · 2018–2020">
+        <div class="corridor-mask"></div>
+        <div class="formation-tag">Shell Netherlands · 2018–2020</div>
+        <div class="fossil" aria-hidden="true">◍</div>
+        <div class="impact"></div>
+        <div class="fracture">
+          <svg viewBox="0 0 300 230">
+            <path class="crack" d="M148 16 L130 52 L158 86 L120 116 L146 148 L106 210"/>
+            <path class="crack" d="M158 86 L205 68 L252 36"/>
+            <path class="crack" d="M120 116 L72 112 L30 94"/>
+            <path class="crack" d="M146 148 L194 158 L250 198"/>
+          </svg>
+          <i class="dust d1"></i><i class="dust d2"></i><i class="dust d3"></i><i class="dust d4"></i><i class="dust d5"></i>
+        </div>
+        <article class="card">
+          <div class="period"><span class="lead">Oct 2018–Jun 2020 · Portfolio layer</span><span class="depth">Depth 03</span></div>
+          <h2>Senior Exploration Geoscientist</h2>
+          <div class="role">Technical Lead · Nigeria Shallow Water portfolio revitalization</div>
+          <p>Combined play-based exploration leadership with analytics products to improve screening consistency, execution speed and decision quality.</p>
+          <div class="evidence"><strong>Proof:</strong> Coordinated roughly 10 specialists and built analytics spanning 90,000+ reservoirs and 5,000 wells for portfolio refresh decisions.</div>
+          <div class="matrix">
+            <div class="box"><strong>Team</strong><span>Coordinated approximately 10 specialists across geology, geophysics, basin modeling and data engineering</span></div>
+            <div class="box"><strong>Dashboard</strong><span>Hydrocarbon Distribution Dashboard across 90,000+ reservoirs and 5,000 wells</span></div>
+          </div>
+          <div class="chips"><span class="chip">Play maps</span><span class="chip">Volume & risk</span><span class="chip">RSP maturation</span></div>
+        </article>
+      </section>
+
+      <section class="layer l4" id="layer-4" data-label="Career depth · 2014–2018">
+        <div class="corridor-mask"></div>
+        <div class="formation-tag">SPDC Nigeria · 2014–2018</div>
+        <div class="fossil" aria-hidden="true">⌁</div>
+        <div class="impact"></div>
+        <div class="fracture">
+          <svg viewBox="0 0 300 230">
+            <path class="crack" d="M150 20 L166 58 L140 94 L176 128 L152 162 L196 214"/>
+            <path class="crack" d="M140 94 L96 82 L50 104"/>
+            <path class="crack" d="M176 128 L224 112 L270 132"/>
+            <path class="crack" d="M152 162 L104 184 L78 216"/>
+          </svg>
+          <i class="dust d1"></i><i class="dust d2"></i><i class="dust d3"></i><i class="dust d4"></i><i class="dust d5"></i>
+        </div>
+        <article class="card">
+          <div class="period"><span class="lead">Jul 2014–Oct 2018 · Execution layer</span><span class="depth">Depth 04</span></div>
+          <h2>Exploration Geoscientist</h2>
+          <div class="role">SPDC Nigeria · high-pressure wells / VSP acquisition / E2D handovers</div>
+          <p>Delivered operational drilling support, subsurface model updates, velocity and volumetric evaluations, and cost-efficient contingent resource additions.</p>
+          <div class="evidence"><strong>Proof:</strong> Prospect owner for Gbaran 26/27, managed Look-Ahead VSP support and contributed 22.8 mmboe handover to Development in 2017. Also led a real-time air-quality transparency initiative using public data; reached thousands of users with international media coverage: <a href="https://undark.org/2018/10/22/air-pollution-lagos" target="_blank" rel="noopener noreferrer" style="color:var(--amber2)">Undark</a> · <a href="https://www.iqair.com/blog/success-stories/air-quality-in-africa" target="_blank" rel="noopener noreferrer" style="color:var(--amber2)">IQAir</a> · <a href="https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears" target="_blank" rel="noopener noreferrer" style="color:var(--amber2)">France24</a>.</div>
+          <div class="kpis">
+            <div class="kpi"><strong>22.8</strong><span>mmboe handover</span></div>
+            <div class="kpi"><strong>15%</strong><span>Nigeria CR target</span></div>
+            <div class="kpi"><strong>16K+</strong><span>ft deep targets</span></div>
+          </div>
+          <div class="chips"><span class="chip">High-pressure wells</span><span class="chip">VSP acquisition</span><span class="chip">E2D handover</span><span class="chip">Air quality initiative</span></div>
+        </article>
+      </section>
+
+      <section class="layer l5" id="layer-5" data-label="Career depth · 2012–2014">
+        <div class="corridor-mask"></div>
+        <div class="formation-tag">QSSC Qatar · 2012–2014</div>
+        <div class="fossil" aria-hidden="true">◆</div>
+        <div class="impact"></div>
+        <div class="fracture">
+          <svg viewBox="0 0 300 230">
+            <path class="crack" d="M150 18 L136 58 L162 94 L132 128 L158 164 L134 216"/>
+            <path class="crack" d="M162 94 L212 70 L266 42"/>
+            <path class="crack" d="M132 128 L82 120 L38 148"/>
+            <path class="crack" d="M158 164 L210 178 L266 168"/>
+          </svg>
+          <i class="dust d1"></i><i class="dust d2"></i><i class="dust d3"></i><i class="dust d4"></i><i class="dust d5"></i>
+        </div>
+        <article class="card">
+          <div class="period"><span class="lead">Apr 2012–Jul 2014 · Seismic layer</span><span class="depth">Depth 05</span></div>
+          <h2>Senior Seismic Interpreter</h2>
+          <div class="role">Qatar Shell Service Company · processing integration / VSP operations</div>
+          <p>Improved subsurface model accuracy through seismic processing integration, well-seismic calibration and real-time VSP planning and operations.</p>
+          <div class="evidence"><strong>Proof:</strong> Managed QSD-1 VSP preparation, supported North Field appraisal operations and processed a 4,000-channel battery-less fiber optic seismic trial.</div>
+          <div class="matrix">
+            <div class="box"><strong>Location</strong><span>Qatar · Netherlands virtual processing team</span></div>
+            <div class="box"><strong>Trial</strong><span>Battery-less fiber optic seismic system with approximately 4,000 channels</span></div>
+          </div>
+          <div class="chips"><span class="chip">Well ties</span><span class="chip">Synthetic generation</span><span class="chip">QSD-1 VSP</span></div>
+        </article>
+      </section>
+
+      <section class="layer l6" id="layer-6" data-label="Career depth · 2007–2012">
+        <div class="corridor-mask"></div>
+        <div class="formation-tag">Early Career · 2007–2012</div>
+        <div class="fossil" aria-hidden="true">⬢</div>
+        <div class="impact"></div>
+        <div class="fracture">
+          <svg viewBox="0 0 300 230">
+            <path class="crack" d="M152 20 L168 56 L146 88 L178 122 L150 158 L184 214"/>
+            <path class="crack" d="M146 88 L98 66 L50 52"/>
+            <path class="crack" d="M178 122 L224 108 L270 122"/>
+            <path class="crack" d="M150 158 L102 184 L58 216"/>
+          </svg>
+          <i class="dust d1"></i><i class="dust d2"></i><i class="dust d3"></i><i class="dust d4"></i><i class="dust d5"></i>
+        </div>
+        <article class="card">
+          <div class="period"><span class="lead">Jun 2007–Dec 2012 · Foundation layer</span><span class="depth">Depth 06</span></div>
+          <h2>Early Career Geoscience</h2>
+          <div class="role">Exploration Geoscientist · consulting / Mexico / Colombia / Venezuela</div>
+          <p>Built a technical foundation across 2D/3D seismic interpretation, velocity modeling, acquisition QC, prospect generation and drilling proposal support.</p>
+          <div class="evidence"><strong>Proof:</strong> Designed and managed a 60 km² 3D seismic acquisition survey, supported PEMEX deepwater campaigns including Trion-1 and Supremus-1, and performed field QC across seismic acquisition and supporting geophysical datasets.</div>
+          <div class="matrix">
+            <div class="box"><strong>Basins</strong><span>Venezuela · Colombia · Mexico · PEMEX deepwater support</span></div>
+            <div class="box"><strong>Delivered</strong><span>Prospect mapping, time-depth conversion, well ties, synthetics, VSP support and acquisition QC</span></div>
+          </div>
+          <div class="chips"><span class="chip">2D/3D seismic</span><span class="chip">Velocity models</span><span class="chip">60 km² 3D survey</span><span class="chip">PEMEX deepwater</span></div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <section class="end">
+    <div>
+      <h2>Every layer has a signal. Mine is turning complexity into action.</h2>
+      <p>Across 15+ years in upstream geoscience, digital product delivery and AI-enabled analytics, the pattern is clear: frame the decision, connect the data, build the workflow and help asset teams move with confidence.</p>
+      <div class="inline-tags" style="justify-content:center;margin-top:18px">
+        <span>EmpathyAI founder</span><span>Semi-pro pickleball</span><span>Endurance sports</span><span>Applied AI &amp; energy innovation</span>
+      </div>
+      <div class="end-actions">
+        <a href="#layer-1">Back to current role</a>
+        <a href="Rafael%202026%20CV%20Dark%20Mode.pdf" download target="_blank" rel="noopener noreferrer">Download PDF CV</a>
+        <a href="https://www.linkedin.com/in/onepalo/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="#recruiterView" id="recruiterViewLink">Recruiter view</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const body = document.body;
+  const cinematicBtn = document.getElementById('cinematicBtn');
+  const recruiterBtn = document.getElementById('recruiterBtn');
+  const recruiterView = document.getElementById('recruiterView');
+  const cv = document.getElementById('cv');
+  const depthBadge = document.getElementById('depthBadge');
+  const drill = document.querySelector('.drill');
+  const fixedRig = document.querySelector('.fixed-rig');
+  const yearNav = document.querySelector('.year-nav');
+  const mobileNav = document.querySelector('.mobile-nav');
+  const layers = Array.from(document.querySelectorAll('.layer'));
+  const navTriggers = Array.from(document.querySelectorAll('.nav-trigger'));
+  const yearBtns = Array.from(document.querySelectorAll('.year-btn'));
+  const mobileBtns = Array.from(document.querySelectorAll('.mobile-nav .nav-trigger'));
+
+  let activeIndex = 0;
+  let lastCinematicTarget = 'layer-1';
+
+  function setMode(mode){
+    const recruiter = mode === 'recruiter';
+    body.classList.toggle('recruiter-mode', recruiter);
+
+    cinematicBtn.classList.toggle('active', !recruiter);
+    recruiterBtn.classList.toggle('active', recruiter);
+    cinematicBtn.setAttribute('aria-pressed', String(!recruiter));
+    recruiterBtn.setAttribute('aria-pressed', String(recruiter));
+
+    requestAnimationFrame(() => {
+      if(recruiter){
+        recruiterView.scrollIntoView({behavior:'smooth', block:'start'});
+      } else {
+        const target = document.getElementById(lastCinematicTarget) || cv;
+        target.scrollIntoView({behavior:'smooth', block:'center'});
+        updateScroll();
+      }
+    });
+  }
+
+  cinematicBtn.addEventListener('click', function(){ setMode('cinematic'); });
+  recruiterBtn.addEventListener('click', function(){ setMode('recruiter'); });
+  document.getElementById('recruiterViewLink')?.addEventListener('click', function(event){
+    event.preventDefault();
+    setMode('recruiter');
+  });
+
+  function syncNav(index){
+    yearBtns.forEach((b,i)=>b.classList.toggle('active', i===index));
+    mobileBtns.forEach((b,i)=>b.classList.toggle('active', i===index));
+  }
+
+  function activate(index){
+    activeIndex = index;
+    layers.forEach((layer,i)=>layer.classList.toggle('active', i===index));
+    syncNav(index);
+    if(layers[index]){
+      depthBadge.textContent = layers[index].dataset.label || 'Career depth';
+      lastCinematicTarget = layers[index].id;
+    }
+  }
+
+  function updateScroll(){
+    if(body.classList.contains('recruiter-mode')){
+      body.classList.remove('in-cv');
+      body.classList.remove('past-cv');
+      return;
+    }
+
+    const rect = cv.getBoundingClientRect();
+    const lastLayerRect = layers[layers.length - 1]?.getBoundingClientRect();
+    const pastLastLayer = lastLayerRect ? lastLayerRect.bottom < window.innerHeight * 0.18 : false;
+    const layerInView = layers.some((layer) => {
+      const layerRect = layer.getBoundingClientRect();
+      return layerRect.top < window.innerHeight * 0.92 && layerRect.bottom > window.innerHeight * 0.08;
+    });
+    body.classList.toggle('in-cv', layerInView || (rect.top < window.innerHeight * 0.72 && rect.bottom > 0));
+    body.classList.toggle('past-cv', pastLastLayer);
+    const max = rect.height - window.innerHeight;
+    const progress = Math.min(1, Math.max(0, -rect.top / Math.max(max, 1)));
+    document.documentElement.style.setProperty('--scroll', progress.toFixed(4));
+
+    const desiredDrillY = window.innerHeight * (0.16 + progress * 0.74);
+    const drillHeight = drill ? drill.getBoundingClientRect().height : 112;
+    const visualTipOffset = drillHeight * 0.95;
+    const sandstoneStop = lastLayerRect ? lastLayerRect.bottom - 24 - visualTipOffset : desiredDrillY;
+    const minDrillY = window.innerHeight * 0.12;
+    const drillY = Math.max(minDrillY, Math.min(desiredDrillY, sandstoneStop));
+    document.documentElement.style.setProperty('--drill-y', `${drillY.toFixed(1)}px`);
+
+    const clippingFinalLayer = lastLayerRect && lastLayerRect.top < window.innerHeight && lastLayerRect.bottom < window.innerHeight;
+    if(clippingFinalLayer){
+      const sandstoneBoundary = Math.max(0, Math.min(window.innerHeight, lastLayerRect.bottom));
+      const rigRect = fixedRig?.getBoundingClientRect();
+      const yearNavRect = yearNav?.getBoundingClientRect();
+      const mobileNavRect = mobileNav?.getBoundingClientRect();
+      const rigInset = rigRect ? Math.max(0, rigRect.bottom - sandstoneBoundary) : 0;
+      const yearInset = yearNavRect ? Math.max(0, yearNavRect.bottom - sandstoneBoundary) : 0;
+      const mobileInset = mobileNavRect ? Math.max(0, mobileNavRect.bottom - sandstoneBoundary) : 0;
+      document.documentElement.style.setProperty('--rig-clip-inset-bottom', `${rigInset.toFixed(1)}px`);
+      document.documentElement.style.setProperty('--year-clip-inset-bottom', `${yearInset.toFixed(1)}px`);
+      document.documentElement.style.setProperty('--mobile-nav-clip-inset-bottom', `${mobileInset.toFixed(1)}px`);
+    } else {
+      document.documentElement.style.setProperty('--rig-clip-inset-bottom', '0px');
+      document.documentElement.style.setProperty('--year-clip-inset-bottom', '0px');
+      document.documentElement.style.setProperty('--mobile-nav-clip-inset-bottom', '0px');
+    }
+
+    let best = Infinity;
+    let nextIndex = 0;
+
+    layers.forEach((layer,i)=>{
+      const r = layer.getBoundingClientRect();
+      const center = r.top + r.height / 2;
+      const distance = Math.abs(center - window.innerHeight * 0.52);
+      if(distance < best){
+        best = distance;
+        nextIndex = i;
+      }
+    });
+
+    if(nextIndex !== activeIndex) activate(nextIndex);
+  }
+
+  function goToLayer(id){
+    const target = document.getElementById(id);
+    if(!target) return;
+    body.classList.remove('recruiter-mode');
+    cinematicBtn.classList.add('active');
+    recruiterBtn.classList.remove('active');
+    cinematicBtn.setAttribute('aria-pressed', 'true');
+    recruiterBtn.setAttribute('aria-pressed', 'false');
+    lastCinematicTarget = id;
+    const mobileLayout = window.matchMedia('(max-width: 600px)').matches;
+    const scrollTarget = mobileLayout ? target.querySelector('.card') || target : target;
+    scrollTarget.scrollIntoView({behavior:'smooth', block: mobileLayout ? 'start' : 'center'});
+    setTimeout(updateScroll, 260);
+    setTimeout(updateScroll, 900);
+  }
+
+  document.addEventListener('click', function(event){
+    const trigger = event.target.closest('.nav-trigger');
+    if(!trigger) return;
+    event.preventDefault();
+    goToLayer(trigger.dataset.target);
+  });
+
+  window.addEventListener('scroll', updateScroll, {passive:true});
+  window.addEventListener('resize', updateScroll);
+  updateScroll();
+})();
+</script>
+</body>
+</html>
