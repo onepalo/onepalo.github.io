@@ -1,0 +1,53 @@
+{
+  "output": "docs/reference-assets/spider-plot.svg",
+  "viewBox": {
+    "width": 254.62,
+    "height": 189.12
+  },
+  "plot": {
+    "centerX": 127.31,
+    "centerY": 91.5,
+    "radius": 58,
+    "labelRadius": 68,
+    "levels": 5
+  },
+  "scale": {
+    "max": 5
+  },
+  "style": {
+    "gridStroke": "rgba(47, 43, 35, .28)",
+    "valueStroke": "#8a7a08",
+    "valueFill": "rgba(138, 122, 8, .12)",
+    "dotFill": "#8a7a08",
+    "labelFill": "#706756",
+    "labelFontFamily": "'Trebuchet MS', sans-serif",
+    "labelFontSize": 7.4,
+    "labelFontWeight": 600
+  },
+  "axes": [
+    {
+      "label": ["Subsurface", "Expertise"],
+      "value": 4.6
+    },
+    {
+      "label": ["Analytics", "& AI"],
+      "value": 4.3
+    },
+    {
+      "label": ["Automation", "Workflows"],
+      "value": 4.1
+    },
+    {
+      "label": ["Leadership"],
+      "value": 4.6
+    },
+    {
+      "label": ["Product", "Delivery"],
+      "value": 3.8
+    },
+    {
+      "label": ["Risk &", "Business Impact"],
+      "value": 3.9
+    }
+  ]
+}

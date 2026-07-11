@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Talent Card - Rafael Navarro</title>
+  <style>
+    /* === RESET === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* === TOKENS === */
+    :root {
+      --teal:    #1A7A9E;
+      --gray-bg: #E4EEF1;
+      --border:  #C8D4D8;
+      --text:    #333333;
+      --muted:   #555555;
+      --red:     #CC0000;
+      --font:    Arial, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      font-size: 10.5px;
+      line-height: 1.45;
+      color: var(--text);
+      background: #B0B0B0;
+    }
+
+    /* === PAGE SHELL === */
+    .page {
+      width: 1056px;      /* 792pt x 96/72 - US Letter Landscape */
+      min-height: 816px;  /* 612pt x 96/72 */
+      background: #fff;
+      margin: 24px auto;
+      padding: 12px 18px 10px;
+      border: 1px solid #AAA;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+    }
+
+    /* === TIMESTAMP === */
+    .stamp {
+      text-align: right;
+      font-size: 9px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    /* ================================================================
+       HEADER  (photo+info LEFT  |  Talent Summary RIGHT)
+    ================================================================ */
+    .hdr {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 16px;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* --- profile block --- */
+    .profile-top {
+      display: flex;
+      gap: 11px;
+      margin-bottom: 7px;
+    }
+    .photo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid #ccc;
+      background: #f0f0f0;
+    }
+    .photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .p-name  { font-size: 20px; font-weight: bold; color: var(--teal); line-height: 1.2; }
+    .p-role  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .p-id    { font-size: 10.5px; color: var(--muted); margin-top: 1px; }
+    .p-org   { font-size: 10px; color: var(--muted); margin-top: 5px; line-height: 1.55; }
+
+    .hdr-meta {
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      row-gap: 0;
+      font-size: 10.5px;
+      margin-top: 3px;
+    }
+    .hm-lbl { color: var(--muted); padding: 1px 0; }
+    .hm-val { color: var(--text);  padding: 1px 0; }
+    .hm-val.lnk { color: var(--teal); }
+
+    /* --- talent summary (header right) --- */
+    .ts-wrap {
+      padding-left: 14px;
+    }
+    .ts-h1 { font-size: 13px; font-weight: bold; color: var(--teal); margin-bottom: 5px; }
+    .ts-row { font-size: 10.5px; margin-bottom: 2px; }
+    .ts-bold { font-weight: bold; }
+    .ts-strong { color: var(--teal); }
+
+    .sp-title {
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--teal);
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    .sp-row { font-size: 10.5px; margin-bottom: 2px; }
+    .sp-lbl { font-weight: bold; }
+
+    /* ================================================================
+       BODY  (left col 1fr  |  right col 1fr)
+    ================================================================ */
+    .body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 12px;
+    }
+
+    /* --- generic section --- */
+    .sect { margin-bottom: 1px; }
+    .si   { padding: 6px 8px; }
+    .si.gb { background: var(--gray-bg); }
+
+    .s-title { font-size: 11.5px; font-weight: bold; color: var(--teal); margin-bottom: 3px; }
+    .s-body  { font-size: 10.5px; line-height: 1.5; }
+
+    .row { padding: 1px 0; }
+    .bold { font-weight: bold; }
+    .teal { color: var(--teal); }
+    .red  { color: var(--red);  }
+
+    /* info table (Position, Mobility) */
+    .itbl { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+    .itbl td { padding: 2px 2px; vertical-align: top; }
+    .itbl .lbl { font-weight: bold; width: 52%; }
+
+    /* talent statement */
+    .stmt p + p { margin-top: 6px; }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    .footer {
+      margin-top: 10px;
+      padding-top: 5px;
+      border-top: 1px solid var(--border);
+      font-size: 8.5px;
+      color: var(--teal);
+      font-style: italic;
+      line-height: 1.55;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 10px 14px; box-shadow: none; border: none; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="stamp">10 Jul 2026 23:27</div>
+
+  <!-- HEADER -->
+  <div class="hdr">
+
+    <!-- Profile left -->
+    <div>
+      <div class="profile-top">
+        <div class="photo">
+          <img src="../assets/img/rafael-navarro-portrait.png" alt="Rafael Navarro"/>
+        </div>
+        <div>
+          <div class="p-name">Rafael Navarro</div>
+          <div class="p-role">Senior Geoscience Analyst</div>
+          <div class="p-id">198079</div>
+          <div class="p-org">
+            Organization:&ensp;UPT/V/CS Subsurface Analytics (Yann Freudenreich) (75011593)<br/>
+            Manager:&ensp;Yann Freudenreich<br/>
+            Position:&ensp;75019212 Senior Geoscience Analyst
+          </div>
+        </div>
+      </div>
+      <div class="hdr-meta">
+        <span class="hm-lbl">Location:</span>          <span class="hm-val lnk">Houston - EP Center Americas</span>
+        <span class="hm-lbl">Location hierarchy:</span><span class="hm-val">CTY_US_HOUS Houston</span>
+        <span class="hm-lbl">Time in Position:</span>  <span class="hm-val">1 year(s), 4 month(s), 9 day(s)</span>
+        <span class="hm-lbl">Length of Service:</span> <span class="hm-val">14 year(s), 3 month(s), 0 day(s)</span>
+      </div>
+    </div>
+
+    <!-- Talent Summary right -->
+    <div class="ts-wrap">
+      <div class="ts-h1">Talent Summary</div>
+      <div class="ts-row"><span class="ts-bold">Achievable Level:</span></div>
+      <div class="ts-row" style="margin-top:5px;"><span class="ts-bold">Last 3 years of Performance Ratings</span></div>
+      <div class="ts-row">
+        <span class="ts-strong">Strong</span>,&nbsp;
+        <span class="ts-strong">Strong</span>,&nbsp;
+        <span class="ts-strong">Strong</span>
+      </div>
+      <div class="sp-title">Skill Pools</div>
+      <div class="sp-row"><span class="sp-lbl">Primary Skill Pool&nbsp;:</span>Geology</div>
+      <div class="sp-row"><span class="sp-lbl">Secondary Skill Pool&nbsp;:</span>Exploration Evaluation - CoP, Seismic Interpretation - CoP</div>
+    </div>
+
+  </div><!-- /hdr -->
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- Job Profile History -->
+      <div class="sect">
+        <div class="si gb">
+          <div class="s-title">Job Profile History</div>
+          <div class="s-body">
+            <div class="row">16/03/2025 | 52765869 - Geoscience Geophysics JG3</div>
+            <div class="row">01/03/2025 - 15/03/2025 | 52766787 - Petroleum Eng Reservoir Engineering JG3</div>
+            <div class="row">01/03/2024 - 28/02/2025 | 52765774 - Geology Exploration Geoscience JG3</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Work Experience -->
+      <div class="sect">
+        <div class="si">
+          <div class="s-title">Work Experience</div>
+          <div class="s-body">
+            <div class="row"><span class="bold">Lead the digitalization of a business</span> | One assignment as a <span class="teal">Digital Product Owner or Digital Product</span></div>
+            <div class="row"><span class="bold">Lead a team</span> | Leader of Teams: Formally managed a team with at least 6 individual contributors</div>
+            <div class="row"><span class="bold">Multi-disciplinary management</span> | <span class="teal">Multiple Assignments</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job History -->
+      <div class="sect">
+        <div class="si gb">
+          <div class="s-title">Job History</div>
+          <div class="s-body">
+            <div class="row">25/08/2020 - Present | Senior X-Digi Geoscientist | Shell plc</div>
+            <div class="row">15/08/2018 - 24/08/2020 | Senior Exploration Geoscientist (Technical Lead) | Shell plc</div>
+            <div class="row">05/07/2014 - 14/10/2018 | Senior Exploration Geoscientist | Shell plc</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="sect">
+        <div class="si">
+          <div class="s-title">Education</div>
+          <div class="s-body">Universidad Simon Bolivar | Bachelors | Engineering (Geophysical)</div>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="sect">
+        <div class="si gb">
+          <div class="s-title">Languages</div>
+          <div class="s-body">English, Spanish</div>
+        </div>
+      </div>
+
+      <!-- Talent Statement -->
+      <div class="sect">
+        <div class="si">
+          <div class="s-title">Talent Statement</div>
+          <div class="s-body stmt">
+            <p>With a foundation as a <strong>geoscientist</strong> and extensive experience in <span class="teal">subsurface exploration around the world</span>, I have a deep understanding of the <span class="teal">technical challenges and opportunities within the field</span>. This expertise, combined with my advanced digital skills in <strong>AI, data analytics</strong>, and <strong>application development</strong>, positions me uniquely to bridge the gap between geoscience and digital transformation. As a Product Owner, I lead teams in creating innovative, practical solutions that not only push the boundaries of what's possible but are also grounded in the realities of subsurface exploration.</p>
+            <p>What sets me apart is my ability to leverage both domains - bringing technical insight from the field and translating it into <span class="teal">digital innovations</span> that drive tangible results. I believe in collaboration, working closely with diverse teams to ensure the solutions we develop are impactful, scalable, and aligned with business needs, while always being mindful of fostering trust and a positive working environment.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left col -->
+
+    <!-- RIGHT COLUMN -->
+    <div>
+
+      <!-- Position -->
+      <div class="sect">
+        <div class="si gb">
+          <div class="s-title">Position</div>
+          <div class="s-body">
+            <table class="itbl">
+              <tr><td class="lbl">Base Country:</td><td>United States of America</td></tr>
+              <tr><td class="lbl">Compensation Grade:</td><td>NC 03</td></tr>
+              <tr><td class="lbl">Employee Type:</td><td>Regular</td></tr>
+              <tr><td class="lbl">Management Level:</td><td>03</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobility -->
+      <div class="sect">
+        <div class="si">
+          <div class="s-title">Mobility</div>
+          <div class="s-body">
+            <table class="itbl">
+              <tr><td class="lbl">Travel:</td><td>Maybe, 25%</td></tr>
+              <tr><td class="lbl">Relocation Short Term:</td><td>No</td></tr>
+              <tr><td class="lbl">Relocation Long Term:</td><td>Yes</td></tr>
+              <tr><td></td><td style="padding-top:0;">North America, Europe, South America, Asia</td></tr>
+              <tr><td class="lbl">Comments:</td><td>Only traveling with LTIA</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Career Interests -->
+      <div class="sect">
+        <div class="si gb">
+          <div class="s-title">Career Interests</div>
+          <div class="s-body" style="font-size:10px;line-height:1.55;">
+            <p><strong>Job Interests:</strong> 52767405 - RD Math Comp Data Science Mgmt JG2, 52765829 - Geology Exploration Geoscience Mgmt JG2, 50071194 - Production Technology JG2, 52767357 - Production Technology Lead JG2</p>
+            <p style="margin-top:4px;"><strong>Career Interests:</strong> I am passionate about advancing the <span class="teal">digital transformation of subsurface exploration</span> through the integration of <strong>subsurface analytics and artificial intelligence (AI)</strong>. My goal is to harness the power of data-driven technologies to unlock deeper insights, enhance decision-making, and drive innovation in hydrocarbon exploration. Whether through leading <strong>subsurface analytics initiatives</strong> or developing <strong>AI-powered tools</strong>, I am committed to creating digital solutions that improve exploration efficiency and accuracy. I see my future in a role where I can continue leveraging cutting-edge digital technologies to help geoscientists and engineers make smarter, faster decisions in subsurface environments.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Development Items -->
+      <div class="sect">
+        <div class="si">
+          <div class="s-title">Development Items</div>
+          <div class="s-body">
+            Advance Data Visualization &amp; Analytics (In Progress) | Managing people and teams (In Progress) | Learning latest AI (Plan to Stay Informed and Build a Network in AI) (In Progress)
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /right col -->
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    This TalentCard document may include data containing confidential personal data, which should only be processed and used for the purpose of this communication.
+    While in your possession, it should be stored securely, not shared with unauthorized persons and deleted or shredded after its legitimate use.
+    If any unwanted or unauthorized copies of this document are found please take necessary action to shred or delete the document.
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
