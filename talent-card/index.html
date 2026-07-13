@@ -157,13 +157,101 @@
       line-height: 1.55;
     }
 
+    /* ================================================================
+       TOOLBAR (screen only)
+    ================================================================ */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1056px;
+      margin: 0 auto 10px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px 6px 11px;
+      color: var(--teal);
+      font-size: 11px;
+      font-weight: bold;
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .back-link::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 6px;
+      height: 6px;
+      border-bottom: 2px solid currentColor;
+      border-left: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .back-link:hover,
+    .back-link:focus-visible {
+      background: var(--gray-bg);
+      border-color: var(--teal);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+    }
+
+    .pdf-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      color: var(--teal);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .pdf-download:hover,
+    .pdf-download:focus-visible {
+      background: var(--gray-bg);
+      border-color: var(--teal);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+    }
+
+    .action-icon {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     @media print {
       body { background: #fff; }
       .page { margin: 0; padding: 10px 14px; box-shadow: none; border: none; width: 100%; }
+      .toolbar { display: none; }
     }
   </style>
 </head>
 <body>
+<div class="toolbar">
+  <a class="back-link" href="../index.html">Back to CV</a>
+  <button class="pdf-download" type="button" aria-label="Export Talent Card as PDF">
+    <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3v11" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M5 19h14" />
+    </svg>
+  </button>
+</div>
 <div class="page">
 
   <div class="stamp">10 Jul 2026 23:27</div>
@@ -351,5 +439,6 @@
   </div>
 
 </div><!-- /page -->
+<script src="../assets/js/document-actions.js"></script>
 </body>
 </html>
