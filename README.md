@@ -44,6 +44,18 @@ The main CV page is structured top to bottom as:
 - Copy the contents of this folder to the root of `onepalo/onepalo.github.io`.
 - Keep `.nojekyll` in the published root so GitHub Pages serves the site as plain static files.
 - Keep public URLs lowercase and hyphenated.
+- Live site: `https://onepalo.github.io/` (a GitHub user page — the repo name matches `<username>.github.io`, so it's served at the domain root, not a subpath).
+- `site/` here is the source of truth; the published repo may lag behind and should simply be overwritten on each publish, not merged/reconciled.
+- A local clone of `onepalo/onepalo.github.io` is kept as a sibling folder next to this workspace, at `..\onepalo.github.io` (i.e. `projects\onepalo.github.io`, alongside `projects\cv`) — reuse it instead of re-cloning each time.
+- To publish an update, from that clone's root:
+  1. Mirror this folder's contents into it, replacing everything except `.git`:
+     ```powershell
+     Get-ChildItem -Force | Where-Object { $_.Name -ne '.git' } | Remove-Item -Recurse -Force
+     Copy-Item -Path "..\cv\site\*" -Destination . -Recurse -Force
+     ```
+  2. Review the changes: `git status` and `git diff --cached --stat` (after `git add -A`).
+  3. Commit and push: `git commit -m "..."` then `git push origin main`.
+- Git pushes authenticate via the system's Git Credential Manager (cached credentials); no GitHub CLI (`gh`) is installed/needed.
 
 ## Maintenance Notes
 

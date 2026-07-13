@@ -236,6 +236,14 @@
   border-top: 0;
 }
 
+/* When the first card is the deep-linked target, restore the normal top
+   padding so the highlight has the same breathing room as every other
+   role-card (otherwise the meta line sits flush against the highlight's
+   top edge, unlike targeted cards further down the list). */
+.editorial-detail .role-card:first-child:target {
+  padding-top: 10px;
+}
+
 .editorial-detail .role-card-meta {
   display: flex;
   align-items: center;
