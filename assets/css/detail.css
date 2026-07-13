@@ -236,10 +236,10 @@
   border-top: 0;
 }
 
-/* When the first card is the deep-linked target, restore the normal top
-   padding so the highlight has the same breathing room as every other
-   role-card (otherwise the meta line sits flush against the highlight's
-   top edge, unlike targeted cards further down the list). */
+/* The hero already has its own bottom divider, so the first card must not
+   draw a second one right underneath it — even when it's the deep-linked
+   target. Just restore the normal top padding so the highlight has proper
+   breathing room from that single hero divider. */
 .editorial-detail .role-card:first-child:target {
   padding-top: 10px;
 }
