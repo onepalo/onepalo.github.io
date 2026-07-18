@@ -52,6 +52,8 @@ The main editable narrative lives in `src/content/content.ts`. Update profession
 
 This project is configured to deploy to the root of `https://onepalo.github.io/` through GitHub Actions. The workflow builds the site from `main` and publishes only `dist/`.
 
+See [docs/PUBLISHING.md](docs/PUBLISHING.md) for the complete replacement, verification, and rollback procedure.
+
 To replace the existing contents of `onepalo/onepalo.github.io` with this project:
 
 ```bash
