@@ -1,0 +1,22 @@
+# Dependencies and generated output
+node_modules/
+dist/
+
+# Local environment and editor files
+.env
+.env.*
+!.env.example
+.vscode/
+*.log
+
+# Local source material and personal data not required by the application
+PersonalData.txt
+cover-letter-template.md
+CoverLetterLeadAIEmbedment.md
+rafael-2026-cv-structured.md
+guide-me.html
+src/content/AIEmbeddedroles.tx
+src/content/ExecutionPlan.tx
+src/content/ExperienceEvidence.md
+src/content/LeadershipPrinciples.md
+src/content/sourceNotes.md

@@ -1,0 +1,21 @@
+:root {
+  color: #1e252b;
+  background: #f7f7f2;
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --canvas: #f7f7f2;
+  --warm-white: #fafaf6;
+  --stone: #eceff1;
+  --ink: #1e252b;
+  --muted: #65727e;
+  --blue: #2e6f95;
+  --teal: #42a5a5;
+  --gold: #d6a94a;
+  --coral: #e07a5f;
+  --burnt-red: #c84b31;
+  --line: rgba(30, 37, 43, 0.13);
+  --shadow: 0 18px 45px rgba(36, 61, 72, 0.11);
+  --font-sans: 'Trebuchet MS', 'Aptos', sans-serif;
+  --display: Georgia, 'Times New Roman', serif;
+}
