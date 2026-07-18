@@ -14,7 +14,7 @@ interface ExperienceStageProps {
 const stageMeta = {
   cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'A case for the contribution I can make as Lead AI Embedment.' },
   journey: { eyebrow: 'Career overview', title: 'Resume / CV', intro: '' },
-  leadership: { eyebrow: '', title: 'How I will lead the team', intro: 'Leading the AI Embedment Team' },
+  leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead the team', intro: '' },
   impact: { eyebrow: 'Evidence, not claims', title: 'Proof of Leadership', intro: '' },
 } as const
 
@@ -24,18 +24,11 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
   return (
     <section className={`experience-stage experience-${experience}`} aria-labelledby={`${experience}-title`}>
       <header className="stage-intro">
-        {experience === 'leadership' ? (
-          <>
-            <h1 id={`${experience}-title`} tabIndex={-1} ref={headingRef}>{meta.title}</h1>
-            <p className="leadership-stage-subtitle">{meta.intro}</p>
-          </>
-        ) : (
-          <>
-            <p className="eyebrow">{meta.eyebrow}</p>
-            <h1 id={`${experience}-title`} tabIndex={-1} ref={headingRef}>{meta.title}</h1>
-            {meta.intro && <p>{meta.intro}</p>}
-          </>
-        )}
+        <>
+          <p className="eyebrow">{meta.eyebrow}</p>
+          <h1 id={`${experience}-title`} tabIndex={-1} ref={headingRef}>{meta.title}</h1>
+          {meta.intro && <p>{meta.intro}</p>}
+        </>
       </header>
       {experience === 'cover' && <CoverLetter />}
       {experience === 'journey' && <Journey />}
@@ -75,7 +68,11 @@ function Journey() {
             onToggle={(event) => setOpenRoleIndex(event.currentTarget.open ? index : -1)}
           >
             <summary className="journey-card-summary">
-              <span className="journey-marker">{String(index + 1).padStart(2, '0')}</span>
+              <span className={`journey-marker${item.countryCodes.length > 1 ? ' journey-marker-mixed' : ''}`} aria-hidden="true">
+                {item.countryCodes.map((countryCode) => (
+                  <img key={countryCode} src={`https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/${countryCode}.svg`} alt="" />
+                ))}
+              </span>
               <div className="journey-card-heading">
                   <div className="journey-heading-meta">
                     <h2>{item.title}</h2>

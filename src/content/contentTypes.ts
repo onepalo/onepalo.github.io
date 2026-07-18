@@ -20,6 +20,7 @@ export interface World {
 export interface JourneyItem {
   title: string
   discipline: 'Digital' | 'Geo'
+  countryCodes: Array<'us' | 'nl' | 'ng' | 'qa' | 've' | 'co' | 'mx'>
   location: string
   period: string
   organization: string
