@@ -8,11 +8,11 @@ import type { ExperienceId } from '../content/contentTypes'
 import { experienceFromHash, hashForExperience } from '../utils/hashNavigation'
 
 const titles: Record<ExperienceId, string> = {
-  home: 'Exploration Universe',
-  cover: 'Why This Role, Why Now | Exploration Universe',
-  leadership: 'How I Will Lead the Team | Exploration Universe',
-  journey: 'Resume / CV | Exploration Universe',
-  impact: 'Proof of Leadership | Exploration Universe',
+  home: "Rafael's Exploration Journal",
+  cover: "Why This Role, Why Now | Rafael's Exploration Journal",
+  leadership: "How I Will Lead the Team | Rafael's Exploration Journal",
+  journey: "Resume / CV | Rafael's Exploration Journal",
+  impact: "Proof of Leadership | Rafael's Exploration Journal",
 }
 
 export default function App() {
