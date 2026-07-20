@@ -1,10 +1,17 @@
 import { useState, type CSSProperties, type KeyboardEvent, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, MapPin, MessageCircle, Network, ShieldCheck, Sprout } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, Sprout } from 'lucide-react'
 import { integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals, thinkingNodes } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
 import leaderIllustration from '../../assets/candidate/Leader.png'
+import usFlag from 'flag-icons/flags/4x3/us.svg'
+import nlFlag from 'flag-icons/flags/4x3/nl.svg'
+import ngFlag from 'flag-icons/flags/4x3/ng.svg'
+import qaFlag from 'flag-icons/flags/4x3/qa.svg'
+import veFlag from 'flag-icons/flags/4x3/ve.svg'
+import coFlag from 'flag-icons/flags/4x3/co.svg'
+import mxFlag from 'flag-icons/flags/4x3/mx.svg'
 
 interface ExperienceStageProps {
   experience: Exclude<ExperienceId, 'home'>
@@ -37,6 +44,8 @@ const leadershipSignalDetails = [
   'More decisions, facilitation, and mentoring happen through the team without waiting for a manager to intervene.',
   'Delivery remains ambitious while people retain the energy and enjoyment to build together over time.',
 ] as const
+
+const flagSources = { us: usFlag, nl: nlFlag, ng: ngFlag, qa: qaFlag, ve: veFlag, co: coFlag, mx: mxFlag } as const
 
 function handleTabListNavigation(event: KeyboardEvent<HTMLButtonElement>) {
   if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
@@ -89,7 +98,7 @@ function Journey() {
       <div className="journey-overview">
         <section className="journey-statement" aria-labelledby="career-statement-title">
           <span>Career statement</span>
-          <p id="career-statement-title">{journeyStatement}</p>
+          <p id="career-statement-title">{journeyStatement.context} <span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
         </section>
         <CvProfile />
       </div>
@@ -115,7 +124,7 @@ function Journey() {
             <summary className="journey-card-summary">
               <span className={`journey-marker${item.countryCodes.length > 1 ? ' journey-marker-mixed' : ''}`} aria-hidden="true">
                 {item.countryCodes.map((countryCode) => (
-                  <img key={countryCode} src={`https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/${countryCode}.svg`} alt="" />
+                  <img key={countryCode} src={flagSources[countryCode]} alt="" />
                 ))}
               </span>
               <div className="journey-card-heading">
@@ -137,7 +146,7 @@ function Journey() {
                   <p>{item.learningCore}</p>
                   <ul className="chips">{item.capabilities.map((capability, capabilityIndex) => <li key={`capability-${capabilityIndex}`}>{capability}</li>)}</ul>
                 </section>
-                {item.reference && <p className="journey-reference"><span>Reference:</span><strong>{item.reference.name}</strong><em>{item.reference.role}</em></p>}
+                {item.reference && <p className="journey-reference"><span className="journey-reference-contact"><Mail size={15} strokeWidth={2} aria-hidden="true" /><span>Contact mail</span></span><strong>{item.reference.name}</strong><em>{item.reference.role}</em></p>}
             </div>
           </details>
         ))}
@@ -148,11 +157,7 @@ function Journey() {
 
 function CvProfile() {
   return (
-    <section className="journey-cv-profile" aria-labelledby="cv-profile-title">
-      <header>
-        <p className="journey-proof-label">CV profile</p>
-        <h2 id="cv-profile-title">Profile at a glance</h2>
-      </header>
+    <section className="journey-cv-profile" aria-label="CV profile">
       <div className="cv-profile-columns">
         <div className="cv-profile-column">
           <div className="cv-profile-line"><h3>Digital Core</h3><p>{journeyCvProfile.digitalCore}</p></div>
@@ -227,7 +232,14 @@ function Leadership() {
 
   return (
     <div className="leadership-view">
-      <section className="leadership-intent" aria-label="Leadership in action">
+      <section className="leadership-intent" aria-labelledby="leadership-commitment-title">
+        <header className="leadership-chapter-heading">
+          <p>01</p>
+          <div>
+            <p className="eyebrow">Leadership commitment</p>
+            <h2 id="leadership-commitment-title">The standard I will set for the team.</h2>
+          </div>
+        </header>
         <div className="leadership-intent-copy">
           <p><span className="cover-letter-emphasis">I want to build a team that learns quickly without becoming frantic.</span> New models invite teams to chase releases, trust persuasive answers, or confuse activity with progress. My response is to keep people, trusted evidence, and AI in one feedback loop, so domain expertise shapes decisions and the work earns adoption.</p>
           <div className="leadership-intent-commitments">
@@ -242,7 +254,14 @@ function Leadership() {
         </figure>
       </section>
 
-      <section className="leadership-focus" aria-label="Leadership in action areas">
+      <section className="leadership-focus" aria-labelledby="leadership-operating-model-title">
+        <header className="leadership-chapter-heading leadership-operating-model-heading">
+          <p>02</p>
+          <div>
+            <p className="eyebrow">How the team operates</p>
+            <h2 id="leadership-operating-model-title">The practices that make the commitment real.</h2>
+          </div>
+        </header>
         <div className="leadership-focus-selector" role="tablist" aria-label="Leadership areas" style={{ '--active-step': activeLeadershipStep } as CSSProperties}>
           <button type="button" role="tab" id="leadership-principles-tab" aria-selected={activeLeadershipSection === 'principles'} aria-controls="leadership-focus-panel" onClick={() => setActiveLeadershipSection('principles')} onKeyDown={handleTabListNavigation}><HeartHandshake className="leadership-focus-icon" size={18} aria-hidden="true" /><span className="leadership-focus-label">Principles</span><span className="leadership-focus-description">How I create trust</span></button>
           <button type="button" role="tab" id="leadership-rhythm-tab" aria-selected={activeLeadershipSection === 'rhythm'} aria-controls="leadership-focus-panel" onClick={() => setActiveLeadershipSection('rhythm')} onKeyDown={handleTabListNavigation}><Network className="leadership-focus-icon" size={18} aria-hidden="true" /><span className="leadership-focus-label">Rhythm</span><span className="leadership-focus-description">How we stay aligned</span></button>

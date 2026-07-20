@@ -15,12 +15,12 @@ Vite prints the local URL in the terminal, normally `http://localhost:5173`.
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start the local development server. |
-| `npm run build` | Type-check and create the production bundle in `dist/`. |
-| `npm run lint` | Run ESLint across the project. |
-| `npm run preview` | Serve the production bundle locally. |
+| Command             | Purpose                                                  |
+| ------------------- | -------------------------------------------------------- |
+| `npm run dev`     | Start the local development server.                      |
+| `npm run build`   | Type-check and create the production bundle in`dist/`. |
+| `npm run lint`    | Run ESLint across the project.                           |
+| `npm run preview` | Serve the production bundle locally.                     |
 
 ## Project structure
 
@@ -35,6 +35,12 @@ src/
 ```
 
 The main editable narrative lives in `src/content/content.ts`. Update professional facts, career entries, leadership practices, connection-map nodes, and impact stories there. Keep component and CSS changes for structural or visual work.
+
+## Responsive Layout
+
+Editorial sections use a shared $900px$ breakpoint: when a side label and reading content no longer have comfortable width, the label moves above the content and the section becomes a single reading column. This applies to the CV statement and profile, cover-letter sections, and leadership sections.
+
+Below $760px$, each interactive component uses its established compact layout for controls and details. When adding a new editorial section, extend the grouped responsive rules in `src/styles/globals.css` instead of adding a one-off breakpoint.
 
 ## Sections
 
