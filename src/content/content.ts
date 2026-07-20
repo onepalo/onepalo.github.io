@@ -1,4 +1,4 @@
-import type { HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, LeadershipRhythm, LeadershipSignal, ThinkingNode, World } from './contentTypes'
+import type { FeaturedProject, HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, LeadershipRhythm, LeadershipSignal, ThinkingNode, World } from './contentTypes'
 import empathyAiLogo from './Asset 31.png'
 
 export const heroContent: HeroContent = {
@@ -45,6 +45,30 @@ export const journeyCvProfile: JourneyCvProfile = {
     { name: 'Manuel Poupon', role: 'Nigeria DW Principal' },
   ],
 }
+
+export const featuredProjects: FeaturedProject[] = [
+  {
+    title: 'GoA PP SmartTrends',
+    businessMoment: 'Regional interpretation needed standardized reservoir insight, but raw well-log data was too granular to use consistently and too important to simplify by hand.',
+    collaboration: 'Worked across subsurface interpretation and asset analytics needs to define reusable reservoir units and a workflow that teams could inspect together.',
+    outcome: 'Turned 72M log rows into 36k standardized reservoir units, reducing the analysis cycle from months to hours and creating reproducible datasets for scenario testing.',
+    aiInPractice: 'AI assists people in exploring and explaining trends; governed rules and domain review remain at the centre of the decision.',
+  },
+  {
+    title: 'Yet2Find',
+    businessMoment: 'Opportunity screening relied on prospect, lease, spatial, and tabular data held across separate sources, making a shared view of yet-to-find potential difficult to establish.',
+    collaboration: 'Worked with geoscience, geomatics, and commercial-data contributors to bring the evidence behind the screening decision into one analytical workflow.',
+    outcome: 'Created an integrated interface for prospect, lease, and volumetric assessment that reduced manual QC and made company-level attribution easier to test and discuss.',
+    aiInPractice: 'The value starts with trusted, connected evidence: automation supports the workflow while technical and commercial judgment stays visible.',
+  },
+  {
+    title: 'Shell Savoy',
+    businessMoment: 'Production, well, log, deviation, and coordinate data used inconsistent identifiers and definitions, slowing cross-discipline readiness for interpretation and candidate screening.',
+    collaboration: 'Worked with geology, petrophysics, reservoir, and WRFM perspectives to establish a governed well master and a shared analytical layer.',
+    outcome: 'Created a more consistent starting point for interpretation, production diagnostics, and opportunity screening across the asset team.',
+    aiInPractice: 'A strong data foundation makes advanced analytics and AI useful later; it is practical preparation, not AI for its own sake.',
+  },
+]
 
 export const thinkingNodes: ThinkingNode[] = [
   { id: 'frame', title: 'Frame', description: 'Clarify the decision, constraints, and users before selecting a solution.', example: 'Define the decision path behind fragmented subsurface data.', order: 1 },

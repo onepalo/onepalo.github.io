@@ -43,6 +43,14 @@ export interface JourneyCvProfile {
   references: Array<{ name: string; role: string }>
 }
 
+export interface FeaturedProject {
+  title: string
+  businessMoment: string
+  collaboration: string
+  outcome: string
+  aiInPractice: string
+}
+
 export interface ThinkingNode {
   id: string
   title: string

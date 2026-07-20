@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type KeyboardEvent, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, Sprout } from 'lucide-react'
-import { integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals, thinkingNodes } from '../../content/content'
+import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, Sprout, X } from 'lucide-react'
+import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals, thinkingNodes } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
@@ -100,6 +100,7 @@ function Journey() {
           <span>Career statement</span>
           <p id="career-statement-title">{journeyStatement.context} <span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
         </section>
+        <FeaturedProjects />
         <CvProfile />
       </div>
       <div className="journey-timeline">
@@ -152,6 +153,51 @@ function Journey() {
         ))}
       </div>
     </>
+  )
+}
+
+function FeaturedProjects() {
+  const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null)
+  const activeProject = activeProjectIndex === null ? null : featuredProjects[activeProjectIndex]
+
+  return (
+    <section className="featured-projects" aria-labelledby="featured-projects-title">
+      <header className="featured-projects-heading">
+        <p className="journey-proof-label">Recent work</p>
+        <div>
+          <h2 id="featured-projects-title">AI embedded workflows in the business.</h2>
+          <p>A few examples from the last 12 months of working alongside domain and data teams to make complex evidence useful in the decisions they need to make now.</p>
+        </div>
+      </header>
+      <div className="featured-project-list">
+        {featuredProjects.map((project, index) => (
+          <button className="featured-project" type="button" key={project.title} onClick={() => setActiveProjectIndex(index)} aria-haspopup="dialog">
+            <p className="featured-project-index">{String(index + 1).padStart(2, '0')}</p>
+            <div className="featured-project-content">
+              <h3>{project.title}</h3>
+              <p>Open the project story</p>
+            </div>
+            <ArrowRight size={18} aria-hidden="true" />
+          </button>
+        ))}
+      </div>
+      {activeProject && (
+        <div className="featured-project-dialog-backdrop" role="presentation" onMouseDown={() => setActiveProjectIndex(null)}>
+          <section className="featured-project-dialog" role="dialog" aria-modal="true" aria-labelledby="featured-project-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+            <header>
+              <div><p className="journey-proof-label">Project story</p><h2 id="featured-project-dialog-title">{activeProject.title}</h2></div>
+              <button className="featured-project-dialog-close" type="button" onClick={() => setActiveProjectIndex(null)} aria-label={`Close ${activeProject.title} project story`}><X size={20} aria-hidden="true" /></button>
+            </header>
+            <dl>
+              <div><dt>Business moment</dt><dd>{activeProject.businessMoment}</dd></div>
+              <div><dt>How I embedded</dt><dd>{activeProject.collaboration}</dd></div>
+              <div><dt>What changed</dt><dd>{activeProject.outcome}</dd></div>
+              <div><dt>AI in practice</dt><dd>{activeProject.aiInPractice}</dd></div>
+            </dl>
+          </section>
+        </div>
+      )}
+    </section>
   )
 }
 
