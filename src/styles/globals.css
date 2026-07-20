@@ -84,7 +84,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .journey-overview { display: grid; gap: 28px; margin: 0 0 44px 86px; }
 .journey-statement { display: grid; grid-template-columns: 220px minmax(0, 1fr); width: 100%; margin: 0; column-gap: 42px; padding: 25px 0 30px; border-top: 1px solid rgba(46, 111, 149, .28); border-bottom: 1px solid rgba(46, 111, 149, .18); }
 .journey-statement > span { margin: 5px 0 0; color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
-.journey-statement p { max-width: none; margin: 0; color: #435a64; font-family: var(--display); font-size: clamp(18px, 1.42vw, 22px); line-height: 1.45; }
+.journey-statement p { max-width: none; margin: 0; color: #435a64; font-family: var(--display); font-size: 16px; line-height: 1.55; }
 .journey-statement-key { color: var(--ink); font-weight: 600; }
 .journey-cv-profile { margin: 0; padding: 0 0 20px; border-bottom: 1px solid rgba(46, 111, 149, .18); }
 .journey-cv-profile > header { padding: 0 0 16px; }
