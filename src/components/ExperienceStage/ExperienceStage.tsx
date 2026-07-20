@@ -358,8 +358,10 @@ function CoverLetter() {
       <section className="leadership-opening" aria-label="Why I want this job">
         <p className="eyebrow">Why I want this job</p>
         <div className="leadership-opening-copy">
-          <p>I want this job because <span className="cover-letter-emphasis">I have lived on both sides of the divide it is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it is disconnected from its people and workflow.</p>
-          <p>This is an opportunity to bring those worlds together, not to build AI for its own sake, but to help assets make better decisions with tools people can understand, challenge, and use. The question I want to answer now is whether I can help fifteen people create that confidence together, at a scale no individual can reach alone.</p>
+          <p>I want this job because <span className="cover-letter-emphasis">I have lived on both sides of the divide it is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it becomes disconnected from the people and workflows it is meant to serve.</p>
+          <p>I also understand that not all AI work has the same purpose. There is an important place for frontier AI: teams can spend months or years testing new models, capabilities, and systems whose value may only become clear over time. But that is not where I believe this team creates its most immediate value.</p>
+          <p>Our work sits closer to the business: finding the decisions that matter now, bringing trusted data and domain expertise into the loop, and using AI to make those decisions faster, clearer, and more consistent. <span className="cover-letter-emphasis">Not AI for its own sake, but practical tools that people can understand, challenge, and use in their everyday work.</span></p>
+          <p>The question I want to answer now is whether I can <span className="cover-letter-emphasis">lead and grow a team of fifteen people who create that confidence at scale</span>: a team trusted to connect domain expertise, data, and AI to the decisions the business needs to make now.</p>
         </div>
       </section>
 
