@@ -21,11 +21,6 @@ export function WorldNav({ onOpenWorld }: WorldNavProps) {
 
   return (
     <div className="world-nav" aria-label="Candidate story worlds">
-      <svg className="orbit-lines" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M110 364 C 220 92, 735 86, 899 318" />
-        <path d="M185 220 C 480 500, 721 474, 858 176" />
-        <path d="M487 493 C 502 335, 521 194, 508 44" />
-      </svg>
       {worlds.map((world, index) => (
         <motion.button
           className={`world-node world-${world.id}`}
