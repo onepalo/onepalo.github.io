@@ -1,9 +1,10 @@
-import { useState, type CSSProperties, type RefObject } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
-import { ArrowLeft, ArrowRight, BatteryCharging, Check, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, MapPin, MessageCircle, Network, ShieldCheck, Sprout } from 'lucide-react'
-import { impactStories, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals, thinkingNodes } from '../../content/content'
+import { useState, type CSSProperties, type KeyboardEvent, type RefObject } from 'react'
+import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, MapPin, MessageCircle, Network, ShieldCheck, Sprout } from 'lucide-react'
+import { integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals, thinkingNodes } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
+import designerBridge from '../../assets/candidate/DesignerRN.png'
+import leaderIllustration from '../../assets/candidate/Leader.png'
 
 interface ExperienceStageProps {
   experience: Exclude<ExperienceId, 'home'>
@@ -12,11 +13,44 @@ interface ExperienceStageProps {
 }
 
 const stageMeta = {
-  cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'A case for the contribution I can make as Lead AI Embedment.' },
+  cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The Value I Can Bring as Team Lead, AI Embedment.' },
   journey: { eyebrow: 'Career overview', title: 'Resume / CV', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead the team', intro: '' },
   impact: { eyebrow: 'Evidence, not claims', title: 'Proof of Leadership', intro: '' },
 } as const
+
+const leadershipPrincipleDetails = [
+  { behavior: 'Regular one-to-ones make room for strengths, energy, workload, growth, and the context behind performance.', evidence: 'Each person can point to a visible growth narrative, a stretch responsibility, or a meaningful exposure opportunity.' },
+  { behavior: 'Teams decide locally within clear quality, ownership, and delivery guardrails rather than wait for permission.', evidence: 'Decision records are clear, reusable work improves, and teams make trade-offs without losing technical rigor.' },
+  { behavior: 'Assumptions, uncertainty, and dissent are brought into the work early, while there is still time to change course.', evidence: 'Risks and requests for help surface without blame, and stronger evidence changes decisions in public.' },
+] as const
+
+const leadershipRhythmDetails = [
+  { duration: '60 minutes', outcome: 'Priorities, dependencies, evidence, learning, and recognition stay visible across the team.', workingAgreement: 'Async first: Status, decisions, documentation, and help requests live in shared spaces. Meetings are reserved for collaboration, learning, and decisions that need people in the room.' },
+  { duration: '45 minutes per direct report', outcome: 'People leave with clearer support, a development focus, and a realistic view of their workload and energy.', workingAgreement: 'Protect the conversation: This is dedicated time for feedback, development, workload, and context. It is not a status meeting.' },
+  { duration: 'Quarterly reset', outcome: 'The team explicitly continues, scales, pauses, or stops work based on value, trust, and adoption.', workingAgreement: 'Make the trade-offs visible: Review the evidence together, then name what the team will continue, scale, pause, or stop.' },
+] as const
+
+const leadershipSignalDetails = [
+  'Capability growth becomes visible in the work people own, not only in a development plan.',
+  'Dissent, risk, and requests for help arrive early enough to improve the work rather than explain a failure.',
+  'More decisions, facilitation, and mentoring happen through the team without waiting for a manager to intervene.',
+  'Delivery remains ambitious while people retain the energy and enjoyment to build together over time.',
+] as const
+
+function handleTabListNavigation(event: KeyboardEvent<HTMLButtonElement>) {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
+
+  const tabList = event.currentTarget.closest('[role="tablist"]')
+  const tabs = tabList ? Array.from(tabList.querySelectorAll<HTMLButtonElement>('[role="tab"]')) : []
+  const currentIndex = tabs.indexOf(event.currentTarget)
+  if (currentIndex < 0) return
+
+  event.preventDefault()
+  const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (currentIndex + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length
+  tabs[nextIndex].focus()
+  tabs[nextIndex].click()
+}
 
 export function ExperienceStage({ experience, headingRef, onNavigate }: ExperienceStageProps) {
   const meta = stageMeta[experience]
@@ -48,15 +82,15 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
 }
 
 function Journey() {
-  const [openRoleIndex, setOpenRoleIndex] = useState(0)
+  const [openRoleIndexes, setOpenRoleIndexes] = useState(() => new Set<number>())
 
   return (
     <>
       <div className="journey-overview">
-        <blockquote className="journey-preface">
+        <section className="journey-statement" aria-labelledby="career-statement-title">
           <span>Career statement</span>
-          <p>{journeyStatement}</p>
-        </blockquote>
+          <p id="career-statement-title">{journeyStatement}</p>
+        </section>
         <CvProfile />
       </div>
       <div className="journey-timeline">
@@ -64,8 +98,19 @@ function Journey() {
           <details
             className="journey-card"
             key={`journey-role-${index}`}
-            open={openRoleIndex === index}
-            onToggle={(event) => setOpenRoleIndex(event.currentTarget.open ? index : -1)}
+            open={openRoleIndexes.has(index)}
+            onToggle={(event) => {
+              const isOpen = event.currentTarget.open
+              setOpenRoleIndexes((currentIndexes) => {
+                const nextIndexes = new Set(currentIndexes)
+                if (isOpen) {
+                  nextIndexes.add(index)
+                } else {
+                  nextIndexes.delete(index)
+                }
+                return nextIndexes
+              })
+            }}
           >
             <summary className="journey-card-summary">
               <span className={`journey-marker${item.countryCodes.length > 1 ? ' journey-marker-mixed' : ''}`} aria-hidden="true">
@@ -74,17 +119,11 @@ function Journey() {
                 ))}
               </span>
               <div className="journey-card-heading">
-                  <div className="journey-heading-meta">
-                    <h2>{item.title}</h2>
-                    <span className={`journey-discipline journey-discipline-${item.discipline.toLowerCase()}`}>{item.discipline}</span>
-                  </div>
-                  <p className="journey-role-context">
-                    <span>{item.organization}</span>
-                    <span><MapPin size={14} aria-hidden="true" /> {item.location}</span>
-                    <span>{item.period}</span>
-                  </p>
-                  <p className="journey-teaser">{item.teaser}</p>
+                <h2>{item.title}</h2>
+                <p className="journey-organization">{item.organization}<span className="journey-period">{item.period}</span></p>
+                <p className="journey-location"><MapPin size={14} aria-hidden="true" /> {item.location}</p>
               </div>
+              <span className={`journey-discipline journey-discipline-${item.discipline.toLowerCase()}`}>{item.discipline}</span>
               <ChevronDown className="journey-chevron" size={19} aria-hidden="true" />
             </summary>
             <div className="journey-detail">
@@ -114,20 +153,38 @@ function CvProfile() {
         <p className="journey-proof-label">CV profile</p>
         <h2 id="cv-profile-title">Profile at a glance</h2>
       </header>
-      <div className="cv-profile-lines">
-        <div className="cv-profile-line"><h3>Digital Core</h3><p>{journeyCvProfile.digitalCore}</p></div>
-        <div className="cv-profile-line"><h3>Subsurface Domain</h3><p>{journeyCvProfile.subsurfaceDomain}</p></div>
-        <div className="cv-profile-line"><h3>Achievements</h3><ul>{journeyCvProfile.achievements.map((achievement, achievementIndex) => <li key={`achievement-${achievementIndex}`}>{achievement}</li>)}</ul></div>
-        <div className="cv-profile-line"><h3>Education & certifications</h3><p>{journeyCvProfile.education}</p></div>
-        <div className="cv-profile-line"><h3>References</h3><ul className="cv-references">{journeyCvProfile.references.map((reference, referenceIndex) => <li key={`reference-${referenceIndex}`}><strong>{reference.name}</strong><span>{reference.role}</span></li>)}</ul></div>
+      <div className="cv-profile-columns">
+        <div className="cv-profile-column">
+          <div className="cv-profile-line"><h3>Digital Core</h3><p>{journeyCvProfile.digitalCore}</p></div>
+          <div className="cv-profile-line"><h3>Subsurface Domain</h3><p>{journeyCvProfile.subsurfaceDomain}</p></div>
+          <div className="cv-profile-line"><h3>Education & certifications</h3><p>{journeyCvProfile.education}</p></div>
+        </div>
+        <div className="cv-profile-column">
+          <div className="cv-profile-line"><h3>Achievements</h3><ul>{journeyCvProfile.achievements.map((achievement, achievementIndex) => <li key={`achievement-${achievementIndex}`}>{achievement}</li>)}</ul></div>
+          <div className="cv-profile-line"><h3>References</h3><ul className="cv-references">{journeyCvProfile.references.map((reference, referenceIndex) => <li key={`reference-${referenceIndex}`}><strong>{reference.name}</strong><span>{reference.role}</span></li>)}</ul></div>
+        </div>
       </div>
     </section>
   )
 }
 
 function Thinking() {
-  const shouldReduceMotion = useReducedMotion()
-  return <div className="thinking-system"><div className="thinking-core"><span>Starting point</span><strong>Ambiguous<br />problem</strong><small>Technical, human, and delivery constraints</small></div><svg className="thinking-rings" viewBox="0 0 600 600" aria-hidden="true"><circle cx="300" cy="300" r="118" /><circle cx="300" cy="300" r="220" /><path d="M80 384 C178 55 461 75 531 274" /></svg><div className="thinking-nodes">{thinkingNodes.map((node) => <motion.article className={`thinking-node thinking-node-${node.order}`} key={node.id} initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.88 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.25 }} transition={{ delay: node.order * 0.06 }}><span className="node-number">{String(node.order).padStart(2, '0')}</span><h2>{node.title}</h2><p>{node.description}</p><small>{node.example}</small></motion.article>)}</div></div>
+  const [activeNodeId, setActiveNodeId] = useState(thinkingNodes[0].id)
+  const activeNode = thinkingNodes.find((node) => node.id === activeNodeId) ?? thinkingNodes[0]
+
+  return <div className="thinking-system">
+    <div className="thinking-cycle">
+      <div className="thinking-core"><span>Starting point</span><strong>Ambiguous<br />problem</strong><small>Technical, human, and delivery constraints</small></div>
+      <svg className="thinking-rings" viewBox="0 0 600 600" aria-hidden="true"><defs><marker id="thinking-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" /></marker></defs><circle cx="300" cy="300" r="118" /><circle cx="300" cy="300" r="220" /><path d="M80 384 C178 55 461 75 531 274" /><path className="thinking-cycle-arrow" d="M300 80 A220 220 0 1 1 121 172" markerEnd="url(#thinking-arrowhead)" /></svg>
+      <div className="thinking-steps" aria-label="Decision cycle">
+        {thinkingNodes.map((node) => <button type="button" className={`thinking-step thinking-step-${node.order}${activeNodeId === node.id ? ' is-active' : ''}`} key={node.id} onClick={() => setActiveNodeId(node.id)} aria-pressed={activeNodeId === node.id}><span>{String(node.order).padStart(2, '0')}</span><strong>{node.title}</strong></button>)}
+      </div>
+    </div>
+    <section className="thinking-detail" aria-live="polite" aria-labelledby="thinking-detail-title">
+      <p className="thinking-detail-label">Selected step {String(activeNode.order).padStart(2, '0')}</p>
+      <div><h2 id="thinking-detail-title">{activeNode.title}</h2><p>{activeNode.description}</p><p className="thinking-example"><span>In practice</span>{activeNode.example}</p></div>
+    </section>
+  </div>
 }
 
 function IntegrationMap() {
@@ -141,7 +198,7 @@ function OperatingSystem() {
         <span className="operating-system-label">The operating system</span>
         <span className="operating-system-copy">
           <span id="operating-system-title" className="operating-system-title" role="heading" aria-level={2}>Make the thinking visible before asking people to move.</span>
-          <span>Frame the decision, state the hypothesis, connect the evidence, challenge assumptions, prototype with users, and scale only what proves useful.</span>
+          <span>How these principles become daily practice.</span>
         </span>
         <ChevronDown className="operating-system-chevron" size={22} aria-hidden="true" />
       </summary>
@@ -155,29 +212,45 @@ function OperatingSystem() {
 function Leadership() {
   const pillarIcons = [HeartHandshake, ShieldCheck, Lightbulb]
   const signalIcons = [Sprout, MessageCircle, Network, BatteryCharging]
+  const [activeLeadershipSection, setActiveLeadershipSection] = useState<'principles' | 'rhythm' | 'signals'>('principles')
+  const [activePillarIndex, setActivePillarIndex] = useState(0)
+  const [activeRhythmIndex, setActiveRhythmIndex] = useState(0)
+  const [activeSignalIndex, setActiveSignalIndex] = useState(0)
+  const activePillar = leadershipPillars[activePillarIndex]
+  const activePillarDetail = leadershipPrincipleDetails[activePillarIndex]
+  const ActivePillarIcon = pillarIcons[activePillarIndex]
+  const activeRhythm = leadershipRhythms[activeRhythmIndex]
+  const activeRhythmDetail = leadershipRhythmDetails[activeRhythmIndex]
+  const activeSignal = leadershipSignals[activeSignalIndex]
+  const ActiveSignalIcon = signalIcons[activeSignalIndex]
+  const activeLeadershipStep = { principles: 0, rhythm: 1, signals: 2 }[activeLeadershipSection]
 
   return (
     <div className="leadership-view">
-      <section className="leadership-ai-context" aria-label="What I want to build">
-        <p className="eyebrow">The team I want to build</p>
-        <div className="leadership-narrative-copy">
-          <p>New models arrive faster than anyone can absorb them, inviting teams to chase releases, trust persuasive answers, or confuse activity with progress. I want to build a team that learns quickly without becoming frantic, keeping people, trusted data, and AI in one feedback loop.</p>
-          <p>Conversational systems can make a weak answer sound persuasive. The response is to keep the loop intact: domain experts define and challenge the decision, governed sources make evidence traceable, analytics make patterns visible, and AI accelerates work inside real workflows where people can test, improve, or reject it.</p>
-          <blockquote className="leadership-pullquote">Fast enough to matter. Rigorous enough to be trusted. Humble enough to change our minds.</blockquote>
+      <section className="leadership-intent" aria-label="Leadership in action">
+        <div className="leadership-intent-copy">
+          <p><span className="cover-letter-emphasis">I want to build a team that learns quickly without becoming frantic.</span> New models invite teams to chase releases, trust persuasive answers, or confuse activity with progress. My response is to keep people, trusted evidence, and AI in one feedback loop, so domain expertise shapes decisions and the work earns adoption.</p>
+          <div className="leadership-intent-commitments">
+            <p><strong>What I ask of the team:</strong> I will ask people to stay curious, say when they do not know, challenge assumptions, and own the outcomes they shape. AI work cannot wait for certainty; it needs people comfortable learning in public and correcting course without making every mistake personal.</p>
+            <p><strong>What the team can expect from me:</strong> I will know people rather than manage them at a distance, make time for feedback and growth, and create guardrails that make autonomy real. I cannot promise permanence in a changing organization, but I can help make the time we do control deeply worthwhile: purposeful work, visible learning, stronger relationships, and meaningful value each person can carry forward. My aim is to build a team whose creativity, trust, and sustained performance make its contribution unmistakable, and make the organization think carefully before losing that capability.</p>
+          </div>
         </div>
+        <blockquote className="leadership-pullquote">Leadership is not a title. It is the willingness to move first, listen closely, and make others stronger.</blockquote>
+        <figure className="leadership-shared-effort">
+          <img src={leaderIllustration} alt="A leader pulling alongside the team." />
+          <figcaption>Shared effort. Shared momentum. Lead by example.</figcaption>
+        </figure>
       </section>
 
-      <section className="leadership-contract" aria-label="The contract with the team">
-        <p className="eyebrow">The contract with the team</p>
-        <div className="leadership-narrative-copy">
-          <p>I will ask people to stay curious, say when they do not know, challenge assumptions, and own the outcomes they shape. AI work cannot wait for certainty; it needs people comfortable learning in public and correcting course without making every mistake personal.</p>
-          <p>In return, I will know people rather than manage them at a distance, make time for feedback and growth, and create guardrails that make autonomy real. I cannot promise permanence in a changing organization, but I can make the next year consequential: purposeful work, visible learning, stronger relationships, and value each person can carry forward.</p>
+      <section className="leadership-focus" aria-label="Leadership in action areas">
+        <div className="leadership-focus-selector" role="tablist" aria-label="Leadership areas" style={{ '--active-step': activeLeadershipStep } as CSSProperties}>
+          <button type="button" role="tab" id="leadership-principles-tab" aria-selected={activeLeadershipSection === 'principles'} aria-controls="leadership-focus-panel" onClick={() => setActiveLeadershipSection('principles')} onKeyDown={handleTabListNavigation}><HeartHandshake className="leadership-focus-icon" size={18} aria-hidden="true" /><span className="leadership-focus-label">Principles</span><span className="leadership-focus-description">How I create trust</span></button>
+          <button type="button" role="tab" id="leadership-rhythm-tab" aria-selected={activeLeadershipSection === 'rhythm'} aria-controls="leadership-focus-panel" onClick={() => setActiveLeadershipSection('rhythm')} onKeyDown={handleTabListNavigation}><Network className="leadership-focus-icon" size={18} aria-hidden="true" /><span className="leadership-focus-label">Rhythm</span><span className="leadership-focus-description">How we stay aligned</span></button>
+          <button type="button" role="tab" id="leadership-signals-tab" aria-selected={activeLeadershipSection === 'signals'} aria-controls="leadership-focus-panel" onClick={() => setActiveLeadershipSection('signals')} onKeyDown={handleTabListNavigation}><Sprout className="leadership-focus-icon" size={18} aria-hidden="true" /><span className="leadership-focus-label">Signals</span><span className="leadership-focus-description">What success looks like</span></button>
         </div>
-      </section>
-
-      <OperatingSystem />
-
-      <section className="leadership-promises" aria-labelledby="leadership-principles-title">
+        <div id="leadership-focus-panel" role="tabpanel" aria-labelledby={`leadership-${activeLeadershipSection}-tab`}>
+          {activeLeadershipSection === 'principles' && (
+      <section className="leadership-principles" aria-labelledby="leadership-principles-title">
         <div className="leadership-section-heading">
           <p className="eyebrow">The promises made concrete</p>
           <h2 id="leadership-principles-title">The conditions I will work to create</h2>
@@ -186,19 +259,28 @@ function Leadership() {
           <p>These are not management rituals. They are the conditions that let a team take on difficult work without losing its sense of purpose or one another.</p>
           <p>When people know they are trusted, supported, and expected to contribute their judgment, they can move with more confidence and make better decisions together.</p>
         </div>
-        <div className="leadership-pillars">
+        <div className="leadership-principle-selector" role="tablist" aria-label="Leadership principles">
           {leadershipPillars.map((pillar, index) => {
             const Icon = pillarIcons[index]
-            return <article className="leadership-pillar" key={pillar.title}>
-              <Icon size={22} aria-hidden="true" />
-              <h3>{pillar.title}</h3>
-              <p>{pillar.statement}</p>
-            </article>
+            return <button type="button" className={activePillarIndex === index ? 'is-active' : ''} role="tab" id={`principle-${index}-tab`} aria-selected={activePillarIndex === index} aria-controls="principle-panel" key={pillar.title} onClick={() => setActivePillarIndex(index)} onKeyDown={handleTabListNavigation}><Icon size={17} aria-hidden="true" /><h3>{pillar.title}</h3></button>
           })}
         </div>
-        <p className="leadership-practices"><strong>In practice:</strong> Each person has a visible growth narrative; teams make local trade-offs inside clear guardrails; and evidence, decision records, and constructive dissent keep the work honest.</p>
+        <section className="leadership-principle-detail" id="principle-panel" role="tabpanel" aria-labelledby={`principle-${activePillarIndex}-tab`}>
+          <ActivePillarIcon size={23} aria-hidden="true" />
+          <div>
+            <p className="leadership-detail-label">Selected principle</p>
+            <h3>{activePillar.title}</h3>
+            <p className="leadership-principle-statement">{activePillar.statement}</p>
+            <div className="leadership-detail-grid">
+              <p><span>What this enables</span>{activePillarDetail.behavior}</p>
+              <p><span>Evidence I would expect</span>{activePillarDetail.evidence}</p>
+            </div>
+          </div>
+        </section>
       </section>
+          )}
 
+          {activeLeadershipSection === 'rhythm' && (
       <section className="leadership-rhythm" aria-labelledby="leadership-rhythm-title">
         <div className="leadership-section-heading">
           <p className="eyebrow">The team rhythm</p>
@@ -208,15 +290,21 @@ function Leadership() {
           <p>A team of fifteen needs more than meetings; it needs a dependable rhythm in which people can ask for help early, learn from one another, and see how their work connects to the whole.</p>
           <p>The cadence below protects time for deep work while ensuring that learning, decisions, and recognition do not get lost in the pace of delivery.</p>
         </div>
-        <div className="leadership-rhythm-list">
-          {leadershipRhythms.map((rhythm) => <article key={rhythm.cadence}>
+        <div className="leadership-rhythm-selector" role="tablist" aria-label="Team rhythm">
+          {leadershipRhythms.map((rhythm, index) => <button type="button" className={activeRhythmIndex === index ? 'is-active' : ''} role="tab" id={`rhythm-${index}-tab`} aria-selected={activeRhythmIndex === index} aria-controls="rhythm-panel" key={rhythm.cadence} onClick={() => setActiveRhythmIndex(index)} onKeyDown={handleTabListNavigation}>
             <span>{rhythm.cadence}</span>
-            <div><h3>{rhythm.title}</h3><p>{rhythm.description}</p></div>
-          </article>)}
+            <h3>{rhythm.title}</h3>
+          </button>)}
         </div>
-        <p className="leadership-async"><strong>Async first:</strong> Status, decisions, documentation, and help requests live in shared spaces. Meetings are reserved for collaboration, learning, and decisions that need people in the room.</p>
+        <section className="leadership-rhythm-detail" id="rhythm-panel" role="tabpanel" aria-labelledby={`rhythm-${activeRhythmIndex}-tab`}>
+          <p className="leadership-detail-label">{activeRhythm.cadence} · {activeRhythmDetail.duration}</p>
+          <div><h3>{activeRhythm.title}</h3><p className="leadership-detail-statement">A dependable cadence makes shared progress visible without turning the week into a meeting.</p><p>{activeRhythm.description}</p><p className="leadership-outcome"><span>Result</span>{activeRhythmDetail.outcome}</p></div>
+        </section>
+        <p className="leadership-async"><strong>Working agreement:</strong> {activeRhythmDetail.workingAgreement}</p>
       </section>
+          )}
 
+          {activeLeadershipSection === 'signals' && (
       <section className="leadership-signals" aria-labelledby="leadership-signals-title">
         <div className="leadership-section-heading">
           <p className="eyebrow">What success looks like</p>
@@ -228,10 +316,19 @@ function Leadership() {
         <div className="leadership-signals-grid">
           {leadershipSignals.map((signal, index) => {
             const Icon = signalIcons[index]
-            return <article key={signal.title}><Icon size={19} aria-hidden="true" /><div><h3>{signal.title}</h3><p>{signal.description}</p></div></article>
+            return <button type="button" className={activeSignalIndex === index ? 'is-active' : ''} key={signal.title} onClick={() => setActiveSignalIndex(index)} aria-pressed={activeSignalIndex === index}><Icon size={19} aria-hidden="true" /><span>{signal.title}</span></button>
           })}
         </div>
+        <section className="leadership-signal-detail" aria-live="polite">
+          <ActiveSignalIcon size={22} aria-hidden="true" />
+          <div><p className="leadership-detail-label">Signal to observe</p><h3>{activeSignal.title}</h3><p className="leadership-detail-statement">The proof is in what the team can do, say, and sustain without waiting for direction.</p><p>{activeSignal.description}</p><p className="leadership-outcome"><span>What I would notice</span>{leadershipSignalDetails[activeSignalIndex]}</p></div>
+        </section>
       </section>
+          )}
+        </div>
+      </section>
+
+      <OperatingSystem />
     </div>
   )
 }
@@ -242,7 +339,7 @@ function CoverLetter() {
       <section className="leadership-opening" aria-label="Why I want this job">
         <p className="eyebrow">Why I want this job</p>
         <div className="leadership-opening-copy">
-          <p>I want this job because I have lived on both sides of the divide it is meant to close: the pressure of a subsurface decision, and the digital work that loses force when it is disconnected from its people and workflow.</p>
+          <p>I want this job because <span className="cover-letter-emphasis">I have lived on both sides of the divide it is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it is disconnected from its people and workflow.</p>
           <p>This is an opportunity to bring those worlds together, not to build AI for its own sake, but to help assets make better decisions with tools people can understand, challenge, and use. The question I want to answer now is whether I can help fifteen people create that confidence together, at a scale no individual can reach alone.</p>
         </div>
       </section>
@@ -251,25 +348,35 @@ function CoverLetter() {
         <p className="eyebrow">The career that led me here</p>
         <div className="leadership-narrative-copy">
           <p>For more than fifteen years, I have worked where technical judgment has consequences: prospects, high-pressure wells, portfolio renewal, risk, and the handover from an uncertain subsurface picture to a decision someone has to own. The real work, I learned, is helping specialists see the same evidence, disagree productively, and decide what to do next.</p>
-          <p>Coordinating a multidisciplinary portfolio refresh in the Netherlands showed me what happens when ten disciplines share an evidence base rather than defend separate interpretations. Over the last six years, that same lesson has shaped my work with product roadmaps, governed data, analytics, and AI: a solution matters only when it fits the workflow, saves time, sharpens a decision, and earns trust.</p>
+          <p>Leading a multidisciplinary team during a regional rejuvenation PBE effort in the Netherlands showed me the power of aligning diverse expertise around a common set of facts. The challenge was not simply technical integration. It was creating the conditions for better decisions. Over the last six years, I have carried that lesson into digital products, data governance, analytics, and AI. Successful adoption happens when solutions solve real problems, integrate into daily work, and build confidence through consistent, measurable value.</p>
         </div>
+        <blockquote className="leadership-pullquote leadership-readiness-quote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
+        <figure className="leadership-designer-bridge">
+          <img src={designerBridge} alt="A person connecting subsurface expertise with technology and AI." />
+        </figure>
       </section>
 
       <section className="leadership-system-map" aria-labelledby="system-map-title">
-        <p className="eyebrow">Already fluent across the system</p>
-        <div className="leadership-system-map-copy">
-          <h2 id="system-map-title">Technical depth and delivery belong in the same conversation.</h2>
-          <p>I have learned to move between the evidence, the digital capabilities, the product choices, and the people who act on the result without losing sight of the decision at the centre.</p>
-        </div>
-        <IntegrationMap />
+        <details className="leadership-system-map-details">
+          <summary>
+            <span className="eyebrow">Already fluent across the system</span>
+            <span className="leadership-system-map-copy">
+              <span id="system-map-title" className="leadership-system-map-title" role="heading" aria-level={2}>Technical depth and delivery belong in the same conversation.</span>
+              <span>I have learned to move between the evidence, the digital capabilities, the product choices, and the people who act on the result without losing sight of the decision at the centre.</span>
+            </span>
+            <ChevronDown className="leadership-system-map-chevron" size={22} aria-hidden="true" />
+          </summary>
+          <div className="leadership-system-map-detail">
+            <IntegrationMap />
+          </div>
+        </details>
       </section>
 
       <section className="leadership-choice" aria-label="Why lead now">
         <p className="eyebrow">Why lead now</p>
         <div className="leadership-narrative-copy">
-          <p>The Lead AI Embedment role needs someone credible with a geoscientist, data scientist, product manager, and asset stakeholder without flattening the work into generic innovation language. That is the bridge I have been building toward.</p>
-          <blockquote className="leadership-pullquote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
-          <p>I want to use my technical fluency to raise the capability around me: ask the sharper question, recognize when a model has drifted from its decision, and give younger specialists room to lead. That is the multiplier effect I want to be accountable for.</p>
+          <p>The Lead AI Embedment role needs someone credible with a geoscientist, data scientist, product owner, and asset stakeholder without flattening the work into generic innovation language. That is the bridge I have been building toward.</p>
+          <p>My career began in subsurface interpretation and evolved into analytics, product ownership, and AI-enabled decision support. That journey taught me that successful adoption rarely comes from technology alone. It comes from helping people frame better questions, challenge assumptions, and connect evidence to decisions. I want to use that experience to elevate the capability of the teams around me, create opportunities for others to lead, and build an environment where innovation is both practical and trusted. <span className="cover-letter-emphasis">That is the multiplier effect I want to be accountable for</span>.</p>
         </div>
       </section>
     </div>
@@ -288,12 +395,6 @@ function LeadershipProof() {
       <div className="personal-leadership-grid">
         {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.logoSrc ? ' has-logo' : ''}`} key={proof.title}><span>{proof.theme}</span><div className="personal-leadership-card-title"><h3>{proof.title}</h3>{proof.logoSrc && <img src={proof.logoSrc} alt={proof.logoAlt ?? ''} />}</div><p>{proof.description}</p>{proof.references && <div className="leadership-proof-references"><strong>Featured by</strong><ul>{proof.references.map((reference) => <li key={reference.url}><a href={reference.url} target="_blank" rel="noopener noreferrer">{reference.label} <ExternalLink size={12} aria-hidden="true" /></a></li>)}</ul></div>}</article>)}
       </div>
-    </section>
-    <section className="technical-impact" aria-labelledby="technical-impact-title">
-      <div className="leadership-proof-heading">
-        <div><h2 id="technical-impact-title">Leadership improves the decision.</h2><p>These examples show how technical depth, collaboration, and delivery turn complex evidence into practical outcomes.</p></div>
-      </div>
-      <div className="impact-grid">{impactStories.map((story) => <article className="impact-card" key={story.title}><div className="impact-card-top"><p className="metric">{story.metric}</p><ul className="chips">{story.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></div><h3>{story.title}</h3><dl><div><dt>Situation</dt><dd>{story.situation}</dd></div><div><dt>Complexity</dt><dd>{story.complexity}</dd></div><div><dt>My role</dt><dd>{story.myRole}</dd></div><div><dt>Action</dt><dd>{story.action}</dd></div><div><dt>Outcome</dt><dd>{story.outcome}</dd></div></dl><p className="relevance"><Check size={15} aria-hidden="true" /> {story.relevance}</p></article>)}</div>
     </section>
   </div>
 }

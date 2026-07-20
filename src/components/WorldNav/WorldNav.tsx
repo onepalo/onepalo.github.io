@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react'
-import type { CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { worlds } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 
@@ -9,6 +9,15 @@ interface WorldNavProps {
 
 export function WorldNav({ onOpenWorld }: WorldNavProps) {
   const shouldReduceMotion = useReducedMotion()
+  const [isCompactLayout, setIsCompactLayout] = useState(() => window.matchMedia('(max-width: 760px)').matches)
+
+  useEffect(() => {
+    const compactLayoutQuery = window.matchMedia('(max-width: 760px)')
+    const updateCompactLayout = () => setIsCompactLayout(compactLayoutQuery.matches)
+
+    compactLayoutQuery.addEventListener('change', updateCompactLayout)
+    return () => compactLayoutQuery.removeEventListener('change', updateCompactLayout)
+  }, [])
 
   return (
     <div className="world-nav" aria-label="Candidate story worlds">
@@ -24,7 +33,7 @@ export function WorldNav({ onOpenWorld }: WorldNavProps) {
           key={world.id}
           onClick={() => onOpenWorld(world.id)}
           style={{ '--world-color': world.accentColor } as CSSProperties}
-          animate={shouldReduceMotion ? undefined : { y: [0, index % 2 ? -9 : 9, 0] }}
+          animate={shouldReduceMotion || isCompactLayout ? undefined : { y: [0, index % 2 ? -9 : 9, 0] }}
           transition={{ duration: 5.5 + index, repeat: Infinity, ease: 'easeInOut', delay: index * 0.35 }}
         >
           <span className="world-orb" aria-hidden="true"><span /></span>

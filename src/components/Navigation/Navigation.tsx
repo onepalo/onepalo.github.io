@@ -1,4 +1,4 @@
-import { Compass, FileText, Home, Map, Orbit } from 'lucide-react'
+import { Award, Home, Route, UserRound, UsersRound } from 'lucide-react'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 
@@ -9,10 +9,10 @@ interface NavigationProps {
 
 const navigationItems: Array<{ id: ExperienceId; label: string; icon: typeof Home }> = [
   { id: 'home', label: 'Home', icon: Home },
-  { id: 'cover', label: 'Why Me?', icon: FileText },
-  { id: 'leadership', label: 'Lead the Team', icon: Compass },
-  { id: 'journey', label: 'Resume / CV', icon: Map },
-  { id: 'impact', label: 'Proof of Leadership', icon: Orbit },
+  { id: 'cover', label: 'Why Me?', icon: UserRound },
+  { id: 'leadership', label: 'Lead the Team', icon: UsersRound },
+  { id: 'journey', label: 'Resume / CV', icon: Route },
+  { id: 'impact', label: 'Proof of Leadership', icon: Award },
 ]
 
 export function Navigation({ activeExperience, onNavigate }: NavigationProps) {

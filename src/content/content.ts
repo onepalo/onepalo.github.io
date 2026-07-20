@@ -1,4 +1,4 @@
-import type { HeroContent, ImpactStory, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, LeadershipRhythm, LeadershipSignal, ThinkingNode, World } from './contentTypes'
+import type { HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, LeadershipRhythm, LeadershipSignal, ThinkingNode, World } from './contentTypes'
 import empathyAiLogo from './Asset 31.png'
 
 export const heroContent: HeroContent = {
@@ -48,7 +48,7 @@ export const thinkingNodes: ThinkingNode[] = [
   { id: 'evidence', title: 'Connect evidence', description: 'Bring data, interpretation, economics, and user context into one view.', example: 'Integrate spatial, tabular, and prospect data for opportunity screening.', order: 3 },
   { id: 'challenge', title: 'Challenge assumptions', description: 'Use QC, uncertainty, and diverse expertise to expose weak signals early.', example: 'Protect technical quality while streamlining reservoir-seal evaluation.', order: 4 },
   { id: 'prototype', title: 'Prototype', description: 'Make the insight tangible with a usable, focused version of the solution.', example: 'Iteratively deliver advanced visual analytics with end users.', order: 5 },
-  { id: 'align-scale', title: 'Align & scale', description: 'Create shared ownership, then operationalize what works through governed data, adoption, and measurable outcomes.', example: 'Lead a portfolio refresh and standardize trusted datasets for reusable decisions.', order: 6 },
+  { id: 'decide-align-scale', title: 'Decide, align & scale', description: 'Decide whether to continue, pause, or stop; then operationalize what earns scale through governance, adoption, shared ownership, and measurable outcomes.', example: 'Lead a portfolio refresh and standardize trusted datasets for reusable decisions.', order: 6 },
 ]
 
 export const integrationNodes: IntegrationNode[] = [
@@ -62,13 +62,6 @@ export const integrationNodes: IntegrationNode[] = [
   { id: 'governance', label: 'Platform Governance', description: 'Trust, scalability, and responsible operationalization.', connectionType: 'delivery', x: 48, y: 87 },
 ]
 
-export const impactStories: ImpactStory[] = [
-  { title: 'Decision-ready reservoir units', situation: 'High-resolution well-log data was too granular for regional interpretation.', complexity: 'Scale, geological rules, and consistent cross-asset definitions.', myRole: 'Designed the analytics workflow and user-facing visual layer.', action: 'Used distributed SQL to transform 72M log rows into standardized units, then exposed trends in interactive analytics.', outcome: 'Created reproducible, scenario-ready datasets for faster technical interpretation.', metric: '72M rows -> 36k units', relevance: 'Combines geoscience rigor, data engineering, and adoption-minded design.', tags: ['Databricks', 'Spotfire', 'Petrophysics'] },
-  { title: 'Nigeria portfolio refresh', situation: 'A shallow-water exploration portfolio needed a consistent technical refresh.', complexity: 'Multiple disciplines, a large evidence base, and a two-phase maturation process.', myRole: 'Technical Lead coordinating a multidisciplinary team of approximately 10.', action: 'Led play mapping, volumes/risk refresh, and a dashboard for hydrocarbon distribution analysis.', outcome: 'Improved screening consistency and portfolio execution readiness.', metric: '90k+ reservoirs / 5k wells', relevance: 'Shows leadership across complex evidence, people, and decisions.', tags: ['Technical lead', 'Portfolio', 'Analytics'] },
-  { title: 'High-pressure opportunity maturation', situation: 'Complex Gbaran wells required operational geology and subsurface de-risking.', complexity: 'Deep targets, high pressure, and real-time delivery requirements.', myRole: 'Prospect owner and drilling-support geoscientist.', action: 'Integrated VSP, models, volumetrics, QIs, and exploration-to-development handover work.', outcome: 'Supported handover to Development and additional drilling opportunities.', metric: '22.8 mmboe in 2017', relevance: 'Anchors digital delivery in direct subsurface decision consequences.', tags: ['Operations', 'VSP', 'Volumetrics'] },
-  { title: 'Integrated opportunity screening', situation: 'Prospect evidence was scattered across spreadsheets, spatial layers, and databases.', complexity: 'Overlapping prospects and lease ownership complicated attribution and QC.', myRole: 'Built the unified analytics workflow with geomatics support.', action: 'Centralized data and delivered interactive spatial analysis with automated calculations.', outcome: 'Reduced manual QC and enabled faster commercial assessment.', metric: '[metric to verify]', relevance: 'A practical example of turning fragmented evidence into a usable product.', tags: ['Spatial data', 'Product delivery', 'QC'] },
-]
-
 export const leadershipProofs: LeadershipProof[] = [
   { theme: 'Create', title: 'Environmental Awareness Campaign - Lagos, Nigeria', description: 'Turned a personal concern about air quality into a real-time public data campaign for transparency, reaching thousands of users and drawing international media coverage.', references: [{ label: 'Undark', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'IQAir', url: 'https://www.iqair.com/blog/success-stories/air-quality-in-africa' }, { label: 'France24', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }] },
   { theme: 'Lead', title: 'Cross-Functional & Compliance Leadership', description: 'Led developer and UX teams while aligning IRM and IDT stakeholders around secure, compliant, enterprise-ready delivery. Earlier, as Technical Lead, coordinated a ten-person multidisciplinary team to rejuvenate Play-Based Exploration in Nigeria’s shallow-water portfolio, bringing shared evidence, refreshed play maps, and decision-ready volume and risk assessments into one working picture.' },
@@ -77,8 +70,8 @@ export const leadershipProofs: LeadershipProof[] = [
 ]
 
 export const leadershipPillars: LeadershipPillar[] = [
-  { title: 'People known, not managed at a distance', statement: 'Know each person’s strengths, aspirations, energy, and development needs.' },
-  { title: 'High standards, real support, clear guardrails', statement: 'Hold quality, ownership, and delivery expectations high while giving squads room to decide how the work gets done.' },
+  { title: 'Know people personally', statement: 'Know each person’s strengths, aspirations, energy, and development needs.' },
+  { title: 'High standards, real support', statement: 'Hold quality, ownership, and delivery expectations high while giving squads room to decide how the work gets done.' },
   { title: 'Think again, together', statement: 'Treat certainty as provisional and change course when stronger evidence arrives.' },
 ]
 

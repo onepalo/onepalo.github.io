@@ -60,18 +60,6 @@ export interface IntegrationNode {
   y: number
 }
 
-export interface ImpactStory {
-  title: string
-  situation: string
-  complexity: string
-  myRole: string
-  action: string
-  outcome: string
-  metric: string
-  relevance: string
-  tags: string[]
-}
-
 export interface LeadershipProof {
   theme: string
   title: string
