@@ -73,7 +73,7 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
           <ArrowLeft size={16} aria-hidden="true" />
           Return to universe
         </button>
-        <button type="button" className="button button-secondary" onClick={() => onNavigate(nextExperience(experience))}>
+        <button type="button" className="stage-return" onClick={() => onNavigate(nextExperience(experience))}>
           Continue the story <ArrowRight size={16} aria-hidden="true" />
         </button>
       </div>
