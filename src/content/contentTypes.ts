@@ -49,14 +49,7 @@ export interface FeaturedProject {
   collaboration: string
   outcome: string
   aiInPractice: string
-}
-
-export interface ThinkingNode {
-  id: string
-  title: string
-  description: string
-  example: string
-  order: number
+  platforms: string[]
 }
 
 export interface IntegrationNode {

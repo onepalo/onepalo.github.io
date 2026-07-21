@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type KeyboardEvent, type RefObject } from 'react'
 import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, Sprout, X } from 'lucide-react'
-import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals, thinkingNodes } from '../../content/content'
+import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
@@ -38,12 +38,37 @@ const leadershipRhythmDetails = [
   { duration: 'Quarterly reset', outcome: 'The team explicitly continues, scales, pauses, or stops work based on value, trust, and adoption.', workingAgreement: 'Make the trade-offs visible: Review the evidence together, then name what the team will continue, scale, pause, or stop.' },
 ] as const
 
+const leadershipRhythmIcons = ['groups', 'person', 'restart_alt'] as const
+
 const leadershipSignalDetails = [
   'Capability growth becomes visible in the work people own, not only in a development plan.',
   'Dissent, risk, and requests for help arrive early enough to improve the work rather than explain a failure.',
   'More decisions, facilitation, and mentoring happen through the team without waiting for a manager to intervene.',
   'Delivery remains ambitious while people retain the energy and enjoyment to build together over time.',
 ] as const
+
+type FeaturedProjectField = 'businessMoment' | 'collaboration' | 'outcome' | 'aiInPractice'
+
+const featuredProjectHighlights: Record<string, Record<FeaturedProjectField, readonly string[]>> = {
+  'GoA PP SmartTrends': {
+    businessMoment: [],
+    collaboration: [],
+    outcome: ['72M log rows into 36k standardized reservoir units', 'months to hours'],
+    aiInPractice: [],
+  },
+  Yet2Find: {
+    businessMoment: [],
+    collaboration: [],
+    outcome: ['integrated interface', 'reduced manual QC'],
+    aiInPractice: [],
+  },
+  'Shell Savoy': {
+    businessMoment: [],
+    collaboration: ['governed well master'],
+    outcome: [],
+    aiInPractice: ['strong data foundation'],
+  },
+}
 
 const flagSources = { us: usFlag, nl: nlFlag, ng: ngFlag, qa: qaFlag, ve: veFlag, co: coFlag, mx: mxFlag } as const
 
@@ -59,6 +84,13 @@ function handleTabListNavigation(event: KeyboardEvent<HTMLButtonElement>) {
   const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (currentIndex + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length
   tabs[nextIndex].focus()
   tabs[nextIndex].click()
+}
+
+function renderHighlightedText(text: string, highlights: readonly string[]) {
+  const pattern = new RegExp(`(${highlights.map((highlight) => highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi')
+  const normalizedHighlights = new Set(highlights.map((highlight) => highlight.toLowerCase()))
+
+  return text.split(pattern).map((part, index) => normalizedHighlights.has(part.toLowerCase()) ? <strong className="featured-project-emphasis" key={`${part}-${index}`}>{part}</strong> : part)
 }
 
 export function ExperienceStage({ experience, headingRef, onNavigate }: ExperienceStageProps) {
@@ -96,15 +128,21 @@ function Journey() {
   return (
     <>
       <div className="journey-overview">
-        <section className="journey-statement" aria-labelledby="career-statement-title">
-          <span>Career statement</span>
-          <p id="career-statement-title">{journeyStatement.context} <span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
-        </section>
-        <FeaturedProjects />
         <CvProfile />
+        <div className="journey-overview-main">
+          <section className="journey-statement" aria-labelledby="career-statement-title">
+            <h2 id="career-statement-title">Career statement</h2>
+            <p>{journeyStatement.context} <span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
+          </section>
+          <FeaturedProjects />
+        </div>
       </div>
-      <div className="journey-timeline">
-        {journeyItems.map((item, index) => (
+      <section className="journey-timeline-section" aria-labelledby="professional-experience-title">
+        <header className="journey-timeline-heading">
+          <h2 id="professional-experience-title">Professional experience</h2>
+        </header>
+        <div className="journey-timeline">
+          {journeyItems.map((item, index) => (
           <details
             className="journey-card"
             key={`journey-role-${index}`}
@@ -150,8 +188,9 @@ function Journey() {
                 {item.reference && <p className="journey-reference"><span className="journey-reference-contact"><Mail size={15} strokeWidth={2} aria-hidden="true" /><span>Contact mail</span></span><strong>{item.reference.name}</strong><em>{item.reference.role}</em></p>}
             </div>
           </details>
-        ))}
-      </div>
+          ))}
+        </div>
+      </section>
     </>
   )
 }
@@ -159,20 +198,17 @@ function Journey() {
 function FeaturedProjects() {
   const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null)
   const activeProject = activeProjectIndex === null ? null : featuredProjects[activeProjectIndex]
+  const activeProjectHighlights = activeProject ? featuredProjectHighlights[activeProject.title] : null
 
   return (
     <section className="featured-projects" aria-labelledby="featured-projects-title">
-      <header className="featured-projects-heading">
-        <p className="journey-proof-label">Recent work</p>
-        <div>
-          <h2 id="featured-projects-title">AI embedded workflows in the business.</h2>
-          <p>A few examples from the last 12 months of working alongside domain and data teams to make complex evidence useful in the decisions they need to make now.</p>
-        </div>
+      <header className="journey-statement featured-projects-heading">
+        <h2 id="featured-projects-title">Recent work</h2>
+        <p>AI embedded workflows in the business. A few examples from the last 12 months of working alongside domain and data teams to make complex evidence useful in the decisions they need to make now.</p>
       </header>
       <div className="featured-project-list">
         {featuredProjects.map((project, index) => (
           <button className="featured-project" type="button" key={project.title} onClick={() => setActiveProjectIndex(index)} aria-haspopup="dialog">
-            <p className="featured-project-index">{String(index + 1).padStart(2, '0')}</p>
             <div className="featured-project-content">
               <h3>{project.title}</h3>
               <p>Open the project story</p>
@@ -189,11 +225,12 @@ function FeaturedProjects() {
               <button className="featured-project-dialog-close" type="button" onClick={() => setActiveProjectIndex(null)} aria-label={`Close ${activeProject.title} project story`}><X size={20} aria-hidden="true" /></button>
             </header>
             <dl>
-              <div><dt>Business moment</dt><dd>{activeProject.businessMoment}</dd></div>
-              <div><dt>How I embedded</dt><dd>{activeProject.collaboration}</dd></div>
-              <div><dt>What changed</dt><dd>{activeProject.outcome}</dd></div>
-              <div><dt>AI in practice</dt><dd>{activeProject.aiInPractice}</dd></div>
+              <div><dt>Business moment</dt><dd>{renderHighlightedText(activeProject.businessMoment, activeProjectHighlights?.businessMoment ?? [])}</dd></div>
+              <div><dt>How I embedded</dt><dd>{renderHighlightedText(activeProject.collaboration, activeProjectHighlights?.collaboration ?? [])}</dd></div>
+              <div><dt>What changed</dt><dd>{renderHighlightedText(activeProject.outcome, activeProjectHighlights?.outcome ?? [])}</dd></div>
+              <div><dt>AI in practice</dt><dd>{renderHighlightedText(activeProject.aiInPractice, activeProjectHighlights?.aiInPractice ?? [])}</dd></div>
             </dl>
+            <footer className="featured-project-platforms"><span>Platforms used</span><ul>{activeProject.platforms.map((platform) => <li key={platform}>{platform}</li>)}</ul></footer>
           </section>
         </div>
       )}
@@ -202,62 +239,34 @@ function FeaturedProjects() {
 }
 
 function CvProfile() {
+  const profileSections = ['Digital core', 'Subsurface domain', 'Achievements', 'Education & certifications', 'References'] as const
+  const [activeProfileIndex, setActiveProfileIndex] = useState(0)
+
   return (
     <section className="journey-cv-profile" aria-label="CV profile">
-      <div className="cv-profile-columns">
-        <div className="cv-profile-column">
-          <div className="cv-profile-line"><h3>Digital Core</h3><p>{journeyCvProfile.digitalCore}</p></div>
-          <div className="cv-profile-line"><h3>Subsurface Domain</h3><p>{journeyCvProfile.subsurfaceDomain}</p></div>
-          <div className="cv-profile-line"><h3>Education & certifications</h3><p>{journeyCvProfile.education}</p></div>
-        </div>
-        <div className="cv-profile-column">
-          <div className="cv-profile-line"><h3>Achievements</h3><ul>{journeyCvProfile.achievements.map((achievement, achievementIndex) => <li key={`achievement-${achievementIndex}`}>{achievement}</li>)}</ul></div>
-          <div className="cv-profile-line"><h3>References</h3><ul className="cv-references">{journeyCvProfile.references.map((reference, referenceIndex) => <li key={`reference-${referenceIndex}`}><strong>{reference.name}</strong><span>{reference.role}</span></li>)}</ul></div>
-        </div>
+      <div className="cv-profile-nav">
+        <header className="cv-profile-heading">
+          <h2>Profile at a glance</h2>
+        </header>
+        {profileSections.map((profileSection, index) => (
+          <details className="cv-profile-stack" key={profileSection} open={activeProfileIndex === index} onToggle={(event) => { if (event.currentTarget.open) setActiveProfileIndex(index) }}>
+            <summary><span>{profileSection}</span><ChevronDown size={16} aria-hidden="true" /></summary>
+            <div className="cv-profile-stack-content">
+              {index === 0 && <p>{journeyCvProfile.digitalCore}</p>}
+              {index === 1 && <p>{journeyCvProfile.subsurfaceDomain}</p>}
+              {index === 2 && <ul className="cv-profile-achievements">{journeyCvProfile.achievements.map((achievement) => <li key={achievement}>{achievement}</li>)}</ul>}
+              {index === 3 && <p>{journeyCvProfile.education}</p>}
+              {index === 4 && <ul className="cv-references">{journeyCvProfile.references.map((reference) => <li key={reference.name}><strong>{reference.name}</strong><span>{reference.role}</span></li>)}</ul>}
+            </div>
+          </details>
+        ))}
       </div>
     </section>
   )
 }
 
-function Thinking() {
-  const [activeNodeId, setActiveNodeId] = useState(thinkingNodes[0].id)
-  const activeNode = thinkingNodes.find((node) => node.id === activeNodeId) ?? thinkingNodes[0]
-
-  return <div className="thinking-system">
-    <div className="thinking-cycle">
-      <div className="thinking-core"><span>Starting point</span><strong>Ambiguous<br />problem</strong><small>Technical, human, and delivery constraints</small></div>
-      <svg className="thinking-rings" viewBox="0 0 600 600" aria-hidden="true"><defs><marker id="thinking-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" /></marker></defs><circle cx="300" cy="300" r="118" /><circle cx="300" cy="300" r="220" /><path d="M80 384 C178 55 461 75 531 274" /><path className="thinking-cycle-arrow" d="M300 80 A220 220 0 1 1 121 172" markerEnd="url(#thinking-arrowhead)" /></svg>
-      <div className="thinking-steps" aria-label="Decision cycle">
-        {thinkingNodes.map((node) => <button type="button" className={`thinking-step thinking-step-${node.order}${activeNodeId === node.id ? ' is-active' : ''}`} key={node.id} onClick={() => setActiveNodeId(node.id)} aria-pressed={activeNodeId === node.id}><span>{String(node.order).padStart(2, '0')}</span><strong>{node.title}</strong></button>)}
-      </div>
-    </div>
-    <section className="thinking-detail" aria-live="polite" aria-labelledby="thinking-detail-title">
-      <p className="thinking-detail-label">Selected step {String(activeNode.order).padStart(2, '0')}</p>
-      <div><h2 id="thinking-detail-title">{activeNode.title}</h2><p>{activeNode.description}</p><p className="thinking-example"><span>In practice</span>{activeNode.example}</p></div>
-    </section>
-  </div>
-}
-
 function IntegrationMap() {
   return <div className="integration-map"><svg viewBox="0 0 1000 700" aria-hidden="true">{integrationNodes.map((node) => <line key={node.id} x1="500" y1="350" x2={node.x * 10} y2={node.y * 7} />)}</svg><div className="integration-center"><img src={rafaelPortrait} alt="Rafael Navarro" /></div>{integrationNodes.map((node) => <article className={`integration-node connection-${node.connectionType}`} key={node.id} style={{ '--node-x': `${node.x}%`, '--node-y': `${node.y}%` } as CSSProperties}><CircleDot size={15} aria-hidden="true" /><h2>{node.label}</h2><p>{node.description}</p></article>)}</div>
-}
-
-function OperatingSystem() {
-  return <section className="operating-system-section" aria-labelledby="operating-system-title">
-    <details className="operating-system">
-      <summary>
-        <span className="operating-system-label">The operating system</span>
-        <span className="operating-system-copy">
-          <span id="operating-system-title" className="operating-system-title" role="heading" aria-level={2}>Make the thinking visible before asking people to move.</span>
-          <span>How these principles become daily practice.</span>
-        </span>
-        <ChevronDown className="operating-system-chevron" size={22} aria-hidden="true" />
-      </summary>
-      <div className="operating-system-detail">
-        <Thinking />
-      </div>
-    </details>
-  </section>
 }
 
 function Leadership() {
@@ -327,7 +336,7 @@ function Leadership() {
         <div className="leadership-principle-selector" role="tablist" aria-label="Leadership principles">
           {leadershipPillars.map((pillar, index) => {
             const Icon = pillarIcons[index]
-            return <button type="button" className={activePillarIndex === index ? 'is-active' : ''} role="tab" id={`principle-${index}-tab`} aria-selected={activePillarIndex === index} aria-controls="principle-panel" key={pillar.title} onClick={() => setActivePillarIndex(index)} onKeyDown={handleTabListNavigation}><Icon size={17} aria-hidden="true" /><h3>{pillar.title}</h3></button>
+            return <button type="button" className={activePillarIndex === index ? 'is-active' : ''} role="tab" id={`principle-${index}-tab`} aria-selected={activePillarIndex === index} aria-controls="principle-panel" key={pillar.title} onClick={() => setActivePillarIndex(index)} onKeyDown={handleTabListNavigation}><Icon size={19} aria-hidden="true" /><h3>{pillar.title}</h3></button>
           })}
         </div>
         <section className="leadership-principle-detail" id="principle-panel" role="tabpanel" aria-labelledby={`principle-${activePillarIndex}-tab`}>
@@ -357,13 +366,13 @@ function Leadership() {
         </div>
         <div className="leadership-rhythm-selector" role="tablist" aria-label="Team rhythm">
           {leadershipRhythms.map((rhythm, index) => <button type="button" className={activeRhythmIndex === index ? 'is-active' : ''} role="tab" id={`rhythm-${index}-tab`} aria-selected={activeRhythmIndex === index} aria-controls="rhythm-panel" key={rhythm.cadence} onClick={() => setActiveRhythmIndex(index)} onKeyDown={handleTabListNavigation}>
-            <span>{rhythm.cadence}</span>
-            <h3>{rhythm.title}</h3>
+            <span className="material-symbols-outlined leadership-rhythm-icon" aria-hidden="true">{leadershipRhythmIcons[index]}</span>
+            <div><h3>{rhythm.title}</h3><span className="leadership-rhythm-cadence">{rhythm.cadence}</span></div>
           </button>)}
         </div>
         <section className="leadership-rhythm-detail" id="rhythm-panel" role="tabpanel" aria-labelledby={`rhythm-${activeRhythmIndex}-tab`}>
-          <p className="leadership-detail-label">{activeRhythm.cadence} · {activeRhythmDetail.duration}</p>
-          <div><h3>{activeRhythm.title}</h3><p className="leadership-detail-statement">A dependable cadence makes shared progress visible without turning the week into a meeting.</p><p>{activeRhythm.description}</p><p className="leadership-outcome"><span>Result</span>{activeRhythmDetail.outcome}</p></div>
+          <header className="leadership-rhythm-detail-header"><span className="material-symbols-outlined leadership-rhythm-detail-icon" aria-hidden="true">{leadershipRhythmIcons[activeRhythmIndex]}</span><span>{activeRhythm.cadence}</span><span>{activeRhythmDetail.duration}</span></header>
+          <div><h3>{activeRhythm.title}</h3><p className="leadership-detail-statement">{activeRhythm.description}</p><p className="leadership-outcome"><span>Result</span>{activeRhythmDetail.outcome}</p></div>
         </section>
         <p className="leadership-async"><strong>Working agreement:</strong> {activeRhythmDetail.workingAgreement}</p>
       </section>
@@ -386,14 +395,12 @@ function Leadership() {
         </div>
         <section className="leadership-signal-detail" aria-live="polite">
           <ActiveSignalIcon size={22} aria-hidden="true" />
-          <div><p className="leadership-detail-label">Signal to observe</p><h3>{activeSignal.title}</h3><p className="leadership-detail-statement">The proof is in what the team can do, say, and sustain without waiting for direction.</p><p>{activeSignal.description}</p><p className="leadership-outcome"><span>What I would notice</span>{leadershipSignalDetails[activeSignalIndex]}</p></div>
+          <div><p className="leadership-detail-label">Signal to observe</p><h3>{activeSignal.title}</h3><p className="leadership-detail-statement">{activeSignal.description}</p><p className="leadership-outcome"><span>What I would notice</span>{leadershipSignalDetails[activeSignalIndex]}</p></div>
         </section>
       </section>
           )}
         </div>
       </section>
-
-      <OperatingSystem />
     </div>
   )
 }
