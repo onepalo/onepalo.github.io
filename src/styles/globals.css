@@ -81,7 +81,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .stage-return { display: inline-flex; align-items: center; gap: 7px; border: 0; padding: 8px 0; color: var(--muted); background: transparent; font-size: 12px; }
 .stage-return:hover { color: var(--blue); }
 
-.journey-overview { display: grid; grid-template-areas: 'stacks main'; grid-template-columns: minmax(180px, 25%) minmax(0, 1fr); gap: 48px; margin: 0 0 44px 86px; }
+.journey-overview { display: grid; grid-template-areas: 'stacks main'; grid-template-columns: minmax(180px, 25%) minmax(0, 1fr); gap: 48px; margin: 0 0 44px; }
 .journey-overview-main { grid-area: main; min-width: 0; }
 .journey-statement { width: 100%; margin: 0; padding: 0 0 32px; }
 .journey-statement h2, .cv-profile-heading h2 { margin: 0 0 8px; color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
