@@ -132,11 +132,16 @@ function Journey() {
         <div className="journey-overview-main">
           <section className="journey-statement" aria-labelledby="career-statement-title">
             <h2 id="career-statement-title">Career statement</h2>
-            <p>{journeyStatement.context} <span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
+            <p>{journeyStatement.firstParagraph}</p>
+            <p><span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
+            <p className="journey-evolving" aria-label="Keep evolving">
+              <span>Keep evolving...</span>
+              <span className="material-symbols-outlined" aria-hidden="true">directions_run</span>
+            </p>
           </section>
-          <FeaturedProjects />
         </div>
       </div>
+      <FeaturedProjects />
       <section className="journey-timeline-section" aria-labelledby="professional-experience-title">
         <header className="journey-timeline-heading">
           <h2 id="professional-experience-title">Professional experience</h2>
@@ -203,15 +208,15 @@ function FeaturedProjects() {
   return (
     <section className="featured-projects" aria-labelledby="featured-projects-title">
       <header className="journey-statement featured-projects-heading">
-        <h2 id="featured-projects-title">Recent work</h2>
-        <p>AI embedded workflows in the business. A few examples from the last 12 months of working alongside domain and data teams to make complex evidence useful in the decisions they need to make now.</p>
+        <h2 id="featured-projects-title">Recent AI-enabled work</h2>
+        <p>Three examples from the last 12 months of turning domain expertise, data, and AI into operational workflows that make complex evidence useful in the decisions teams need to make now.</p>
       </header>
       <div className="featured-project-list">
         {featuredProjects.map((project, index) => (
           <button className="featured-project" type="button" key={project.title} onClick={() => setActiveProjectIndex(index)} aria-haspopup="dialog">
             <div className="featured-project-content">
               <h3>{project.title}</h3>
-              <p>Open the project story</p>
+              <p>Click here to view the project story</p>
             </div>
             <ArrowRight size={18} aria-hidden="true" />
           </button>
@@ -246,7 +251,7 @@ function CvProfile() {
     <section className="journey-cv-profile" aria-label="CV profile">
       <div className="cv-profile-nav">
         <header className="cv-profile-heading">
-          <h2>Profile at a glance</h2>
+          <h2>Professional at a glance</h2>
         </header>
         {profileSections.map((profileSection, index) => (
           <details className="cv-profile-stack" key={profileSection} open={activeProfileIndex === index} onToggle={(event) => { if (event.currentTarget.open) setActiveProfileIndex(index) }}>

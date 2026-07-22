@@ -81,12 +81,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .stage-return { display: inline-flex; align-items: center; gap: 7px; border: 0; padding: 8px 0; color: var(--muted); background: transparent; font-size: 12px; }
 .stage-return:hover { color: var(--blue); }
 
-.journey-overview { display: grid; grid-template-areas: 'stacks main'; grid-template-columns: minmax(180px, 25%) minmax(0, 1fr); gap: 48px; margin: 0 0 44px; }
+.journey-overview { display: grid; grid-template-areas: 'stacks main'; grid-template-columns: minmax(180px, 25%) minmax(0, 1fr); gap: 48px; margin: 0 0 32px; }
 .journey-overview-main { grid-area: main; min-width: 0; }
-.journey-statement { width: 100%; margin: 0; padding: 0 0 32px; }
+.journey-statement { display: flex; width: 100%; min-height: 100%; flex-direction: column; margin: 0; padding: 0 0 32px; }
 .journey-statement h2, .cv-profile-heading h2 { margin: 0 0 8px; color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
-.journey-statement p { max-width: none; margin: 0; color: #435a64; font-family: var(--display); font-size: 16px; line-height: 1.55; }
+.journey-statement p { max-width: none; margin: 0; color: #435a64; font-family: var(--display); font-size: 17px; line-height: 1.52; }
+.journey-statement p + p { margin-top: 17px; }
 .journey-statement-key { color: var(--ink); font-weight: 600; }
+.journey-statement .journey-evolving { display: inline-flex; align-items: center; align-self: flex-end; gap: 9px; margin-top: auto; padding-top: 30px; color: var(--ink); font-size: 16px; font-style: italic; line-height: 1; transform: translateY(14px); }
+.journey-evolving .material-symbols-outlined { color: var(--blue); font-family: 'Material Symbols Outlined'; font-size: 27px; font-style: normal; line-height: 1; }
 .journey-cv-profile { grid-area: stacks; margin: 0; padding: 0; }
 .cv-profile-nav { padding: 0; }
 .cv-profile-heading { margin: 0 0 13px; }
@@ -118,7 +121,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .featured-project-dialog > header { display: flex; align-items: start; justify-content: space-between; gap: 20px; padding: 28px 30px 24px; border-bottom: 1px solid rgba(30, 37, 43, .12); }.featured-project-dialog .journey-proof-label { margin: 0 0 7px; }.featured-project-dialog h2 { margin: 0; font-size: 31px; line-height: 1.05; }
 .featured-project-dialog-close { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(46, 111, 149, .32); border-radius: 50%; color: var(--blue); background: transparent; cursor: pointer; }.featured-project-dialog-close:hover { color: var(--warm-white); background: var(--blue); }.featured-project-dialog-close:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .featured-project-dialog dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 0; }.featured-project-dialog dl div { min-width: 0; padding: 23px 30px 26px; border-top: 1px solid rgba(30, 37, 43, .1); }.featured-project-dialog dl div:nth-child(-n + 2) { border-top: 0; }.featured-project-dialog dl div:nth-child(even) { border-left: 1px solid rgba(30, 37, 43, .1); }.featured-project-dialog dt { margin: 0 0 8px; color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }.featured-project-dialog dd { margin: 0; color: #465760; font-size: 15px; line-height: 1.58; }.featured-project-emphasis { font-weight: 600; }.featured-project-platforms { display: flex; align-items: center; gap: 14px; padding: 18px 30px 20px; border-top: 1px solid rgba(30, 37, 43, .1); }.featured-project-platforms > span { flex: 0 0 auto; color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }.featured-project-platforms ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }.featured-project-platforms li { padding: 4px 8px; border: 1px solid rgba(46, 111, 149, .28); border-radius: 3px; color: #465760; font-size: 11px; line-height: 1.2; }
-.journey-timeline-section { margin-top: 42px; }.journey-timeline-heading { margin: 0 0 18px; }.journey-timeline-heading h2 { margin: 0; font-size: 29px; line-height: 1.08; }
+.journey-timeline-section { margin-top: 42px; padding-top: 30px; border-top: 1px solid rgba(30, 37, 43, .14); }.journey-timeline-heading { margin: 0 0 18px; }.journey-timeline-heading h2 { margin: 0; font-size: 29px; line-height: 1.08; }
 .journey-timeline { position: relative; display: grid; gap: 12px; }
 .journey-timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 41px; border-left: 1px dashed rgba(46, 111, 149, .45); }
 .journey-card { position: relative; overflow: hidden; border: 1px solid rgba(30, 37, 43, .11); border-radius: 7px; background: rgba(250, 250, 246, .76); box-shadow: 0 8px 28px rgba(36, 61, 72, .03); transition: box-shadow .2s ease, border-color .2s ease, background .2s ease; }
@@ -276,6 +279,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 @media (max-width: 900px) {
 	.journey-overview { grid-template-areas: 'main' 'stacks'; grid-template-columns: minmax(0, 1fr); margin-left: 0; margin-bottom: 32px; }
 	.journey-statement { padding: 18px 0 22px; }
+	.journey-statement .journey-evolving { margin-top: 34px; padding-top: 0; font-size: 16px; transform: none; }
 	.journey-cv-profile { padding: 0; }
 	.cv-profile-nav { padding: 18px 0 0; }
 	.cv-profile-heading { margin-bottom: 14px; }

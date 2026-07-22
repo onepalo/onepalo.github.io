@@ -26,7 +26,7 @@ export const journeyItems: JourneyItem[] = [
 ]
 
 export const journeyStatement = {
-  context: 'My career began in exploration and subsurface interpretation, building a strong foundation in geoscience, uncertainty assessment, and technical decision-making. Over time, that foundation expanded beyond the subsurface into analytics, software-enabled workflows, AI, and digital product leadership.',
+  firstParagraph: 'My career began in exploration and subsurface interpretation, building a strong foundation in geoscience, uncertainty assessment, and technical decision-making. Over time, that foundation expanded beyond the subsurface into analytics, software-enabled workflows, AI, and digital product leadership.',
   keyStatement: 'Today, with more than 15 years of experience across geoscience and technology',
   conclusion: ', I leverage a unique combination of domain expertise, data, software, and product thinking to transform complex technical workflows into scalable solutions that accelerate decision-making, unlock efficiencies, and deliver measurable business value.',
 }
