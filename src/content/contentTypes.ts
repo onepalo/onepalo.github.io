@@ -73,6 +73,26 @@ export interface LeadershipProof {
   }>
 }
 
+export interface CampaignStoryAct {
+  id: 'trace' | 'signal' | 'reach' | 'action'
+  chapter: string
+  title: string
+  body: string
+  reference?: {
+    label: string
+    url: string
+  }
+}
+
+export interface CampaignStory {
+  location: string
+  eyebrow: string
+  title: string
+  lede: string
+  acts: CampaignStoryAct[]
+  closing: string
+}
+
 export interface LeadershipPillar {
   title: string
   statement: string

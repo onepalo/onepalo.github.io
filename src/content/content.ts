@@ -1,4 +1,4 @@
-import type { FeaturedProject, HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, LeadershipRhythm, LeadershipSignal, World } from './contentTypes'
+import type { CampaignStory, FeaturedProject, HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, LeadershipRhythm, LeadershipSignal, World } from './contentTypes'
 import empathyAiLogo from './Asset 31.png'
 
 export const heroContent: HeroContent = {
@@ -85,11 +85,47 @@ export const integrationNodes: IntegrationNode[] = [
 ]
 
 export const leadershipProofs: LeadershipProof[] = [
-  { theme: 'Create', title: 'Environmental Awareness Campaign - Lagos, Nigeria', description: 'Turned a personal concern about air quality into a real-time public data campaign that made local conditions more visible and understandable. The initiative reached thousands of users, encouraged public discussion around transparency and health, and drew international media coverage that connected Lagos to a wider conversation about air-quality data in Africa.', references: [{ label: 'Undark', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'IQAir', url: 'https://www.iqair.com/blog/success-stories/air-quality-in-africa' }, { label: 'France24', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }] },
+  { theme: 'Create', title: 'Environmental Awareness Campaign - Port Harcourt, Nigeria', description: 'Turned a personal concern about air quality into a public-data initiative that made conditions in Port Harcourt more visible and understandable. The monitoring contributed to public discussion around transparency and health, and was documented by international reporting on air pollution in Nigeria.', references: [{ label: 'Undark: Port Harcourt investigation', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'France24 / AFP: demand for air-quality data', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }] },
   { theme: 'Lead', title: 'Cross-Functional & Compliance Leadership', description: 'Led developer and UX teams while aligning IRM and IDT stakeholders around secure, compliant, enterprise-ready delivery. Earlier, as Technical Lead, coordinated a ten-person multidisciplinary team to rejuvenate Play-Based Exploration in Nigeria’s shallow-water portfolio, bringing shared evidence, refreshed play maps, and decision-ready volume and risk assessments into one working picture.' },
   { theme: 'Build', title: 'EmpathyAI - Founder', description: 'Founded EmpathyAI, an independent applied-AI initiative exploring how organizations can turn workforce ideas into actionable innovation. Its first concept, Connectify, reimagines idea sharing across hierarchy, language, and fear of judgment, combining inclusive participation with AI-assisted insight to help leaders surface patterns they might otherwise miss.', logoSrc: empathyAiLogo, logoAlt: 'EmpathyAI logo' },
   { theme: 'Compete', title: 'Competitive Pickleball - DUPR 4.0', description: 'Applies the same disciplined, iterative improvement mindset used in analytics and technical product work to competitive sport. Deliberate practice, direct feedback, clear communication with a partner, and calm decisions under pressure turn each match into evidence for the next adjustment.' },
 ]
+
+export const campaignStory: CampaignStory = {
+  location: 'Port Harcourt, Nigeria',
+  eyebrow: 'An air-quality story',
+  title: 'When air-quality data became a public question.',
+  lede: 'A personal concern about the air in Port Harcourt became a public-data initiative: making conditions more visible, understandable, and harder to ignore.',
+  acts: [
+    {
+      id: 'trace',
+      chapter: '01 / The trace',
+      title: 'It began after a ride.',
+      body: 'After cycling through Port Harcourt, a fine black residue began appearing on clothes, at home, and across nearby surfaces. It was a physical observation shared by many residents, but one that had no clear public record behind it.',
+    },
+    {
+      id: 'signal',
+      chapter: '02 / The signal',
+      title: 'A question needed a measurement.',
+      body: 'With little publicly available monitoring in Nigeria at the time, a PM2.5 station was installed at home and its measurements were published through the AirVisual network, now IQAir. Within months, it became one of the few publicly accessible sources of air-quality data in the country. Readings often rose far above internationally recognized health guidelines. The point was not to make a private concern louder; it was to make it observable.',
+      reference: { label: 'Read the Undark investigation', url: 'https://undark.org/2018/10/22/air-pollution-lagos' },
+    },
+    {
+      id: 'reach',
+      chapter: '03 / The signal travels',
+      title: 'Evidence made the invisible discussable.',
+      body: 'The public data became part of a wider conversation among residents, environmental groups, researchers, and journalists. Later reporting and studies strengthened the understanding that much of the region\'s particulate pollution was associated with refining activities, including illegal crude-oil refining operations in the Niger Delta. Port Harcourt was the lived context, while the underlying challenge reached far beyond one city.',
+      reference: { label: 'Read the France24 / AFP report', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' },
+    },
+    {
+      id: 'action',
+      chapter: '04 / What changed',
+      title: 'Attention became a form of care.',
+      body: 'Greater awareness helped create space for conversations about environmental exposure and employee wellbeing, including clearer air-quality communication, pollution alerts, and air-purification support for affected families.',
+    },
+  ],
+  closing: 'Measuring the air did not solve the pollution. It gave people a shared way to see it, question it, and act on it.',
+}
 
 export const leadershipPillars: LeadershipPillar[] = [
   { title: 'Know people personally', statement: 'Know each person’s strengths, aspirations, energy, and development needs.' },

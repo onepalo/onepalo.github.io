@@ -1,0 +1,9 @@
+What began as a simple observation after a cycling session evolved into a personal air-quality investigation. After noticing an unusual layer of fine black particles covering my clothes, home, and surrounding surfaces in Port Harcourt, I started looking for reliable data to understand what residents were being exposed to. At the time, publicly available air-quality monitoring in Nigeria was extremely limited, making it difficult to separate speculation from evidence.
+
+To fill that gap, I deployed a PM2.5 monitoring station and began publishing measurements through the AirVisual (now IQAir) network. Within months, the station became one of the very few publicly accessible sources of air-quality data in Nigeria and attracted significant local interest. The data frequently showed particulate concentrations far above internationally recognized health guidelines, helping bring attention to an issue that many residents had experienced but could not quantify.
+
+The initiative gained visibility among local media, environmental groups, researchers, and eventually international journalists. In fact, an Undark Magazine investigation on air pollution in Nigeria referenced my monitoring station as one of the rare publicly available sources of PM2.5 data in Port Harcourt.
+
+Over time, subsequent investigations and studies strengthened the understanding that a significant portion of the region's particulate pollution was associated with refining activities, including illegal crude-oil refining operations in the Niger Delta.
+
+Internally, the increased awareness contributed to broader discussions around employee wellbeing and environmental exposure. Measures were introduced to improve communication of air-quality conditions and support affected families, including pollution alerts and air-purification initiatives.
