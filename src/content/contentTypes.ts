@@ -1,4 +1,4 @@
-export type ExperienceId = 'home' | 'cover' | 'journey' | 'leadership' | 'impact'
+export type ExperienceId = 'home' | 'cover' | 'journey' | 'leadership' | 'impact' | 'campaign'
 
 export interface HeroContent {
   eyebrow: string
@@ -9,7 +9,7 @@ export interface HeroContent {
 }
 
 export interface World {
-  id: Exclude<ExperienceId, 'home'>
+  id: Exclude<ExperienceId, 'home' | 'campaign'>
   title: string
   shortTitle: string
   description: string

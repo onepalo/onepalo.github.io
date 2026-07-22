@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type KeyboardEvent, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, ExternalLink, HeartHandshake, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, Sprout, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, HeartHandshake, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, Sprout, X } from 'lucide-react'
 import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
@@ -14,7 +14,7 @@ import coFlag from 'flag-icons/flags/4x3/co.svg'
 import mxFlag from 'flag-icons/flags/4x3/mx.svg'
 
 interface ExperienceStageProps {
-  experience: Exclude<ExperienceId, 'home'>
+  experience: Exclude<ExperienceId, 'home' | 'campaign'>
   headingRef: RefObject<HTMLHeadingElement | null>
   onNavigate: (experience: ExperienceId) => void
 }
@@ -23,7 +23,7 @@ const stageMeta = {
   cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The Value I Can Bring as Team Lead, AI Embedment.' },
   journey: { eyebrow: 'Career overview', title: 'Resume / CV', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead the team', intro: '' },
-  impact: { eyebrow: 'Evidence, not claims', title: 'Proof of Leadership', intro: '' },
+  impact: { eyebrow: 'Leadership is a practice, not a title.', title: 'Proof of Leadership', intro: '' },
 } as const
 
 const leadershipPrincipleDetails = [
@@ -108,7 +108,7 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
       {experience === 'cover' && <CoverLetter />}
       {experience === 'journey' && <Journey />}
       {experience === 'leadership' && <Leadership />}
-      {experience === 'impact' && <LeadershipProof />}
+      {experience === 'impact' && <LeadershipProof onOpenCampaign={() => onNavigate('campaign')} />}
       <div className="stage-next">
         <button type="button" className="stage-return" onClick={() => onNavigate('home')}>
           <ArrowLeft size={16} aria-hidden="true" />
@@ -134,9 +134,8 @@ function Journey() {
             <h2 id="career-statement-title">Career statement</h2>
             <p>{journeyStatement.firstParagraph}</p>
             <p><span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
-            <p className="journey-evolving" aria-label="Keep evolving">
-              <span>Keep evolving...</span>
-              <span className="material-symbols-outlined" aria-hidden="true">directions_run</span>
+            <p className="journey-evolving" aria-label="Always evolving">
+              <span>Always evolving...</span>
             </p>
           </section>
         </div>
@@ -190,7 +189,7 @@ function Journey() {
                   <p>{item.learningCore}</p>
                   <ul className="chips">{item.capabilities.map((capability, capabilityIndex) => <li key={`capability-${capabilityIndex}`}>{capability}</li>)}</ul>
                 </section>
-                {item.reference && <p className="journey-reference"><span className="journey-reference-contact"><Mail size={15} strokeWidth={2} aria-hidden="true" /><span>Contact mail</span></span><strong>{item.reference.name}</strong><em>{item.reference.role}</em></p>}
+                {item.reference && <p className="journey-reference"><span className="journey-reference-contact"><Mail size={15} strokeWidth={2} aria-hidden="true" /><span>Reference</span></span><strong>{item.reference.name}</strong><em>{item.reference.role}</em></p>}
             </div>
           </details>
           ))}
@@ -462,23 +461,22 @@ function CoverLetter() {
   )
 }
 
-function LeadershipProof() {
+function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
   return <div className="leadership-proof-view">
-    <section className="personal-leadership" aria-labelledby="beyond-day-job-title">
+    <section className="personal-leadership" aria-label="Leadership evidence beyond the day job">
       <div className="leadership-proof-heading">
         <div>
-          <h2 id="beyond-day-job-title">Leadership is a practice, not a title.</h2>
           <p>The same habits behind my technical work also shape what I create, lead, and pursue beyond the day job.</p>
         </div>
       </div>
       <div className="personal-leadership-grid">
-        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.logoSrc ? ' has-logo' : ''}`} key={proof.title}><span>{proof.theme}</span><div className="personal-leadership-card-title"><h3>{proof.title}</h3>{proof.logoSrc && <img src={proof.logoSrc} alt={proof.logoAlt ?? ''} />}</div><p>{proof.description}</p>{proof.references && <div className="leadership-proof-references"><strong>Featured by</strong><ul>{proof.references.map((reference) => <li key={reference.url}><a href={reference.url} target="_blank" rel="noopener noreferrer">{reference.label} <ExternalLink size={12} aria-hidden="true" /></a></li>)}</ul></div>}</article>)}
+        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.logoSrc ? ' has-logo' : ''}`} key={proof.title}><span>{proof.theme}</span><div className="personal-leadership-card-title"><h3>{proof.title}</h3>{proof.logoSrc && <img src={proof.logoSrc} alt={proof.logoAlt ?? ''} />}</div><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Lagos, Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Click here for more <ArrowRight size={14} aria-hidden="true" /></button>}</article>)}
       </div>
     </section>
   </div>
 }
 
-function nextExperience(current: Exclude<ExperienceId, 'home'>): Exclude<ExperienceId, 'home'> {
-  const order: Array<Exclude<ExperienceId, 'home'>> = ['cover', 'leadership', 'journey', 'impact']
+function nextExperience(current: Exclude<ExperienceId, 'home' | 'campaign'>): Exclude<ExperienceId, 'home' | 'campaign'> {
+  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'leadership', 'journey', 'impact']
   return order[(order.indexOf(current) + 1) % order.length]
 }

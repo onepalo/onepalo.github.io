@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Hero } from '../components/Hero/Hero'
 import { Navigation } from '../components/Navigation/Navigation'
 import { ExperienceStage } from '../components/ExperienceStage/ExperienceStage'
+import { EnvironmentalCampaign } from '../components/EnvironmentalCampaign/EnvironmentalCampaign'
 import { heroContent } from '../content/content'
 import type { ExperienceId } from '../content/contentTypes'
 import { experienceFromHash, hashForExperience } from '../utils/hashNavigation'
@@ -13,6 +14,7 @@ const titles: Record<ExperienceId, string> = {
   leadership: "How I Will Lead the Team | Rafael's Exploration Journal",
   journey: "Resume / CV | Rafael's Exploration Journal",
   impact: "Proof of Leadership | Rafael's Exploration Journal",
+  campaign: "Environmental Awareness Campaign | Rafael's Exploration Journal",
 }
 
 export default function App() {
@@ -41,7 +43,7 @@ export default function App() {
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && activeExperience !== 'home') openExperience('home')
+      if (event.key === 'Escape' && activeExperience !== 'home') openExperience(activeExperience === 'campaign' ? 'impact' : 'home')
     }
     window.addEventListener('keydown', handleEscape)
     return () => window.removeEventListener('keydown', handleEscape)
@@ -49,7 +51,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Navigation activeExperience={activeExperience} onNavigate={openExperience} />
+      {activeExperience !== 'campaign' && <Navigation activeExperience={activeExperience} onNavigate={openExperience} />}
       <AnimatePresence mode="wait" initial={false}>
         {activeExperience === 'home' ? (
           <motion.main
@@ -65,6 +67,8 @@ export default function App() {
               onOpenWorld={openExperience}
             />
           </motion.main>
+        ) : activeExperience === 'campaign' ? (
+          <EnvironmentalCampaign headingRef={stageHeadingRef} onReturn={() => openExperience('impact')} />
         ) : (
           <motion.main
             key={activeExperience}

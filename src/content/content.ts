@@ -12,7 +12,7 @@ export const heroContent: HeroContent = {
 export const worlds: World[] = [
   { id: 'cover', title: 'Why Me?', shortTitle: 'Why Me?', description: 'Why this role is the natural next step in my career.', accentColor: '#2e6f95', visualHint: 'personal statement' },
   { id: 'leadership', title: 'How I Will Lead the Team', shortTitle: 'Leadership', description: 'The people, standards, and rhythms I will create for an AI Embedment team.', accentColor: '#42a5a5', visualHint: 'team compass' },
-  { id: 'journey', title: 'Resume / CV', shortTitle: 'Resume / CV', description: 'From field geophysics to global product and analytics delivery.', accentColor: '#d6a94a', visualHint: 'constellation route' },
+  { id: 'journey', title: 'Resume', shortTitle: 'Resume', description: 'From field geophysics to global product and analytics delivery.', accentColor: '#d6a94a', visualHint: 'constellation route' },
   { id: 'impact', title: 'Proof of Leadership', shortTitle: 'Leadership proof', description: 'Results, influence, and initiative demonstrated in and beyond the day job.', accentColor: '#e07a5f', visualHint: 'proof points' },
 ]
 
@@ -28,7 +28,7 @@ export const journeyItems: JourneyItem[] = [
 export const journeyStatement = {
   firstParagraph: 'My career began in exploration and subsurface interpretation, building a strong foundation in geoscience, uncertainty assessment, and technical decision-making. Over time, that foundation expanded beyond the subsurface into analytics, software-enabled workflows, AI, and digital product leadership.',
   keyStatement: 'Today, with more than 15 years of experience across geoscience and technology',
-  conclusion: ', I leverage a unique combination of domain expertise, data, software, and product thinking to transform complex technical workflows into scalable solutions that accelerate decision-making, unlock efficiencies, and deliver measurable business value.',
+  conclusion: ', I bridge domain expertise, data, software, and product thinking to help teams turn complex evidence into actionable decisions, scale knowledge through digital workflows, and create measurable business impact.',
 }
 
 export const journeyCvProfile: JourneyCvProfile = {
@@ -85,7 +85,7 @@ export const integrationNodes: IntegrationNode[] = [
 ]
 
 export const leadershipProofs: LeadershipProof[] = [
-  { theme: 'Create', title: 'Environmental Awareness Campaign - Lagos, Nigeria', description: 'Turned a personal concern about air quality into a real-time public data campaign for transparency, reaching thousands of users and drawing international media coverage.', references: [{ label: 'Undark', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'IQAir', url: 'https://www.iqair.com/blog/success-stories/air-quality-in-africa' }, { label: 'France24', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }] },
+  { theme: 'Create', title: 'Environmental Awareness Campaign - Lagos, Nigeria', description: 'Turned a personal concern about air quality into a real-time public data campaign that made local conditions more visible and understandable. The initiative reached thousands of users, encouraged public discussion around transparency and health, and drew international media coverage that connected Lagos to a wider conversation about air-quality data in Africa.', references: [{ label: 'Undark', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'IQAir', url: 'https://www.iqair.com/blog/success-stories/air-quality-in-africa' }, { label: 'France24', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }] },
   { theme: 'Lead', title: 'Cross-Functional & Compliance Leadership', description: 'Led developer and UX teams while aligning IRM and IDT stakeholders around secure, compliant, enterprise-ready delivery. Earlier, as Technical Lead, coordinated a ten-person multidisciplinary team to rejuvenate Play-Based Exploration in Nigeria’s shallow-water portfolio, bringing shared evidence, refreshed play maps, and decision-ready volume and risk assessments into one working picture.' },
   { theme: 'Build', title: 'EmpathyAI - Founder', description: 'Founded EmpathyAI, an independent applied-AI initiative exploring how organizations can turn workforce ideas into actionable innovation. Its first concept, Connectify, reimagines idea sharing across hierarchy, language, and fear of judgment, combining inclusive participation with AI-assisted insight to help leaders surface patterns they might otherwise miss.', logoSrc: empathyAiLogo, logoAlt: 'EmpathyAI logo' },
   { theme: 'Compete', title: 'Competitive Pickleball - DUPR 4.0', description: 'Applies the same disciplined, iterative improvement mindset used in analytics and technical product work to competitive sport. Deliberate practice, direct feedback, clear communication with a partner, and calm decisions under pressure turn each match into evidence for the next adjustment.' },
