@@ -56,6 +56,20 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .character-visual img { position: relative; z-index: 2; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: drop-shadow(0 15px 18px rgba(30, 37, 43, .18)); }
 .character-halo { position: absolute; z-index: 0; top: 6%; right: 0; left: 0; aspect-ratio: 1; border: 1px solid rgba(46, 111, 149, .38); border-radius: 50%; background: radial-gradient(circle, rgba(250, 250, 246, .75), rgba(66, 165, 165, .09) 48%, transparent 69%); box-shadow: 0 0 0 40px rgba(66, 165, 165, .035), 0 0 0 80px rgba(46, 111, 149, .02); }
 .character-contours { position: absolute; z-index: 1; inset: 8% -12% auto; height: 47%; border: 1px solid rgba(214, 169, 74, .27); border-radius: 48% 52% 43% 57%; transform: rotate(-11deg); }
+.author-signature { position: absolute; z-index: 4; right: clamp(18px, 2.5vw, 38px); bottom: clamp(18px, 2.5vh, 30px); width: clamp(132px, 12vw, 168px); height: 42px; transform: scale(.6); transform-origin: right bottom; pointer-events: none; }
+.signature-copy { position: absolute; right: 0; bottom: 0; display: block; color: var(--ink); font-family: 'Allura', cursive; font-size: clamp(22px, 1.65vw, 27px); line-height: .9; white-space: nowrap; }
+.signature-letter { display: inline-block; opacity: 0; transform: translateY(5px); animation: signature-letter-arrive .32s cubic-bezier(.18, .8, .3, 1) forwards; }
+.signature-spark { position: absolute; display: block; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px rgba(214, 169, 74, .7); opacity: 0; transform: scale(0); animation: signature-sparkle .48s ease-out forwards; }
+.signature-spark::before, .signature-spark::after { position: absolute; top: 50%; left: 50%; background: var(--gold); content: ''; transform: translate(-50%, -50%); }
+.signature-spark::before { width: 8px; height: 1px; }
+.signature-spark::after { width: 1px; height: 8px; }
+.signature-spark-1 { top: 0; right: 4px; animation-delay: 1.45s; }
+.signature-spark-2 { top: 12px; right: 18px; width: 2px; height: 2px; animation-delay: 1.58s; }
+.signature-spark-3 { top: 5px; right: 31px; width: 2px; height: 2px; animation-delay: 1.7s; }
+.signature-spark-4 { top: 20px; right: 7px; width: 2px; height: 2px; animation-delay: 1.83s; }
+.signature-spark-5 { top: 16px; right: 40px; width: 1px; height: 1px; animation-delay: 1.94s; }
+@keyframes signature-letter-arrive { to { opacity: .92; transform: translateY(0) rotate(0); } }
+@keyframes signature-sparkle { 45% { opacity: 1; transform: scale(1.25); } 100% { opacity: .78; transform: scale(.72); } }
 
 .stage-view { min-height: 100vh; padding: 108px clamp(20px, 6vw, 96px) 50px; background: radial-gradient(circle at 92% 7%, rgba(66, 165, 165, .1), transparent 19%), radial-gradient(circle at 2% 43%, rgba(214, 169, 74, .11), transparent 22%), var(--canvas); }
 .stage-view::before { content: ''; position: fixed; inset: 0; z-index: -1; opacity: .4; background-image: radial-gradient(rgba(30, 37, 43, .12) .55px, transparent .55px); background-size: 20px 20px; pointer-events: none; }
@@ -347,7 +361,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .campaign-rider { width: min(100%, 1080px); margin: 0; pointer-events: none; }
 .campaign-rider img { display: block; width: 100%; max-height: calc(100svh - clamp(72px, 10vw, 156px)); object-fit: contain; object-position: center bottom; }
 .campaign-rider-caption { position: absolute; bottom: clamp(26px, 4vw, 54px); left: clamp(22px, 4vw, 58px); margin: 0; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
-.campaign-narrative { position: relative; z-index: 1; padding: clamp(124px, 15vh, 176px) clamp(24px, 5vw, 80px) 8svh; color: #f4f1e8; background: #18252b; }
+.campaign-narrative { position: relative; z-index: 1; padding: clamp(124px, 15vh, 176px) clamp(24px, 5vw, 80px) 8svh; color: #f4f1e8; background: #202124; }
 .campaign-intro { display: grid; align-content: center; min-height: min(72svh, 720px); max-width: 590px; }
 .campaign-eyebrow { margin: 0 0 18px; color: #8dcac3; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .campaign-intro h1 { max-width: 670px; margin: 0; color: #f4f1e8; font-size: clamp(42px, 5vw, 76px); line-height: .98; }

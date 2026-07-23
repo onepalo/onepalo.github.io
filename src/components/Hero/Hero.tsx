@@ -8,6 +8,8 @@ interface HeroProps {
 }
 
 export function Hero({ content, onOpenWorld }: HeroProps) {
+  const signature = 'By Rafael Navarro'
+
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="contour-field" aria-hidden="true">
@@ -16,6 +18,20 @@ export function Hero({ content, onOpenWorld }: HeroProps) {
       <h1 id="hero-title" className="sr-only">{content.title}</h1>
       <WorldNav onOpenWorld={onOpenWorld} />
       <CharacterVisual />
+      <div className="author-signature" aria-hidden="true">
+        <span className="signature-spark signature-spark-1" />
+        <span className="signature-spark signature-spark-2" />
+        <span className="signature-spark signature-spark-3" />
+        <span className="signature-spark signature-spark-4" />
+        <span className="signature-spark signature-spark-5" />
+        <span className="signature-copy">
+          {Array.from(signature).map((letter, index) => (
+            <span className="signature-letter" style={{ animationDelay: `${0.3 + index * 0.075}s` }} key={`${letter}-${index}`}>
+              {letter === ' ' ? '\u00a0' : letter}
+            </span>
+          ))}
+        </span>
+      </div>
     </section>
   )
 }
