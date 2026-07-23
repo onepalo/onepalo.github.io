@@ -32,7 +32,7 @@ export const journeyStatement = {
 }
 
 export const journeyCvProfile: JourneyCvProfile = {
-  digitalCore: 'Spotfire | Databricks SQL/Python | Data governance | NLP/LLM | Agentic AI | Figma | Azure DevOps | ArcGIS | VS Code | GitHub',
+  digitalCore: 'Spotfire | Databricks | SQL/Python | Data governance | NLP/LLM | Agentic AI | Figma | Azure DevOps | ArcGIS | VS Code | GitHub',
   subsurfaceDomain: 'Seismic acquisition & processing | Seismic interpretation | Drilling operations & VSP | Prospect maturation | Volumetrics & Risk | Petrophysics | WRFM',
   achievements: [
     'Delivered 22.8 MMBOE opportunity from high-pressure exploration portfolio.',

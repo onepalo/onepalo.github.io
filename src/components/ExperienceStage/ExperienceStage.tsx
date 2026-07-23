@@ -454,6 +454,7 @@ function CoverLetter() {
         <p className="eyebrow">Why lead now</p>
         <div className="leadership-narrative-copy">
           <p>The Lead AI Embedment role needs someone credible with a geoscientist, data scientist, product owner, and asset stakeholder without flattening the work into generic innovation language. That is the bridge I have been building toward.</p>
+          <p>AI has become accessible to many of us, and exploration is an important start. But for this programme to genuinely move forward, it needs someone who can carry the full journey with credibility: listen closely to customers, connect the right disciplines, turn an idea into something real quickly, and earn the trust needed to bring it into day-to-day work. That is the kind of work I have built my reputation on.</p>
           <p>My career began in subsurface interpretation and evolved into analytics, product ownership, and AI-enabled decision support. That journey taught me that successful adoption rarely comes from technology alone. It comes from helping people frame better questions, challenge assumptions, and connect evidence to decisions. I want to use that experience to elevate the capability of the teams around me, create opportunities for others to lead, and build an environment where innovation is both practical and trusted. <span className="cover-letter-emphasis">That is the multiplier effect I want to be accountable for</span>.</p>
         </div>
       </section>
