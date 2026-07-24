@@ -29,6 +29,12 @@ export function EnvironmentalCampaign({ headingRef, onReturn }: EnvironmentalCam
               <p className="campaign-lede">{campaignStory.lede}</p>
               <p className="campaign-scroll-cue" aria-hidden="true">Scroll to follow the signal</p>
             </header>
+            <aside className="campaign-rider-stage-mobile" aria-label="Cyclist after a ride in Port Harcourt, the starting point for the air-quality investigation.">
+              <figure className="campaign-rider">
+                <img src={cyclist} alt="" />
+              </figure>
+              <p className="campaign-rider-caption">Port Harcourt / a question begins</p>
+            </aside>
             {campaignStory.acts.map((act) => (
               <section className={`campaign-act campaign-act--${act.id}`} key={act.id} aria-labelledby={`campaign-${act.id}-title`}>
                 <motion.div

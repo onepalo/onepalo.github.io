@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, HeartHandshake, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, Sprout, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, X } from 'lucide-react'
 import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
@@ -27,7 +27,6 @@ const stageMeta = {
 } as const
 
 const leadershipPrincipleDetails = [
-  { behavior: 'Every effort begins with a named decision, sponsor, users, baseline, and value hypothesis rather than a technology looking for a use case.' },
   { behavior: 'Squads learn the real workflow with domain experts, then test a useful change in the context where people already make decisions.' },
   { behavior: 'Start with the tools, data, and approved models already available. When something works, turn it into a simpler starting point for the next team.' },
 ] as const
@@ -41,16 +40,24 @@ const leadershipRhythmDetails = [
 const leadershipRhythmIcons = ['groups', 'person', 'restart_alt'] as const
 
 const leadershipSignalDetails = [
-  'Three to five workflows have demonstrated value in live use, with an operational owner, runbook, and a clear measure of what changed. At least one can be replicated with less effort than the first deployment.',
   'A clear opportunity can reach a first useful version in one to three months, rather than entering a six-to-twenty-four-month programme by default.',
   'We will be honest about what is estimated, what has worked in a trial, and what is delivering value in day-to-day use. Reusable data patterns, evaluations, connectors, and workflow components make the next delivery faster.',
 ] as const
 
+const evolvingPhrases = [
+  'Always evolving...',
+  'Still curious. Still tinkering.',
+  'One more thing to learn...',
+  'Apparently, I am not done yet.',
+  'New puzzle. Same curiosity.',
+  'Upgraded after every good question.',
+  'Surprise: still evolving.',
+] as const
+
 const operatingDeliveryStages = [
-  { step: '01', title: 'Frame', duration: 'Up to 2 weeks', description: 'Name the decision, sponsor, users, data, baseline, and value hypothesis.' },
-  { step: '02', title: 'Validate', duration: 'Up to 4 weeks', description: 'Test workflow fit, data feasibility, and practitioner feedback before committing to a build.' },
-  { step: '03', title: 'Build and adopt', duration: 'Up to 6 weeks', description: 'Put a useful version into the real workflow with an owner, support, and a way to learn from use.' },
-  { step: '04', title: 'Scale or stop', duration: 'Use and results', description: 'Strengthen, replicate, pause, or close the work based on what people use, what changes, and what holds up in practice.' },
+  { step: '01', title: 'Frame', duration: 'Up to 2 weeks', description: 'Name the decision, sponsor, users, data, baseline, and value hypothesis. As part of rapid learning, run an internal Shark Tank session to use our collective knowledge to identify the best and quickest way forward.' },
+  { step: '02', title: 'Validate, build and adopt', duration: 'Up to 8 weeks', description: 'Test workflow fit, data feasibility, and practitioner feedback, then put a useful version into the real workflow with an owner, support, and a way to learn from use.' },
+  { step: '03', title: 'Scale or stop', duration: 'Use and results', description: 'Strengthen, replicate, pause, or close the work based on what people use, what changes, and what holds up in practice.' },
 ] as const
 
 type FeaturedProjectField = 'businessMoment' | 'collaboration' | 'outcome' | 'aiInPractice'
@@ -116,6 +123,7 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
 
 function Journey() {
   const [openRoleIndexes, setOpenRoleIndexes] = useState(() => new Set<number>())
+  const [evolvingPhraseIndex, setEvolvingPhraseIndex] = useState(0)
 
   return (
     <>
@@ -126,8 +134,10 @@ function Journey() {
             <h2 id="career-statement-title">Career statement</h2>
             <p>{journeyStatement.firstParagraph}</p>
             <p><span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
-            <p className="journey-evolving" aria-label="Always evolving">
-              <span>Always evolving...</span>
+            <p className="journey-evolving">
+              <button className="journey-evolving-button" type="button" onClick={() => setEvolvingPhraseIndex((currentIndex) => (currentIndex + 1) % evolvingPhrases.length)} aria-label="Reveal the next evolving thought" title="Psst... click me.">
+                <span className="journey-evolving-phrase" key={evolvingPhraseIndex}>{evolvingPhrases[evolvingPhraseIndex]}</span>
+              </button>
             </p>
           </section>
         </div>
@@ -266,8 +276,8 @@ function IntegrationMap() {
 }
 
 function Leadership() {
-  const pillarIcons = [HeartHandshake, ShieldCheck, Lightbulb]
-  const signalIcons = [Sprout, MessageCircle, Network, BatteryCharging]
+  const pillarIcons = [ShieldCheck, Lightbulb]
+  const signalIcons = [MessageCircle, Network, BatteryCharging]
 
   return (
     <div className="leadership-view">
@@ -281,7 +291,7 @@ function Leadership() {
         </header>
         <div className="leadership-intent-copy">
           <p>I want to build a team that learns quickly without becoming frantic. New models invite teams to chase releases, trust persuasive answers, or confuse activity with progress. My response is to keep people, trusted evidence, and AI in one feedback loop, so domain expertise shapes decisions and the work earns adoption.</p>
-          <p><span className="cover-letter-emphasis">The standard is not AI activity; it is a meaningful improvement in a decision people need to make.</span> We will focus our effort where domain credibility, available AI capabilities, and a clear business opportunity can produce a useful change in the workflow, quickly enough for users to shape it.</p>
+          <p>The standard is not AI activity; it is a meaningful improvement in a decision people need to make. We will focus our effort where domain credibility, available AI capabilities, and a clear business opportunity can produce a useful change in the workflow, quickly enough for users to shape it.</p>
           <div className="leadership-intent-commitments">
             <p><strong>What I ask of the team:</strong> I will ask people to stay curious, say when they do not know, challenge assumptions, and own the outcomes they shape. AI work cannot wait for certainty; it needs people comfortable learning in public and correcting course without making every mistake personal.</p>
             <p><strong>What the team can expect from me:</strong> I will know people rather than manage them at a distance, make time for feedback and growth, and set guardrails that give autonomy real meaning. I cannot promise permanence in a changing organization. I can make sure the time we do control is worthwhile: useful work, visible growth, stronger relationships, and experience people carry forward.</p>
@@ -396,7 +406,7 @@ function CoverLetter() {
           <p>I want this job because <span className="cover-letter-emphasis">I have worked on both sides of the gap this role is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it becomes disconnected from the people and workflows it is meant to serve.</p>
           <p>I also understand that not all AI work has the same purpose. There is an important place for frontier AI: teams can spend months or years testing new models, capabilities, and systems whose value may only become clear over time. But that is not where I believe this team creates its most immediate value.</p>
           <p>Our work sits closer to the business: finding the decisions that matter now, bringing trusted data and domain expertise into the loop, and using AI to make those decisions faster, clearer, and more consistent. Not AI for its own sake, but practical tools that people can understand, challenge, and use in their everyday work.</p>
-          <p>The question I want to answer now is whether I can lead and grow a team of fifteen people who create that confidence at scale: a team trusted to connect domain expertise, data, and AI to the decisions the business needs to make now.</p>
+          <p>The question I want to answer now is whether I can lead and grow a team up to fifteen (15) people who create that confidence at scale: a team trusted to connect domain expertise, data, and AI to the decisions the business needs to make now.</p>
         </div>
       </section>
 
@@ -432,8 +442,8 @@ function CoverLetter() {
         <p className="eyebrow">Why lead now</p>
         <div className="leadership-narrative-copy">
           <p>The Lead AI Embedment role needs someone who can speak credibly with geoscientists, data scientists, product owners, and asset stakeholders without reducing the work to generic innovation language. That is the bridge I have been building toward.</p>
-          <p>AI has become accessible to many of us, and exploration is an important start. But for this programme to genuinely move forward, it needs someone who can take a problem from the first customer conversation through to something people trust in their everyday work: listen closely, connect the right disciplines, turn an idea into something real quickly, and earn the trust needed to bring it into day-to-day work. That is the kind of work I have built my reputation on.</p>
-          <p>My career began in subsurface interpretation and evolved into analytics, product ownership, and AI-enabled decision support. That journey taught me that successful adoption rarely comes from technology alone. It comes from helping people frame better questions, challenge assumptions, and connect evidence to decisions. I want to use that experience to elevate the capability of the teams around me, create opportunities for others to lead, and build an environment where innovation is both practical and trusted. <span className="cover-letter-emphasis">That is the kind of team leadership I want to be accountable for</span>.</p>
+          <p>AI has become accessible to many of us, and exploration is an important start. But for this programme to genuinely move forward, it needs someone who can take a problem from the first customer conversation through to something people trust in their everyday work: listen closely, connect the right disciplines,  <span className="cover-letter-emphasis">turn an idea into something real quickly,</span> and earn the trust needed to bring it into day-to-day work. That is the kind of work I have built my reputation on.</p>
+          <p>My career began in subsurface interpretation and evolved into analytics, product ownership, and AI-enabled decision support. That journey taught me that successful adoption rarely comes from technology alone. It comes from helping people frame better questions, challenge assumptions, and connect evidence to decisions. I want to use that experience to elevate the capability of the teams around me, create opportunities for others to lead, and build an environment where innovation is both practical and trusted. That is the kind of team leadership I want to be accountable for.</p>
         </div>
       </section>
     </div>

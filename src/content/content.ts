@@ -128,7 +128,6 @@ export const campaignStory: CampaignStory = {
 }
 
 export const leadershipPillars: LeadershipPillar[] = [
-  { title: 'Start with the decision and its value', statement: 'AI earns its place when it helps people make a consequential business or technical decision.' },
   { title: 'Embed with practitioners, not around them', statement: 'Build alongside the people who own the workflow, evidence, and operating constraints.' },
   { title: 'Use what exists, then make it reusable', statement: 'Start with what is available, then turn what works into a simpler starting point for the next team.' },
 ]
@@ -140,7 +139,6 @@ export const leadershipRhythms: LeadershipRhythm[] = [
 ]
 
 export const leadershipSignals: LeadershipSignal[] = [
-  { title: 'High-value workflows are in use', description: 'A few priority workflows have named owners and are part of the work they were designed to improve, with at least one ready to replicate across a comparable asset or group.' },
   { title: 'First useful versions arrive in weeks', description: 'The team moves from a clear opportunity to a useful, testable version without defaulting to long programme phases.' },
   { title: 'Use and reuse are visible', description: 'We can see whether people return to the workflow, what they say about it, and whether it improves the decision, while trusted patterns reduce the effort for the next delivery.' },
 ]
