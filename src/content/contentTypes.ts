@@ -101,7 +101,6 @@ export interface LeadershipPillar {
 export interface LeadershipRhythm {
   cadence: string
   title: string
-  description: string
 }
 
 export interface LeadershipSignal {

@@ -11,7 +11,7 @@ const navigationItems: Array<{ id: ExperienceId; label: string; icon: typeof Hom
   { id: 'home', label: 'Home', icon: Home },
   { id: 'cover', label: 'Why Me?', icon: UserRound },
   { id: 'leadership', label: 'Lead the Team', icon: UsersRound },
-  { id: 'journey', label: 'Resume / CV', icon: Route },
+  { id: 'journey', label: 'Resume', icon: Route },
   { id: 'impact', label: 'Proof', icon: Award },
 ]
 

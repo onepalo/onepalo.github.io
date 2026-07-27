@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, BatteryCharging, ChevronDown, CircleDot, Lightbulb, Mail, MapPin, MessageCircle, Network, ShieldCheck, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ChevronDown, CircleDot, Lightbulb, Mail, MapPin, MessageCircle, Plane, ShieldCheck, X } from 'lucide-react'
 import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
@@ -21,28 +21,18 @@ interface ExperienceStageProps {
 
 const stageMeta = {
   cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The Value I Can Bring as Team Lead, AI Embedment.' },
-  journey: { eyebrow: 'Career overview', title: 'Resume / CV', intro: '' },
+  journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead the team', intro: '' },
   impact: { eyebrow: 'Leadership is a practice, not a title.', title: 'Proof of Leadership', intro: '' },
 } as const
 
-const leadershipPrincipleDetails = [
-  { behavior: 'Squads learn the real workflow with domain experts, then test a useful change in the context where people already make decisions.' },
-  { behavior: 'Start with the tools, data, and approved models already available. When something works, turn it into a simpler starting point for the next team.' },
-] as const
-
 const leadershipRhythmDetails = [
-  { duration: '60 minutes', practice: 'Use the weekly meeting to address the next increment, user feedback, dependencies, and delivery decisions while they can still change the work. Status, decisions, documentation, and help requests stay async; meeting time is for collaboration, learning, and decisions that need people in the room.' },
-  { duration: '60 minutes', practice: 'Use the sponsor review to direct capacity toward the clearest opportunities. Bring the actual evidence on value, workflow readiness, user commitment, risk, and potential for reuse before adding work.' },
-  { duration: 'Half-day review', practice: 'At the quarterly review, decide whether to continue, scale, pause, or stop. Look at use, adoption, quality, and reuse together, then protect the capacity needed to adopt what has proved useful.' },
+  { duration: '60 minutes', practice: 'Bring the real work to the room: what we are delivering next, what users are telling us, and where we are stuck. Everything else can be written down.' },
+  { duration: '60 minutes', practice: 'With our sponsors, look honestly at what is helping, what is stuck, and where the team can make the biggest difference next.' },
+  { duration: 'Half-day review', practice: 'Review where people are getting value, where support is needed, and what should be retired.' },
 ] as const
 
 const leadershipRhythmIcons = ['groups', 'person', 'restart_alt'] as const
-
-const leadershipSignalDetails = [
-  'A clear opportunity can reach a first useful version in one to three months, rather than entering a six-to-twenty-four-month programme by default.',
-  'We will be honest about what is estimated, what has worked in a trial, and what is delivering value in day-to-day use. Reusable data patterns, evaluations, connectors, and workflow components make the next delivery faster.',
-] as const
 
 const evolvingPhrases = [
   'Always evolving...',
@@ -55,9 +45,9 @@ const evolvingPhrases = [
 ] as const
 
 const operatingDeliveryStages = [
-  { step: '01', title: 'Frame', duration: 'Up to 2 weeks', description: 'Name the decision, sponsor, users, data, baseline, and value hypothesis. As part of rapid learning, run an internal Shark Tank session to use our collective knowledge to identify the best and quickest way forward.' },
-  { step: '02', title: 'Validate, build and adopt', duration: 'Up to 8 weeks', description: 'Test workflow fit, data feasibility, and practitioner feedback, then put a useful version into the real workflow with an owner, support, and a way to learn from use.' },
-  { step: '03', title: 'Scale or stop', duration: 'Use and results', description: 'Strengthen, replicate, pause, or close the work based on what people use, what changes, and what holds up in practice.' },
+  { step: '01', title: 'Start with the decision', duration: 'Up to 2 weeks', description: 'Before we build, we agree on the decision, the people who will use the result, the data we can trust, and what better looks like. We then decide whether the current stack can deliver it, or whether it belongs with a frontier-AI or innovation team.' },
+  { step: '02', title: 'Deliver with the stack we have', duration: 'Up to 12 months', description: 'We build reliable solutions using the approved models, data, and tools already available. Every initiative needs an early useful release and a clear path to a working solution within 12 months. Work that needs longer research or new frontier capabilities goes to the right innovation team.' },
+  { step: '03', title: 'Replicate what works', duration: 'Across assets', description: 'When a solution works, we identify what can travel: data patterns, evaluations, connectors, workflow components, and lessons. With connected teams, we adapt and replicate those patterns across assets, while retiring work that no longer helps.' },
 ] as const
 
 type FeaturedProjectField = 'businessMoment' | 'collaboration' | 'outcome' | 'aiInPractice'
@@ -277,7 +267,7 @@ function IntegrationMap() {
 
 function Leadership() {
   const pillarIcons = [ShieldCheck, Lightbulb]
-  const signalIcons = [MessageCircle, Network, BatteryCharging]
+  const signalIcons = [MessageCircle, Plane]
 
   return (
     <div className="leadership-view">
@@ -286,21 +276,22 @@ function Leadership() {
           <p>01</p>
           <div>
             <p className="eyebrow">Leadership commitment</p>
-            <h2 id="leadership-commitment-title">The standard I will set for the team.</h2>
+            <h2 id="leadership-commitment-title">The kind of team I want us to become.</h2>
           </div>
         </header>
         <div className="leadership-intent-copy">
-          <p>I want to build a team that learns quickly without becoming frantic. New models invite teams to chase releases, trust persuasive answers, or confuse activity with progress. My response is to keep people, trusted evidence, and AI in one feedback loop, so domain expertise shapes decisions and the work earns adoption.</p>
-          <p>The standard is not AI activity; it is a meaningful improvement in a decision people need to make. We will focus our effort where domain credibility, available AI capabilities, and a clear business opportunity can produce a useful change in the workflow, quickly enough for users to shape it.</p>
+          <p>I have worked through enough change to know that a leader cannot promise certainty they do not control. I cannot promise permanence in a changing organization. What I can promise is that people on my team will know why their work matters, where they are trusted to act, and how they can grow from the work they do.</p>
+          <p>I want to know people well enough to see their strengths, their ambitions, and the conditions in which they do their best work. I will set a high bar, but I do not want people to perform confidence when they are uncertain. In AI work especially, we need people who can say, &quot;I do not know yet,&quot; &quot;the data is not ready,&quot; or &quot;this is not solving the right problem.&quot;</p>
+          <p>My job is to make the work clear enough for people to act, and safe enough for them to say when something is wrong.</p>
           <div className="leadership-intent-commitments">
-            <p><strong>What I ask of the team:</strong> I will ask people to stay curious, say when they do not know, challenge assumptions, and own the outcomes they shape. AI work cannot wait for certainty; it needs people comfortable learning in public and correcting course without making every mistake personal.</p>
-            <p><strong>What the team can expect from me:</strong> I will know people rather than manage them at a distance, make time for feedback and growth, and set guardrails that give autonomy real meaning. I cannot promise permanence in a changing organization. I can make sure the time we do control is worthwhile: useful work, visible growth, stronger relationships, and experience people carry forward.</p>
+            <p><strong>What I ask of the team:</strong> Bring your curiosity, say what you see, and own your part of the outcome. We will make mistakes. The important thing is to notice them early, learn, and keep going together.</p>
+            <p><strong>What the team can expect from me:</strong> I will make time to listen, give clear feedback, and help you grow. I will also be honest about priorities and boundaries, so you know where you can decide for yourself.</p>
           </div>
         </div>
-        <blockquote className="leadership-pullquote">Leadership is not a title. It is the willingness to move first, listen closely, and make others stronger.</blockquote>
+        <blockquote className="leadership-pullquote">I want people to leave this team more capable, more confident, and more connected than when they joined.</blockquote>
         <figure className="leadership-shared-effort">
           <img src={leaderIllustration} alt="A leader pulling alongside the team." />
-          <figcaption>Shared effort. Shared momentum. Lead by example.</figcaption>
+          <figcaption>Good work moves faster when nobody has to pull alone.</figcaption>
         </figure>
       </section>
 
@@ -314,8 +305,8 @@ function Leadership() {
         <section className="operating-delivery-loop" aria-labelledby="operating-delivery-loop-title">
           <header>
             <p className="eyebrow">How the team operates</p>
-            <h2 id="operating-delivery-loop-title">Useful AI in real workflows, not research for its own sake.</h2>
-            <p>An AI Embedment team works alongside asset teams, combines domain expertise with the tools already available, and turns priority decisions into workflows people can use.</p>
+            <h2 id="operating-delivery-loop-title">AI should make a real job easier to do.</h2>
+            <p>We start with a decision someone already needs to make. Then we work with the asset team to see whether the tools we have can make that decision easier, clearer, or more consistent.</p>
           </header>
           <ol>
             {operatingDeliveryStages.map((stage) => (
@@ -331,21 +322,18 @@ function Leadership() {
         <section className="leadership-principles" aria-labelledby="leadership-principles-title">
           <div className="leadership-section-heading">
             <p className="eyebrow">How we choose and build</p>
-            <h2 id="leadership-principles-title">Principles that keep delivery close to value</h2>
+            <h2 id="leadership-principles-title">A few rules that keep us honest.</h2>
           </div>
           <div className="leadership-practice-intro">
-            <p>I would rather see three workflows people rely on than a long list of AI pilots. The work has to matter to the people making the decision and to the team that will live with the result.</p>
-            <p>Squads need room to move, clear quality and risk boundaries, and permission to change direction when the evidence changes.</p>
+            <p>I would rather see three workflows people use than a wall of AI pilots. That means staying close to the work, being thoughtful about risk, and changing course when the evidence calls for it.</p>
           </div>
           <div className="operating-principles-grid">
             {leadershipPillars.map((pillar, index) => {
               const Icon = pillarIcons[index]
-              const detail = leadershipPrincipleDetails[index]
               return <article className="operating-principle-card" key={pillar.title}>
                 <Icon size={22} aria-hidden="true" />
                 <h3>{pillar.title}</h3>
-                <p className="operating-statement">{pillar.statement}</p>
-                <p><span>What this enables</span>{detail.behavior}</p>
+                <p>{pillar.statement}</p>
               </article>
             })}
           </div>
@@ -354,19 +342,18 @@ function Leadership() {
         <section className="leadership-rhythm" aria-labelledby="leadership-rhythm-title">
           <div className="leadership-section-heading">
             <p className="eyebrow">The team rhythm</p>
-            <h2 id="leadership-rhythm-title">A cadence that protects speed, learning, and adoption</h2>
+            <h2 id="leadership-rhythm-title">A rhythm that helps us learn without wasting people&apos;s time.</h2>
           </div>
           <div className="leadership-practice-intro">
-            <p>Short cycles let us test the work with users before we spend months building the wrong thing. They give us regular moments to make trade-offs visible and adjust the work while it is still easy to change.</p>
-            <p>Communication remains async by default; meeting time is reserved for collaboration, decisions, and the evidence that changes the next move.</p>
+            <p>I do not want us to spend months building something before users have had a chance to say, &quot;this will not work for me.&quot; Short cycles make that conversation happen early, while we can still do something about it.</p>
+            <p>Write the update down. Use meeting time for the conversations that need people in the room.</p>
           </div>
           <div className="operating-rhythm-list">
             {leadershipRhythms.map((rhythm, index) => (
               <article key={rhythm.cadence}>
                 <header><span className="material-symbols-outlined" aria-hidden="true">{leadershipRhythmIcons[index]}</span><p>{rhythm.cadence}</p><p>{leadershipRhythmDetails[index].duration}</p></header>
                 <h3>{rhythm.title}</h3>
-                <p className="operating-statement">{rhythm.description}</p>
-                <p><span>How we work</span>{leadershipRhythmDetails[index].practice}</p>
+                <p>{leadershipRhythmDetails[index].practice}</p>
               </article>
             ))}
           </div>
@@ -375,10 +362,10 @@ function Leadership() {
         <section className="leadership-signals" aria-labelledby="leadership-signals-title">
           <div className="leadership-section-heading">
             <p className="eyebrow">What success looks like</p>
-            <h2 id="leadership-signals-title">Signals I would expect to see by month 12</h2>
+            <h2 id="leadership-signals-title">What I would hope people say after a year.</h2>
           </div>
           <div className="leadership-practice-intro">
-            <p>By month 12, I would want to point to a few workflows people rely on, with evidence that they improve the work and can be reused elsewhere.</p>
+            <p>I would want people to point to a few workflows and say, &quot;this makes my job easier.&quot; I would also want other assets to build on what we learned.</p>
           </div>
           <div className="operating-signals-grid">
             {leadershipSignals.map((signal, index) => {
@@ -386,8 +373,7 @@ function Leadership() {
               return <article className="operating-signal-card" key={signal.title}>
                 <Icon size={21} aria-hidden="true" />
                 <h3>{signal.title}</h3>
-                <p className="operating-statement">{signal.description}</p>
-                <p><span>What I would notice</span>{leadershipSignalDetails[index]}</p>
+                <p>{signal.description}</p>
               </article>
             })}
           </div>
@@ -403,9 +389,8 @@ function CoverLetter() {
       <section className="leadership-opening" aria-label="Why I want this job">
         <p className="eyebrow">Why I want this job</p>
         <div className="leadership-opening-copy">
-          <p>I want this job because <span className="cover-letter-emphasis">I have worked on both sides of the gap this role is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it becomes disconnected from the people and workflows it is meant to serve.</p>
-          <p>I also understand that not all AI work has the same purpose. There is an important place for frontier AI: teams can spend months or years testing new models, capabilities, and systems whose value may only become clear over time. But that is not where I believe this team creates its most immediate value.</p>
-          <p>Our work sits closer to the business: finding the decisions that matter now, bringing trusted data and domain expertise into the loop, and using AI to make those decisions faster, clearer, and more consistent. Not AI for its own sake, but practical tools that people can understand, challenge, and use in their everyday work.</p>
+          <p>I want this job because <span className="cover-letter-emphasis">I have worked on both sides of the gap this role is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it becomes disconnected from the people and workflows it is meant to serve. In my current work, I spend a lot of time with people who are trying to make sense of fragmented data, competing interpretations, and decisions that cannot wait for perfect information. AI can help, but only when it makes the work clearer for the people who carry the responsibility for the decision.</p>
+          <p>That matters to me because I have spent my career close to that responsibility: first in subsurface interpretation and operational work, then in product delivery, analytics, and now AI-enabled workflows. I have learned that a solution is only useful when people understand it, can challenge it, and choose to use it again.</p>
           <p>The question I want to answer now is whether I can lead and grow a team up to fifteen (15) people who create that confidence at scale: a team trusted to connect domain expertise, data, and AI to the decisions the business needs to make now.</p>
         </div>
       </section>
@@ -414,7 +399,7 @@ function CoverLetter() {
         <p className="eyebrow">The career that led me here</p>
         <div className="leadership-narrative-copy">
           <p>For more than fifteen years, I have worked where technical judgment has consequences: prospects, high-pressure wells, portfolio renewal, risk, and the handover from an uncertain subsurface picture to a decision someone has to own. The real work, I learned, is helping specialists see the same evidence, disagree productively, and decide what to do next.</p>
-          <p>Leading a multidisciplinary team during a regional rejuvenation PBE effort in the Netherlands showed me the power of aligning diverse expertise around a common set of facts. The challenge was not simply technical integration. It was creating the conditions for better decisions. Over the last six years, I have carried that lesson into digital products, data governance, analytics, and AI. Successful adoption happens when solutions solve real problems, integrate into daily work, and build confidence through consistent, measurable value.</p>
+          <p>Leading a multidisciplinary team during a regional rejuvenation effort in the Netherlands showed me what happens when diverse experts work from the same evidence. Over the last six years, I have carried that lesson into digital products, analytics, and AI: the work succeeds when it solves a real problem and becomes part of daily practice.</p>
         </div>
         <blockquote className="leadership-pullquote leadership-readiness-quote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
         <figure className="leadership-designer-bridge">
@@ -428,7 +413,7 @@ function CoverLetter() {
             <span className="eyebrow">Already fluent across the system</span>
             <span className="leadership-system-map-copy">
               <span id="system-map-title" className="leadership-system-map-title" role="heading" aria-level={2}>Technical depth and delivery belong in the same conversation.</span>
-              <span>I have learned to move between the evidence, the digital capabilities, the product choices, and the people who act on the result without losing sight of the decision at the centre.</span>
+              <span>I move between the evidence, the digital tools, the product choices, and the people who act on the result without losing sight of the decision at the centre.</span>
             </span>
             <ChevronDown className="leadership-system-map-chevron" size={22} aria-hidden="true" />
           </summary>
@@ -441,9 +426,9 @@ function CoverLetter() {
       <section className="leadership-choice" aria-label="Why lead now">
         <p className="eyebrow">Why lead now</p>
         <div className="leadership-narrative-copy">
-          <p>The Lead AI Embedment role needs someone who can speak credibly with geoscientists, data scientists, product owners, and asset stakeholders without reducing the work to generic innovation language. That is the bridge I have been building toward.</p>
-          <p>AI has become accessible to many of us, and exploration is an important start. But for this programme to genuinely move forward, it needs someone who can take a problem from the first customer conversation through to something people trust in their everyday work: listen closely, connect the right disciplines,  <span className="cover-letter-emphasis">turn an idea into something real quickly,</span> and earn the trust needed to bring it into day-to-day work. That is the kind of work I have built my reputation on.</p>
-          <p>My career began in subsurface interpretation and evolved into analytics, product ownership, and AI-enabled decision support. That journey taught me that successful adoption rarely comes from technology alone. It comes from helping people frame better questions, challenge assumptions, and connect evidence to decisions. I want to use that experience to elevate the capability of the teams around me, create opportunities for others to lead, and build an environment where innovation is both practical and trusted. That is the kind of team leadership I want to be accountable for.</p>
+          <p>This role needs someone who can work credibly with geoscientists, data scientists, product owners, and asset stakeholders. That is the bridge I have been building toward.</p>
+          <p>AI is accessible to many of us. The harder work is taking a problem from the first customer conversation to something people trust in their everyday work: listening closely, connecting the right disciplines, and <span className="cover-letter-emphasis">turning an idea into something real quickly.</span> That is the work I have built my reputation on.</p>
+          <p>I want to use that experience to help the people around me grow, create opportunities for others to lead, and build a team that is practical, trusted, and accountable for the difference it makes.</p>
         </div>
       </section>
     </div>

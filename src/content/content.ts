@@ -128,17 +128,17 @@ export const campaignStory: CampaignStory = {
 }
 
 export const leadershipPillars: LeadershipPillar[] = [
-  { title: 'Embed with practitioners, not around them', statement: 'Build alongside the people who own the workflow, evidence, and operating constraints.' },
-  { title: 'Use what exists, then make it reusable', statement: 'Start with what is available, then turn what works into a simpler starting point for the next team.' },
+  { title: 'Start with the people doing the work', statement: 'Before we suggest a solution, we spend time with the people carrying the decision and learn where the work gets difficult.' },
+  { title: 'Use what we already have', statement: 'Start with approved tools, data, and models that teams already trust. Do not rebuild what already works.' },
 ]
 
 export const leadershipRhythms: LeadershipRhythm[] = [
-  { cadence: 'Weekly', title: 'Delivery and learning rhythm', description: 'Each squad reviews the next usable increment, user feedback, blockers, evidence, and the decisions needed to keep moving.' },
-  { cadence: 'Monthly', title: 'Portfolio and sponsor review', description: 'Sponsors and team leads compare opportunities, delivery evidence, and capacity so the team stays focused on the work with the strongest value.' },
-  { cadence: 'Quarterly', title: 'Scale, pause, or stop', description: 'Review business value, adoption, quality, and reuse to decide where to deepen, replicate, redirect, or close investment.' },
+  { cadence: 'Weekly', title: 'What needs our attention this week' },
+  { cadence: 'Monthly', title: 'Where we put our energy next' },
+  { cadence: 'Quarterly', title: 'Choose what deserves more' },
 ]
 
 export const leadershipSignals: LeadershipSignal[] = [
-  { title: 'First useful versions arrive in weeks', description: 'The team moves from a clear opportunity to a useful, testable version without defaulting to long programme phases.' },
-  { title: 'Use and reuse are visible', description: 'We can see whether people return to the workflow, what they say about it, and whether it improves the decision, while trusted patterns reduce the effort for the next delivery.' },
+  { title: 'Useful work shows up early', description: 'When an opportunity is clear, people should have something they can use within one to three months, not a promise at the end of a long programme.' },
+  { title: 'Good work travels', description: 'When a workflow helps, we make its data patterns, components, and lessons easy for another asset to adapt without starting over.' },
 ]
