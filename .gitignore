@@ -10,6 +10,7 @@ dist/
 *.log
 
 # Local source material and personal data not required by the application
+/.private/
 PersonalData.txt
 cover-letter-template.md
 CoverLetterLeadAIEmbedment.md

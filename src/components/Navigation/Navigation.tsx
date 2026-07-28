@@ -1,4 +1,4 @@
-import { Award, Home, Route, UserRound, UsersRound } from 'lucide-react'
+import { Home, UserRound } from 'lucide-react'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 
@@ -7,12 +7,12 @@ interface NavigationProps {
   onNavigate: (experience: ExperienceId) => void
 }
 
-const navigationItems: Array<{ id: ExperienceId; label: string; icon: typeof Home }> = [
+const navigationItems: Array<{ id: ExperienceId; label: string; icon?: typeof Home; materialIcon?: string }> = [
   { id: 'home', label: 'Home', icon: Home },
   { id: 'cover', label: 'Why Me?', icon: UserRound },
-  { id: 'leadership', label: 'Lead the Team', icon: UsersRound },
-  { id: 'journey', label: 'Resume', icon: Route },
-  { id: 'impact', label: 'Proof', icon: Award },
+  { id: 'leadership', label: 'Lead the Team', materialIcon: 'diversity_1' },
+  { id: 'journey', label: 'Resume', materialIcon: 'work_history' },
+  { id: 'impact', label: 'Proof', materialIcon: 'cheer' },
 ]
 
 export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
@@ -23,7 +23,7 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
         <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>AI Exploration Geoscientist</em></span>
       </button>
       <nav className="primary-nav" aria-label="Primary navigation">
-        {navigationItems.map(({ id, label, icon: Icon }) => (
+        {navigationItems.map(({ id, label, icon: Icon, materialIcon }) => (
           <button
             className={activeExperience === id ? 'nav-item is-active' : 'nav-item'}
             type="button"
@@ -31,7 +31,7 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
             onClick={() => onNavigate(id)}
             aria-current={activeExperience === id ? 'page' : undefined}
           >
-            <Icon size={15} aria-hidden="true" />
+            {materialIcon ? <span className="material-symbols-outlined nav-material-icon" aria-hidden="true">{materialIcon}</span> : Icon && <Icon size={15} aria-hidden="true" />}
             <span>{label}</span>
           </button>
         ))}

@@ -2,7 +2,7 @@ import type { CampaignStory, FeaturedProject, HeroContent, IntegrationNode, Jour
 import empathyAiLogo from './Asset 31.png'
 
 export const heroContent: HeroContent = {
-  eyebrow: 'Rafael Navarro / Lead AI Embedment candidate',
+  eyebrow: 'Rafael Navarro / Manager - AI Embedment candidate',
   title: 'From subsurface decisions to AI-enabled workflows.',
   subtitle: 'The work I have delivered across geoscience, digital products, and AI, and how I would lead an AI Embedment team.',
   primaryCta: 'Explore the universe',
@@ -74,19 +74,19 @@ export const featuredProjects: FeaturedProject[] = [
 ]
 
 export const integrationNodes: IntegrationNode[] = [
-  { id: 'exploration', label: 'Exploration', description: 'Opportunity maturation, risk, and technical framing.', connectionType: 'domain', x: 18, y: 20 },
-  { id: 'subsurface', label: 'Subsurface', description: 'Integrated earth-model and reservoir evidence.', connectionType: 'domain', x: 78, y: 18 },
-  { id: 'digital', label: 'Digital & Data', description: 'Governed datasets, analytics, and usable interfaces.', connectionType: 'delivery', x: 84, y: 48 },
-  { id: 'ai', label: 'AI / Automation', description: 'Practical AI prototypes that make analysis easier to use.', connectionType: 'capability', x: 76, y: 76 },
-  { id: 'product', label: 'Product Teams', description: 'Roadmaps, feedback, and iterative delivery.', connectionType: 'delivery', x: 19, y: 77 },
-  { id: 'stakeholders', label: 'Business Stakeholders', description: 'What matters now, who owns it, and whether people use it.', connectionType: 'alignment', x: 12, y: 49 },
-  { id: 'community', label: 'Technical Communities', description: 'Shared practice, peer review, and reuse.', connectionType: 'alignment', x: 48, y: 11 },
-  { id: 'governance', label: 'Platform Governance', description: 'The data, controls, and support needed to use solutions safely.', connectionType: 'delivery', x: 48, y: 87 },
+  { id: 'decision', label: 'Asset decision', description: 'The decision, its owner, and what makes a better call matter.', connectionType: 'alignment', x: 13, y: 50 },
+  { id: 'domain', label: 'Subsurface & wells', description: 'Exploration, wells, reservoir, production, and technical judgement.', connectionType: 'domain', x: 20, y: 20 },
+  { id: 'evidence', label: 'Data & evidence', description: 'Source data, trusted definitions, visible gaps, and uncertainty.', connectionType: 'delivery', x: 80, y: 20 },
+  { id: 'workflow', label: 'AI-enabled workflow', description: 'Useful automation, models, and interfaces around the next call.', connectionType: 'capability', x: 80, y: 80 },
+  { id: 'product', label: 'Product & experience', description: 'Discovery, design, feedback, and delivery people can use.', connectionType: 'delivery', x: 20, y: 80 },
+  { id: 'central', label: 'Central AI & technology', description: 'Data platforms, GenAI capabilities, security, and specialist help.', connectionType: 'alignment', x: 50, y: 12 },
+  { id: 'reuse', label: 'Patterns that travel', description: 'Connectors, evaluations, and workflow pieces another asset can use.', connectionType: 'delivery', x: 87, y: 50 },
+  { id: 'adoption', label: 'Use, learn, improve', description: 'User feedback, adoption, support, and evidence of value.', connectionType: 'alignment', x: 50, y: 88 },
 ]
 
 export const leadershipProofs: LeadershipProof[] = [
-  { theme: 'Create', title: 'Environmental Awareness Campaign - Port Harcourt, Nigeria', description: 'Turned a personal concern about air quality into a public-data initiative that made conditions in Port Harcourt more visible and understandable. The monitoring contributed to public discussion around transparency and health, and was documented by international reporting on air pollution in Nigeria.', references: [{ label: 'Undark: Port Harcourt investigation', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'France24 / AFP: demand for air-quality data', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }, { label: 'IQAir: Revealing the Invisible - Rafael in Nigeria', url: 'https://www.iqair.com/newsroom/air-quality-in-africa' }] },
-  { theme: 'Lead', title: 'Leading Across Delivery, Data, and Compliance', description: 'Led developer and UX teams while aligning IRM and IDT stakeholders around delivery that met security, compliance, and real operating needs. Earlier, as Technical Lead, coordinated a ten-person multidisciplinary team to rejuvenate Play-Based Exploration in Nigeria’s shallow-water portfolio, bringing shared evidence, refreshed play maps, and decision-ready volume and risk assessments into one working picture.' },
+  { theme: 'Create', title: 'Environmental Awareness Campaign - Nigeria', description: 'Turned a personal concern about air quality into a public-data initiative that made conditions in Port Harcourt more visible and understandable. The monitoring contributed to public discussion around transparency and health, and was documented by international reporting on air pollution in Nigeria.', references: [{ label: 'Undark: Port Harcourt investigation', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'France24 / AFP: demand for air-quality data', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }, { label: 'IQAir: Revealing the Invisible - Rafael in Nigeria', url: 'https://www.iqair.com/newsroom/air-quality-in-africa' }] },
+  { theme: 'Lead', title: 'Leading Across Subsurface & Data', description: 'Led developer and UX teams while aligning IRM and IDT stakeholders around delivery that met security, compliance, and real operating needs. Earlier, as Technical Lead, coordinated a ten-person multidisciplinary team to rejuvenate Play-Based Exploration in Nigeria’s shallow-water portfolio, bringing shared evidence, refreshed play maps, and decision-ready volume and risk assessments into one working picture.' },
   { theme: 'Build', title: 'EmpathyAI - Founder', description: 'Founded EmpathyAI, an independent applied-AI initiative exploring how organizations can hear workforce ideas and act on them. Its first concept, Connectify, reimagines idea sharing across hierarchy, language, and fear of judgment, combining inclusive participation with AI-assisted insight to help leaders surface patterns they might otherwise miss.', logoSrc: empathyAiLogo, logoAlt: 'EmpathyAI logo' },
   { theme: 'Compete', title: 'Competitive Pickleball - DUPR 4.0', description: 'Applies the same disciplined, iterative improvement mindset used in analytics and technical product work to competitive sport. Deliberate practice, direct feedback, clear communication with a partner, and calm decisions under pressure give me a clear lesson for the next match.' },
 ]
@@ -128,14 +128,14 @@ export const campaignStory: CampaignStory = {
 }
 
 export const leadershipPillars: LeadershipPillar[] = [
-  { title: 'Start with the people doing the work', statement: 'Before we suggest a solution, we spend time with the people carrying the decision and learn where the work gets difficult.' },
-  { title: 'Use what we already have', statement: 'Start with approved tools, data, and models that teams already trust. Do not rebuild what already works.' },
+  { title: 'Start with the people doing the work', statement: 'Before we reach for a model or a dashboard, we spend time with the people carrying the decision. We learn where the work slows down, what they already do to get around the problem, what they need to trust, and what would make the next call easier. The best idea is not always the most technical one; it is the one that fits the work and gives people a clearer way forward.' },
+  { title: 'Use the right tool for the job', statement: 'We can vibe code small utilities, prototypes, and ad hoc workflows when that is the fastest way to help someone move. When a workflow needs to be shared, trusted, and kept alive, we expose it through the platforms people already use - Databricks, Spotfire, AWS, and AZURE - so the data, controls, and experience can grow with the need. Do not rebuild what already works; connect it, extend it, and make it easier to use.' },
 ]
 
 export const leadershipRhythms: LeadershipRhythm[] = [
-  { cadence: 'Weekly', title: 'What needs our attention this week' },
-  { cadence: 'Monthly', title: 'Where we put our energy next' },
-  { cadence: 'Quarterly', title: 'Choose what deserves more' },
+  { cadence: 'Weekly', title: 'Keep the work moving' },
+  { cadence: 'Monthly', title: 'Decide where to put our energy' },
+  { cadence: 'Quarterly', title: 'Show the work. Choose what grows.' },
 ]
 
 export const leadershipSignals: LeadershipSignal[] = [

@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, ChevronDown, CircleDot, Lightbulb, Mail, MapPin, MessageCircle, Plane, ShieldCheck, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ChevronDown, CircleDot, Lightbulb, MapPin, MessageCircle, Plane, ShieldCheck, X } from 'lucide-react'
 import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
@@ -20,16 +20,16 @@ interface ExperienceStageProps {
 }
 
 const stageMeta = {
-  cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The Value I Can Bring as Team Lead, AI Embedment.' },
+  cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The value I would bring as Manager - AI Embedment.' },
   journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead the team', intro: '' },
   impact: { eyebrow: 'Leadership is a practice, not a title.', title: 'Proof of Leadership', intro: '' },
 } as const
 
 const leadershipRhythmDetails = [
-  { duration: '60 minutes', practice: 'Bring the real work to the room: what we are delivering next, what users are telling us, and where we are stuck. Everything else can be written down.' },
-  { duration: '60 minutes', practice: 'With our sponsors, look honestly at what is helping, what is stuck, and where the team can make the biggest difference next.' },
-  { duration: 'Half-day review', practice: 'Review where people are getting value, where support is needed, and what should be retired.' },
+  { duration: '60 minutes', practice: 'Bring the work that needs a decision, a fresh pair of eyes, or help removing a blocker. We look at what changed for users, share what we learned, and leave with clear owners. The routine update is written down.' },
+  { duration: '60 minutes', practice: 'With asset sponsors, look honestly at what is helping, what is stuck, and where our time can make the biggest difference next. We decide what to keep moving, reshape, pause, or hand to another team.' },
+  { duration: 'Half-day review', practice: 'Put the work on the table: usable releases, feedback from users, decisions changed, and lessons worth keeping. Then decide what should grow, what needs more support, and what should stop.' },
 ] as const
 
 const leadershipRhythmIcons = ['groups', 'person', 'restart_alt'] as const
@@ -45,9 +45,9 @@ const evolvingPhrases = [
 ] as const
 
 const operatingDeliveryStages = [
-  { step: '01', title: 'Start with the decision', duration: 'Up to 2 weeks', description: 'Before we build, we agree on the decision, the people who will use the result, the data we can trust, and what better looks like. We then decide whether the current stack can deliver it, or whether it belongs with a frontier-AI or innovation team.' },
-  { step: '02', title: 'Deliver with the stack we have', duration: 'Up to 12 months', description: 'We build reliable solutions using the approved models, data, and tools already available. Every initiative needs an early useful release and a clear path to a working solution within 12 months. Work that needs longer research or new frontier capabilities goes to the right innovation team.' },
-  { step: '03', title: 'Replicate what works', duration: 'Across assets', description: 'When a solution works, we identify what can travel: data patterns, evaluations, connectors, workflow components, and lessons. With connected teams, we adapt and replicate those patterns across assets, while retiring work that no longer helps.' },
+  { step: '01', title: 'Find the decision that is stuck', duration: 'Monthly with asset teams', description: 'We talk with asset teams about decisions that are slow, contested, or simply harder than they need to be. We choose work where help would matter now, someone is ready to use it, and the lesson may travel to another asset.' },
+  { step: '02', title: 'Help with what is here', duration: 'Days to 2 weeks', description: 'The data will often be incomplete or spread across places. That is not a reason to wait. We use what we can trust, show the gaps and assumptions, and build a small, ad hoc workflow that helps someone make the next call. We stay within data and security boundaries, and bring in the right central team early when the need depends on a capability we do not own.' },
+  { step: '03', title: 'Grow what earns it', duration: '30-90 days to learn', description: 'We put the workflow in front of users early and let their experience decide what comes next. If it makes the work easier, we strengthen the data, product, and support around it so it can last and travel. If it does not, we learn quickly and stop.' },
 ] as const
 
 type FeaturedProjectField = 'businessMoment' | 'collaboration' | 'outcome' | 'aiInPractice'
@@ -74,6 +74,17 @@ const featuredProjectHighlights: Record<string, Record<FeaturedProjectField, rea
 }
 
 const flagSources = { us: usFlag, nl: nlFlag, ng: ngFlag, qa: qaFlag, ve: veFlag, co: coFlag, mx: mxFlag } as const
+
+const testimonials = [
+  { id: '01', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', quote: 'Rafael is at his best when a decision is stuck. He brings the right evidence and people together, makes the uncertainty visible, and helps the team move without pretending the answer is simpler than it is.' },
+  { id: '02', name: 'Example colleague 02', role: 'Product and delivery partner', quote: 'He can move comfortably between users, developers, and technical specialists. Rafael keeps the conversation anchored in the real job someone needs to do, which is why the work has a better chance of being used.' },
+  { id: '03', name: 'Example colleague 03', role: 'Data and analytics partner', quote: 'Rafael does not wait for perfect data before helping. He is clear about what is trusted, what is missing, and what the next practical step should be.' },
+  { id: '04', name: 'Example colleague 04', role: 'Subsurface technical lead', quote: 'He has deep enough subsurface experience to ask the difficult questions, but he does not use that expertise to close the room down. Rafael makes it easier for different disciplines to challenge each other and still reach a decision.' },
+  { id: '05', name: 'Example colleague 05', role: 'Asset sponsor', quote: 'Rafael has a good instinct for where a team can make a difference. He does not confuse activity with progress, and he is willing to pause work that is not helping.' },
+  { id: '06', name: 'Example colleague 06', role: 'UX and engineering partner', quote: 'Working with Rafael means the technical work stays connected to the person using it. He asks what will make a workflow easier to trust, challenge, and return to.' },
+  { id: '07', name: 'Example colleague 07', role: 'Global portfolio colleague', quote: 'He sees both the local problem and the pattern that could travel. Rafael is thoughtful about what should be adapted for an asset and what should become reusable.' },
+  { id: '08', name: 'Example colleague 08', role: 'Team member', quote: 'Rafael creates room for people to be honest about what they do not know yet. He sets a high bar, gives clear direction, and makes the work feel owned together.' },
+]
 
 function renderHighlightedText(text: string, highlights: readonly string[]) {
   const pattern = new RegExp(`(${highlights.map((highlight) => highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi')
@@ -181,7 +192,7 @@ function Journey() {
                   <p>{item.learningCore}</p>
                   <ul className="chips">{item.capabilities.map((capability, capabilityIndex) => <li key={`capability-${capabilityIndex}`}>{capability}</li>)}</ul>
                 </section>
-                {item.reference && <p className="journey-reference"><span className="journey-reference-contact"><Mail size={15} strokeWidth={2} aria-hidden="true" /><span>Reference</span></span><strong>{item.reference.name}</strong><em>{item.reference.role}</em></p>}
+                {item.reference && <p className="journey-reference"><span className="journey-reference-contact"><span className="material-symbols-outlined" aria-hidden="true">contact_mail</span><span>Reference</span></span><strong>{item.reference.name}</strong><em>{item.reference.role}</em></p>}
             </div>
           </details>
           ))}
@@ -262,7 +273,70 @@ function CvProfile() {
 }
 
 function IntegrationMap() {
-  return <div className="integration-map"><svg viewBox="0 0 1000 700" aria-hidden="true">{integrationNodes.map((node) => <line key={node.id} x1="500" y1="350" x2={node.x * 10} y2={node.y * 7} />)}</svg><div className="integration-center"><img src={rafaelPortrait} alt="Rafael Navarro" /></div>{integrationNodes.map((node) => <article className={`integration-node connection-${node.connectionType}`} key={node.id} style={{ '--node-x': `${node.x}%`, '--node-y': `${node.y}%` } as CSSProperties}><CircleDot size={15} aria-hidden="true" /><h2>{node.label}</h2><p>{node.description}</p></article>)}</div>
+  const [activeView, setActiveView] = useState<'map' | 'testimonials'>('testimonials')
+  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0)
+  const activeTestimonial = testimonials[activeTestimonialIndex]
+  const previousTestimonialIndex = (activeTestimonialIndex - 1 + testimonials.length) % testimonials.length
+  const nextTestimonialIndex = (activeTestimonialIndex + 1) % testimonials.length
+  const previousTestimonial = testimonials[previousTestimonialIndex]
+  const nextTestimonial = testimonials[nextTestimonialIndex]
+
+  function moveTestimonial(direction: -1 | 1) {
+    setActiveTestimonialIndex((currentIndex) => (currentIndex + direction + testimonials.length) % testimonials.length)
+  }
+
+  return (
+    <div className="integration-map-panel">
+      <div className="integration-map-switcher" role="tablist" aria-label="System map views">
+        <button id="testimonial-tab" type="button" role="tab" aria-selected={activeView === 'testimonials'} aria-controls="testimonial-panel" onClick={() => setActiveView('testimonials')}>Testimonials</button>
+        <button id="system-map-tab" type="button" role="tab" aria-selected={activeView === 'map'} aria-controls="system-map-panel" onClick={() => setActiveView('map')}>Where I connect</button>
+      </div>
+      {activeView === 'map' ? (
+        <div id="system-map-panel" className="integration-map" role="tabpanel" aria-labelledby="system-map-tab">
+          <svg viewBox="0 0 1000 700" aria-hidden="true">{integrationNodes.map((node) => <line key={node.id} x1="500" y1="350" x2={node.x * 10} y2={node.y * 7} />)}</svg>
+          <div className="integration-center"><img src={rafaelPortrait} alt="Rafael Navarro" /></div>
+          {integrationNodes.map((node) => <article className={`integration-node connection-${node.connectionType}`} key={node.id} style={{ '--node-x': `${node.x}%`, '--node-y': `${node.y}%` } as CSSProperties}><CircleDot size={15} aria-hidden="true" /><h2>{node.label}</h2><p>{node.description}</p></article>)}
+        </div>
+      ) : (
+        <section id="testimonial-panel" className="testimonial-carousel" role="tabpanel" aria-labelledby="testimonial-tab" aria-roledescription="carousel" aria-label="Candidate testimonials" tabIndex={0} onKeyDown={(event) => {
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault()
+            moveTestimonial(-1)
+          }
+          if (event.key === 'ArrowRight') {
+            event.preventDefault()
+            moveTestimonial(1)
+          }
+        }}>
+          <header className="testimonial-carousel-header">
+          </header>
+          <div className="testimonial-carousel-deck">
+            <button type="button" className="testimonial-carousel-preview testimonial-carousel-preview-previous" onClick={() => setActiveTestimonialIndex(previousTestimonialIndex)} aria-label={`Show previous testimonial by ${previousTestimonial.name}`}>
+              <span className="testimonial-preview-number">{previousTestimonial.id}</span>
+              <strong>{previousTestimonial.name}</strong>
+              <span className="testimonial-preview-role">{previousTestimonial.role}</span>
+              <p>&quot;{previousTestimonial.quote}&quot;</p>
+            </button>
+            <article className="testimonial-carousel-slide" key={activeTestimonial.id}>
+              <blockquote>&quot;{activeTestimonial.quote}&quot;</blockquote>
+              <footer><strong>{activeTestimonial.name}</strong><span>{activeTestimonial.role}</span></footer>
+            </article>
+            <button type="button" className="testimonial-carousel-preview testimonial-carousel-preview-next" onClick={() => setActiveTestimonialIndex(nextTestimonialIndex)} aria-label={`Show next testimonial by ${nextTestimonial.name}`}>
+              <span className="testimonial-preview-number">{nextTestimonial.id}</span>
+              <strong>{nextTestimonial.name}</strong>
+              <span className="testimonial-preview-role">{nextTestimonial.role}</span>
+              <p>&quot;{nextTestimonial.quote}&quot;</p>
+            </button>
+          </div>
+          <nav className="testimonial-carousel-navigation" aria-label="Testimonial navigation">
+            <button type="button" className="testimonial-carousel-arrow" onClick={() => moveTestimonial(-1)} aria-label="Show previous testimonial" title="Previous testimonial"><ArrowLeft size={19} aria-hidden="true" /></button>
+            <p className="testimonial-carousel-progress" aria-live="polite">{activeTestimonialIndex + 1} <span aria-hidden="true">/</span> {testimonials.length}</p>
+            <button type="button" className="testimonial-carousel-arrow" onClick={() => moveTestimonial(1)} aria-label="Show next testimonial" title="Next testimonial"><ArrowRight size={19} aria-hidden="true" /></button>
+          </nav>
+        </section>
+      )}
+    </div>
+  )
 }
 
 function Leadership() {
@@ -276,13 +350,13 @@ function Leadership() {
           <p>01</p>
           <div>
             <p className="eyebrow">Leadership commitment</p>
-            <h2 id="leadership-commitment-title">The kind of team I want us to become.</h2>
+            <h2 id="leadership-commitment-title">What I have led, and how I would build from here.</h2>
           </div>
         </header>
         <div className="leadership-intent-copy">
-          <p>I have worked through enough change to know that a leader cannot promise certainty they do not control. I cannot promise permanence in a changing organization. What I can promise is that people on my team will know why their work matters, where they are trusted to act, and how they can grow from the work they do.</p>
-          <p>I want to know people well enough to see their strengths, their ambitions, and the conditions in which they do their best work. I will set a high bar, but I do not want people to perform confidence when they are uncertain. In AI work especially, we need people who can say, &quot;I do not know yet,&quot; &quot;the data is not ready,&quot; or &quot;this is not solving the right problem.&quot;</p>
-          <p>My job is to make the work clear enough for people to act, and safe enough for them to say when something is wrong.</p>
+          <p>In the Netherlands, I coordinated an approximately ten-person team across geology, geophysics, basin modelling, and data engineering to refresh the Nigeria Shallow Water portfolio. We had to turn a wide, messy body of evidence into regional play maps, volumes, and risk that people could work with together.</p>
+          <p>Later, as a Product Owner, I worked with development and UX teams, geoscientists, and business stakeholders to turn real workflow needs into products. More recently, I have built data and analytics workflows that help teams get from fragmented information to something they can use to make a decision.</p>
+          <p>That is the kind of leadership I know: make the decision clear, bring the right people into the room, let the evidence be challenged, and stay close enough to know whether the work is helping. I will set a high bar, but I do not want people to perform confidence when they are uncertain. In AI work especially, we need people who can say, &quot;I do not know yet,&quot; &quot;the data is not ready,&quot; or &quot;this is not solving the right problem.&quot;</p>
           <div className="leadership-intent-commitments">
             <p><strong>What I ask of the team:</strong> Bring your curiosity, say what you see, and own your part of the outcome. We will make mistakes. The important thing is to notice them early, learn, and keep going together.</p>
             <p><strong>What the team can expect from me:</strong> I will make time to listen, give clear feedback, and help you grow. I will also be honest about priorities and boundaries, so you know where you can decide for yourself.</p>
@@ -291,17 +365,11 @@ function Leadership() {
         <blockquote className="leadership-pullquote">I want people to leave this team more capable, more confident, and more connected than when they joined.</blockquote>
         <figure className="leadership-shared-effort">
           <img src={leaderIllustration} alt="A leader pulling alongside the team." />
-          <figcaption>Good work moves faster when nobody has to pull alone.</figcaption>
+          <figcaption>Good work moves faster when no one has to pull alone.</figcaption>
         </figure>
       </section>
 
       <section className="leadership-focus" aria-labelledby="leadership-operating-model-title">
-        <header className="leadership-chapter-heading leadership-operating-model-heading">
-          <p>02</p>
-          <div>
-            <br></br>
-          </div>
-        </header>
         <section className="operating-delivery-loop" aria-labelledby="operating-delivery-loop-title">
           <header>
             <p className="eyebrow">How the team operates</p>
@@ -342,11 +410,11 @@ function Leadership() {
         <section className="leadership-rhythm" aria-labelledby="leadership-rhythm-title">
           <div className="leadership-section-heading">
             <p className="eyebrow">The team rhythm</p>
-            <h2 id="leadership-rhythm-title">A rhythm that helps us learn without wasting people&apos;s time.</h2>
+            <h2 id="leadership-rhythm-title">A rhythm that keeps us close to the work.</h2>
           </div>
           <div className="leadership-practice-intro">
-            <p>I do not want us to spend months building something before users have had a chance to say, &quot;this will not work for me.&quot; Short cycles make that conversation happen early, while we can still do something about it.</p>
-            <p>Write the update down. Use meeting time for the conversations that need people in the room.</p>
+            <p>I do not want us to be busy just to look busy. We need enough time together to hear what is happening in the work, make hard choices, and learn from what users are telling us.</p>
+            <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
           </div>
           <div className="operating-rhythm-list">
             {leadershipRhythms.map((rhythm, index) => (
@@ -391,8 +459,12 @@ function CoverLetter() {
         <div className="leadership-opening-copy">
           <p>I want this job because <span className="cover-letter-emphasis">I have worked on both sides of the gap this role is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it becomes disconnected from the people and workflows it is meant to serve. In my current work, I spend a lot of time with people who are trying to make sense of fragmented data, competing interpretations, and decisions that cannot wait for perfect information. AI can help, but only when it makes the work clearer for the people who carry the responsibility for the decision.</p>
           <p>That matters to me because I have spent my career close to that responsibility: first in subsurface interpretation and operational work, then in product delivery, analytics, and now AI-enabled workflows. I have learned that a solution is only useful when people understand it, can challenge it, and choose to use it again.</p>
-          <p>The question I want to answer now is whether I can lead and grow a team up to fifteen (15) people who create that confidence at scale: a team trusted to connect domain expertise, data, and AI to the decisions the business needs to make now.</p>
+          <p>My leadership has grown through leading the work itself: coordinating an approximately ten-person subsurface team and bringing development and UX teams together around shared outcomes. This role is the next responsibility I am ready to take on: helping a global AI Embedment team grow, make good calls, and do work they can be proud of.</p>
         </div>
+        <blockquote className="leadership-pullquote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
+        <figure className="leadership-designer-bridge">
+          <img src={designerBridge} alt="A person connecting subsurface expertise with technology and AI." />
+        </figure>
       </section>
 
       <section className="leadership-readiness" aria-label="The career that led me here">
@@ -401,19 +473,15 @@ function CoverLetter() {
           <p>For more than fifteen years, I have worked where technical judgment has consequences: prospects, high-pressure wells, portfolio renewal, risk, and the handover from an uncertain subsurface picture to a decision someone has to own. The real work, I learned, is helping specialists see the same evidence, disagree productively, and decide what to do next.</p>
           <p>Leading a multidisciplinary team during a regional rejuvenation effort in the Netherlands showed me what happens when diverse experts work from the same evidence. Over the last six years, I have carried that lesson into digital products, analytics, and AI: the work succeeds when it solves a real problem and becomes part of daily practice.</p>
         </div>
-        <blockquote className="leadership-pullquote leadership-readiness-quote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
-        <figure className="leadership-designer-bridge">
-          <img src={designerBridge} alt="A person connecting subsurface expertise with technology and AI." />
-        </figure>
       </section>
 
       <section className="leadership-system-map" aria-labelledby="system-map-title">
         <details className="leadership-system-map-details">
           <summary>
-            <span className="eyebrow">Already fluent across the system</span>
+            <span className="eyebrow">Two views of the same work</span>
             <span className="leadership-system-map-copy">
-              <span id="system-map-title" className="leadership-system-map-title" role="heading" aria-level={2}>Technical depth and delivery belong in the same conversation.</span>
-              <span>I move between the evidence, the digital tools, the product choices, and the people who act on the result without losing sight of the decision at the centre.</span>
+              <span id="system-map-title" className="leadership-system-map-title" role="heading" aria-level={2}>How I work, and what colleagues see.</span>
+              <span>The map traces the connections I work across: from an asset decision through subsurface evidence, data, product delivery, and AI. The testimonials offer a second view: what colleagues have seen that work look like in practice.</span>
             </span>
             <ChevronDown className="leadership-system-map-chevron" size={22} aria-hidden="true" />
           </summary>
@@ -426,9 +494,9 @@ function CoverLetter() {
       <section className="leadership-choice" aria-label="Why lead now">
         <p className="eyebrow">Why lead now</p>
         <div className="leadership-narrative-copy">
-          <p>This role needs someone who can work credibly with geoscientists, data scientists, product owners, and asset stakeholders. That is the bridge I have been building toward.</p>
-          <p>AI is accessible to many of us. The harder work is taking a problem from the first customer conversation to something people trust in their everyday work: listening closely, connecting the right disciplines, and <span className="cover-letter-emphasis">turning an idea into something real quickly.</span> That is the work I have built my reputation on.</p>
-          <p>I want to use that experience to help the people around me grow, create opportunities for others to lead, and build a team that is practical, trusted, and accountable for the difference it makes.</p>
+          <p>This role needs someone who can work comfortably with geoscientists, data scientists, product owners, and asset teams. I have been learning how to bring those perspectives into the same conversation.</p>
+          <p>AI is accessible to many of us. The harder work is taking a real problem from the first conversation to something people trust enough to use in their everyday work. That means listening closely, bringing the right people together, and <span className="cover-letter-emphasis">making something useful before the moment has passed.</span></p>
+          <p>I want to use that experience to help people grow, make room for others to lead, and build a team that does useful work people can stand behind.</p>
         </div>
       </section>
     </div>
