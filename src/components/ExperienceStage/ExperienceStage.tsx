@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, ChevronDown, CircleDot, Lightbulb, MapPin, MessageCircle, Plane, ShieldCheck, X } from 'lucide-react'
-import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs, leadershipRhythms, leadershipSignals } from '../../content/content'
+import { ArrowLeft, ArrowRight, ChevronDown, CircleDot, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
+import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
@@ -25,14 +25,6 @@ const stageMeta = {
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead the team', intro: '' },
   impact: { eyebrow: 'Leadership is a practice, not a title.', title: 'Proof of Leadership', intro: '' },
 } as const
-
-const leadershipRhythmDetails = [
-  { duration: '60 minutes', practice: 'Bring the work that needs a decision, a fresh pair of eyes, or help removing a blocker. We look at what changed for users, share what we learned, and leave with clear owners. The routine update is written down.' },
-  { duration: '60 minutes', practice: 'With asset sponsors, look honestly at what is helping, what is stuck, and where our time can make the biggest difference next. We decide what to keep moving, reshape, pause, or hand to another team.' },
-  { duration: 'Half-day review', practice: 'Put the work on the table: usable releases, feedback from users, decisions changed, and lessons worth keeping. Then decide what should grow, what needs more support, and what should stop.' },
-] as const
-
-const leadershipRhythmIcons = ['groups', 'person', 'restart_alt'] as const
 
 const evolvingPhrases = [
   'Always evolving...',
@@ -341,7 +333,6 @@ function IntegrationMap() {
 
 function Leadership() {
   const pillarIcons = [ShieldCheck, Lightbulb]
-  const signalIcons = [MessageCircle, Plane]
 
   return (
     <div className="leadership-view">
@@ -386,6 +377,10 @@ function Leadership() {
               </li>
             ))}
           </ol>
+          <div className="operating-delivery-rhythm">
+            <p>We keep the loop close to the work: weekly, we unblock decisions and share what changed for users; monthly, we decide with asset sponsors where our time can help most; quarterly, we put usable releases and lessons on the table, then choose what grows, needs support, or stops.</p>
+            <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
+          </div>
         </section>
         <section className="leadership-principles" aria-labelledby="leadership-principles-title">
           <div className="leadership-section-heading">
@@ -407,45 +402,6 @@ function Leadership() {
           </div>
         </section>
 
-        <section className="leadership-rhythm" aria-labelledby="leadership-rhythm-title">
-          <div className="leadership-section-heading">
-            <p className="eyebrow">The team rhythm</p>
-            <h2 id="leadership-rhythm-title">A rhythm that keeps us close to the work.</h2>
-          </div>
-          <div className="leadership-practice-intro">
-            <p>I do not want us to be busy just to look busy. We need enough time together to hear what is happening in the work, make hard choices, and learn from what users are telling us.</p>
-            <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
-          </div>
-          <div className="operating-rhythm-list">
-            {leadershipRhythms.map((rhythm, index) => (
-              <article key={rhythm.cadence}>
-                <header><span className="material-symbols-outlined" aria-hidden="true">{leadershipRhythmIcons[index]}</span><p>{rhythm.cadence}</p><p>{leadershipRhythmDetails[index].duration}</p></header>
-                <h3>{rhythm.title}</h3>
-                <p>{leadershipRhythmDetails[index].practice}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="leadership-signals" aria-labelledby="leadership-signals-title">
-          <div className="leadership-section-heading">
-            <p className="eyebrow">What success looks like</p>
-            <h2 id="leadership-signals-title">What I would hope people say after a year.</h2>
-          </div>
-          <div className="leadership-practice-intro">
-            <p>I would want people to point to a few workflows and say, &quot;this makes my job easier.&quot; I would also want other assets to build on what we learned.</p>
-          </div>
-          <div className="operating-signals-grid">
-            {leadershipSignals.map((signal, index) => {
-              const Icon = signalIcons[index]
-              return <article className="operating-signal-card" key={signal.title}>
-                <Icon size={21} aria-hidden="true" />
-                <h3>{signal.title}</h3>
-                <p>{signal.description}</p>
-              </article>
-            })}
-          </div>
-        </section>
       </section>
     </div>
   )
@@ -512,7 +468,7 @@ function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
         </div>
       </div>
       <div className="personal-leadership-grid">
-        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.logoSrc ? ' has-logo' : ''}`} key={proof.title}><span>{proof.theme}</span><div className="personal-leadership-card-title"><h3>{proof.title}</h3>{proof.logoSrc && <img src={proof.logoSrc} alt={proof.logoAlt ?? ''} />}</div><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Port Harcourt, Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Click here for more <ArrowRight size={14} aria-hidden="true" /></button>}</article>)}
+        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.logoSrc ? ' has-logo' : ''}`} key={proof.title}><span>{proof.theme}</span><div className="personal-leadership-card-title"><h3>{proof.title}</h3>{proof.logoSrc && <img src={proof.logoSrc} alt={proof.logoAlt ?? ''} />}</div><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Click here for more <ArrowRight size={14} aria-hidden="true" /></button>}</article>)}
       </div>
     </section>
   </div>

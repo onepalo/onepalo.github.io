@@ -1,4 +1,4 @@
-import type { CampaignStory, FeaturedProject, HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, LeadershipRhythm, LeadershipSignal, World } from './contentTypes'
+import type { CampaignStory, FeaturedProject, HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, World } from './contentTypes'
 import empathyAiLogo from './Asset 31.png'
 
 export const heroContent: HeroContent = {
@@ -130,15 +130,4 @@ export const campaignStory: CampaignStory = {
 export const leadershipPillars: LeadershipPillar[] = [
   { title: 'Start with the people doing the work', statement: 'Before we reach for a model or a dashboard, we spend time with the people carrying the decision. We learn where the work slows down, what they already do to get around the problem, what they need to trust, and what would make the next call easier. The best idea is not always the most technical one; it is the one that fits the work and gives people a clearer way forward.' },
   { title: 'Use the right tool for the job', statement: 'We can vibe code small utilities, prototypes, and ad hoc workflows when that is the fastest way to help someone move. When a workflow needs to be shared, trusted, and kept alive, we expose it through the platforms people already use - Databricks, Spotfire, AWS, and AZURE - so the data, controls, and experience can grow with the need. Do not rebuild what already works; connect it, extend it, and make it easier to use.' },
-]
-
-export const leadershipRhythms: LeadershipRhythm[] = [
-  { cadence: 'Weekly', title: 'Keep the work moving' },
-  { cadence: 'Monthly', title: 'Decide where to put our energy' },
-  { cadence: 'Quarterly', title: 'Show the work. Choose what grows.' },
-]
-
-export const leadershipSignals: LeadershipSignal[] = [
-  { title: 'Useful work shows up early', description: 'When an opportunity is clear, people should have something they can use within one to three months, not a promise at the end of a long programme.' },
-  { title: 'Good work travels', description: 'When a workflow helps, we make its data patterns, components, and lessons easy for another asset to adapt without starting over.' },
 ]

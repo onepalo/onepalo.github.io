@@ -97,13 +97,3 @@ export interface LeadershipPillar {
   title: string
   statement: string
 }
-
-export interface LeadershipRhythm {
-  cadence: string
-  title: string
-}
-
-export interface LeadershipSignal {
-  title: string
-  description: string
-}

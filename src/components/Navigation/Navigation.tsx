@@ -20,7 +20,7 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
     <header className="site-header">
       <button className="wordmark" type="button" onClick={() => onNavigate('home')} aria-label="Exploration Rafael Navarro home">
         <span className="wordmark-mark" aria-hidden="true"><img src={rafaelPortrait} alt="" /></span>
-        <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>AI Exploration Geoscientist</em></span>
+        <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>Geoscientist</em></span>
       </button>
       <nav className="primary-nav" aria-label="Primary navigation">
         {navigationItems.map(({ id, label, icon: Icon, materialIcon }) => (
