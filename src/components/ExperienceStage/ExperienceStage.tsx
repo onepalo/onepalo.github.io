@@ -21,7 +21,7 @@ interface ExperienceStageProps {
 
 const stageMeta = {
   cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The value I would bring as Manager - AI Embedment.' },
-  'how-i-work': { eyebrow: 'Working across disciplines', title: 'How I work', intro: 'The connections I build around a decision, and what colleagues have seen that work look like.' },
+  'how-i-work': { eyebrow: 'Working across disciplines', title: 'How I work', intro: 'Two perspectives on how I work: the disciplines I bring together around a decision, and what colleagues experience working alongside me.' },
   journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead', intro: '' },
   impact: { eyebrow: 'Leadership is a practice, not a title.', title: 'Proof of Leadership', intro: '' },
@@ -281,9 +281,11 @@ function IntegrationMap() {
 
   return (
     <div className="integration-map-panel">
-      <div className="integration-map-switcher" role="tablist" aria-label="System map views">
-        <button id="testimonial-tab" type="button" role="tab" aria-selected={activeView === 'testimonials'} aria-controls="testimonial-panel" onClick={() => setActiveView('testimonials')}>Testimonials</button>
-        <button id="system-map-tab" type="button" role="tab" aria-selected={activeView === 'map'} aria-controls="system-map-panel" onClick={() => setActiveView('map')}>Where I connect</button>
+      <div className="integration-map-controls">
+        <div className="integration-map-switcher" role="tablist" aria-label="System map views">
+          <button id="testimonial-tab" type="button" role="tab" aria-selected={activeView === 'testimonials'} aria-controls="testimonial-panel" onClick={() => setActiveView('testimonials')}>Testimonials</button>
+          <button id="system-map-tab" type="button" role="tab" aria-selected={activeView === 'map'} aria-controls="system-map-panel" onClick={() => setActiveView('map')}>Where I connect</button>
+        </div>
       </div>
       {activeView === 'map' ? (
         <div id="system-map-panel" className="integration-map" role="tabpanel" aria-labelledby="system-map-tab">

@@ -75,14 +75,12 @@ export const featuredProjects: FeaturedProject[] = [
 ]
 
 export const integrationNodes: IntegrationNode[] = [
-  { id: 'decision', label: 'Asset decision', description: 'The decision, its owner, and what makes a better call matter.', connectionType: 'alignment', x: 13, y: 50 },
-  { id: 'domain', label: 'Subsurface & wells', description: 'Exploration, wells, reservoir, production, and technical judgement.', connectionType: 'domain', x: 20, y: 20 },
-  { id: 'evidence', label: 'Data & evidence', description: 'Source data, trusted definitions, visible gaps, and uncertainty.', connectionType: 'delivery', x: 80, y: 20 },
-  { id: 'workflow', label: 'AI-enabled workflow', description: 'Useful automation, models, and interfaces around the next call.', connectionType: 'capability', x: 80, y: 80 },
-  { id: 'product', label: 'Product & experience', description: 'Discovery, design, feedback, and delivery people can use.', connectionType: 'delivery', x: 20, y: 80 },
+  { id: 'domain', label: 'Subsurface & wells', description: 'Exploration, wells, reservoir, production, and technical judgement.', connectionType: 'domain', x: 25, y: 24 },
+  { id: 'evidence', label: 'Data & evidence', description: 'Source data, trusted definitions, visible gaps, and uncertainty.', connectionType: 'delivery', x: 75, y: 24 },
+  { id: 'workflow', label: 'AI-enabled workflows', description: 'Useful automation, models, and interfaces around the next call.', connectionType: 'capability', x: 75, y: 76 },
+  { id: 'product', label: 'Product & experience', description: 'Discovery, design, feedback, and delivery people can use.', connectionType: 'delivery', x: 25, y: 76 },
   { id: 'central', label: 'Central AI & technology', description: 'Data platforms, GenAI capabilities, security, and specialist help.', connectionType: 'alignment', x: 50, y: 12 },
-  { id: 'reuse', label: 'Patterns that travel', description: 'Connectors, evaluations, and workflow pieces another asset can use.', connectionType: 'delivery', x: 87, y: 50 },
-  { id: 'adoption', label: 'Use, learn, improve', description: 'User feedback, adoption, support, and evidence of value.', connectionType: 'alignment', x: 50, y: 88 },
+  { id: 'adoption', label: 'Use, learn & improve', description: 'User feedback, adoption, support, and evidence of value.', connectionType: 'alignment', x: 50, y: 88 },
 ]
 
 export const leadershipProofs: LeadershipProof[] = [
