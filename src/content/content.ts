@@ -11,7 +11,8 @@ export const heroContent: HeroContent = {
 
 export const worlds: World[] = [
   { id: 'cover', title: 'Why Me?', shortTitle: 'Why Me?', description: 'Why this role is the natural next step in my career.', accentColor: '#2e6f95', visualHint: 'personal statement' },
-  { id: 'leadership', title: 'How I Will Lead the Team', shortTitle: 'Leadership', description: 'How I would build a team that puts useful AI into everyday technical work.', accentColor: '#42a5a5', visualHint: 'team compass' },
+  { id: 'leadership', title: 'How I Will Lead', shortTitle: 'Leadership', description: 'How I would build a team that puts useful AI into everyday technical work.', accentColor: '#42a5a5', visualHint: 'team compass' },
+  { id: 'how-i-work', title: 'How I work', shortTitle: 'How I work', description: 'The connections behind my work, and what colleagues see in practice.', accentColor: '#b65f4a', visualHint: 'working connections' },
   { id: 'journey', title: 'Resume', shortTitle: 'Resume', description: 'From field geophysics to global product and analytics delivery.', accentColor: '#d6a94a', visualHint: 'constellation route' },
   { id: 'impact', title: 'Proof of Leadership', shortTitle: 'Leadership proof', description: 'Work I have led, built, and carried beyond my day job.', accentColor: '#e07a5f', visualHint: 'proof points' },
 ]

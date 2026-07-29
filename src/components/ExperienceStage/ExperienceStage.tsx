@@ -21,8 +21,9 @@ interface ExperienceStageProps {
 
 const stageMeta = {
   cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The value I would bring as Manager - AI Embedment.' },
+  'how-i-work': { eyebrow: 'Working across disciplines', title: 'How I work', intro: 'The connections I build around a decision, and what colleagues have seen that work look like.' },
   journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
-  leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead the team', intro: '' },
+  leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead', intro: '' },
   impact: { eyebrow: 'Leadership is a practice, not a title.', title: 'Proof of Leadership', intro: '' },
 } as const
 
@@ -98,6 +99,7 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
         </>
       </header>
       {experience === 'cover' && <CoverLetter />}
+      {experience === 'how-i-work' && <HowIWork />}
       {experience === 'journey' && <Journey />}
       {experience === 'leadership' && <Leadership />}
       {experience === 'impact' && <LeadershipProof onOpenCampaign={() => onNavigate('campaign')} />}
@@ -407,6 +409,14 @@ function Leadership() {
   )
 }
 
+function HowIWork() {
+  return (
+    <section className="how-i-work-view" aria-label="How I work">
+      <IntegrationMap />
+    </section>
+  )
+}
+
 function CoverLetter() {
   return (
     <div className="leadership-view">
@@ -429,22 +439,6 @@ function CoverLetter() {
           <p>For more than fifteen years, I have worked where technical judgment has consequences: prospects, high-pressure wells, portfolio renewal, risk, and the handover from an uncertain subsurface picture to a decision someone has to own. The real work, I learned, is helping specialists see the same evidence, disagree productively, and decide what to do next.</p>
           <p>Leading a multidisciplinary team during a regional rejuvenation effort in the Netherlands showed me what happens when diverse experts work from the same evidence. Over the last six years, I have carried that lesson into digital products, analytics, and AI: the work succeeds when it solves a real problem and becomes part of daily practice.</p>
         </div>
-      </section>
-
-      <section className="leadership-system-map" aria-labelledby="system-map-title">
-        <details className="leadership-system-map-details">
-          <summary>
-            <span className="eyebrow">Two views of the same work</span>
-            <span className="leadership-system-map-copy">
-              <span id="system-map-title" className="leadership-system-map-title" role="heading" aria-level={2}>How I work, and what colleagues see.</span>
-              <span>The map traces the connections I work across: from an asset decision through subsurface evidence, data, product delivery, and AI. The testimonials offer a second view: what colleagues have seen that work look like in practice.</span>
-            </span>
-            <ChevronDown className="leadership-system-map-chevron" size={22} aria-hidden="true" />
-          </summary>
-          <div className="leadership-system-map-detail">
-            <IntegrationMap />
-          </div>
-        </details>
       </section>
 
       <section className="leadership-choice" aria-label="Why lead now">
@@ -475,6 +469,6 @@ function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
 }
 
 function nextExperience(current: Exclude<ExperienceId, 'home' | 'campaign'>): Exclude<ExperienceId, 'home' | 'campaign'> {
-  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'leadership', 'journey', 'impact']
+  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'how-i-work', 'leadership', 'journey', 'impact']
   return order[(order.indexOf(current) + 1) % order.length]
 }

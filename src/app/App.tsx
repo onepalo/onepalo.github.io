@@ -11,6 +11,7 @@ import { experienceFromHash, hashForExperience } from '../utils/hashNavigation'
 const titles: Record<ExperienceId, string> = {
   home: "Rafael's Exploration Journal",
   cover: "Why This Role, Why Now | Rafael's Exploration Journal",
+  'how-i-work': "How I Work | Rafael's Exploration Journal",
   leadership: "How I Will Lead the Team | Rafael's Exploration Journal",
   journey: "Resume | Rafael's Exploration Journal",
   impact: "Proof of Leadership | Rafael's Exploration Journal",
