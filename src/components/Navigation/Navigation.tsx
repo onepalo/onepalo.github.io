@@ -1,5 +1,5 @@
 import { Home, UserRound } from 'lucide-react'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 
@@ -8,8 +8,17 @@ interface NavigationProps {
   onNavigate: (experience: ExperienceId) => void
 }
 
-const navigationItems: Array<{ id: ExperienceId; label: string; icon?: typeof Home; materialIcon?: string }> = [
-  { id: 'home', label: 'Home', icon: Home },
+type NavigationItem = { id: ExperienceId; label: string; icon?: typeof Home; materialIcon?: string }
+
+interface NavigationButtonProps {
+  item: NavigationItem
+  isActive: boolean
+  onSelect: (experience: ExperienceId) => void
+}
+
+const homeNavigationItem: NavigationItem = { id: 'home', label: 'Home', icon: Home }
+
+const navigationItems: NavigationItem[] = [
   { id: 'how-i-work', label: 'Testimonials', materialIcon: 'taunt' },
   { id: 'journey', label: 'Resume', materialIcon: 'work_history' },
   { id: 'impact', label: 'Proof', materialIcon: 'cheer' },
@@ -20,9 +29,45 @@ const approachItems: Array<{ id: Extract<ExperienceId, 'cover' | 'leadership'>; 
   { id: 'leadership', label: 'Lead the Team', materialIcon: 'diversity_1' },
 ]
 
+function NavigationButton({ item: { id, label, icon: Icon, materialIcon }, isActive, onSelect }: NavigationButtonProps) {
+  return (
+    <button
+      className={isActive ? 'nav-item is-active' : 'nav-item'}
+      type="button"
+      onClick={() => onSelect(id)}
+      aria-label={label}
+      aria-current={isActive ? 'page' : undefined}
+      title={label}
+    >
+      {materialIcon ? <span className="material-symbols-outlined nav-material-icon" aria-hidden="true">{materialIcon}</span> : Icon && <Icon size={15} aria-hidden="true" />}
+      <span>{label}</span>
+    </button>
+  )
+}
+
 export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
   const isApproachActive = activeExperience === 'cover' || activeExperience === 'leadership'
   const approachDisclosureRef = useRef<HTMLDetailsElement>(null)
+
+  useEffect(() => {
+    const closeApproachMenu = (event: PointerEvent) => {
+      if (!approachDisclosureRef.current?.contains(event.target as Node)) approachDisclosureRef.current?.removeAttribute('open')
+    }
+    const closeApproachMenuOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || !approachDisclosureRef.current?.open) return
+      event.preventDefault()
+      event.stopPropagation()
+      approachDisclosureRef.current.removeAttribute('open')
+      approachDisclosureRef.current.querySelector<HTMLElement>('summary')?.focus()
+    }
+
+    document.addEventListener('pointerdown', closeApproachMenu)
+    document.addEventListener('keydown', closeApproachMenuOnEscape)
+    return () => {
+      document.removeEventListener('pointerdown', closeApproachMenu)
+      document.removeEventListener('keydown', closeApproachMenuOnEscape)
+    }
+  }, [])
 
   function navigateTo(experience: ExperienceId) {
     approachDisclosureRef.current?.removeAttribute('open')
@@ -36,21 +81,9 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
         <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>Geoscientist</em></span>
       </button>
       <nav className="primary-nav" aria-label="Primary navigation">
-        {navigationItems.slice(0, 1).map(({ id, label, icon: Icon, materialIcon }) => (
-          <button
-            className={activeExperience === id ? 'nav-item is-active' : 'nav-item'}
-            type="button"
-            key={id}
-            onClick={() => navigateTo(id)}
-            aria-label={label}
-            aria-current={activeExperience === id ? 'page' : undefined}
-          >
-            {materialIcon ? <span className="material-symbols-outlined nav-material-icon" aria-hidden="true">{materialIcon}</span> : Icon && <Icon size={15} aria-hidden="true" />}
-            <span>{label}</span>
-          </button>
-        ))}
+        <NavigationButton item={homeNavigationItem} isActive={activeExperience === homeNavigationItem.id} onSelect={navigateTo} />
         <details ref={approachDisclosureRef} className={isApproachActive ? 'nav-disclosure is-active' : 'nav-disclosure'}>
-          <summary className="nav-disclosure-trigger" aria-label="My approach">
+          <summary className="nav-disclosure-trigger" aria-label="My approach" title="My approach">
             <UserRound size={15} aria-hidden="true" />
             <span className="nav-disclosure-label">My approach</span>
             <span className="material-symbols-outlined nav-disclosure-arrow" aria-hidden="true">keyboard_arrow_down</span>
@@ -71,19 +104,7 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
             ))}
           </div>
         </details>
-        {navigationItems.slice(1).map(({ id, label, icon: Icon, materialIcon }) => (
-          <button
-            className={activeExperience === id ? 'nav-item is-active' : 'nav-item'}
-            type="button"
-            key={id}
-            onClick={() => navigateTo(id)}
-            aria-label={label}
-            aria-current={activeExperience === id ? 'page' : undefined}
-          >
-            {materialIcon ? <span className="material-symbols-outlined nav-material-icon" aria-hidden="true">{materialIcon}</span> : Icon && <Icon size={15} aria-hidden="true" />}
-            <span>{label}</span>
-          </button>
-        ))}
+        {navigationItems.map((item) => <NavigationButton item={item} isActive={activeExperience === item.id} onSelect={navigateTo} key={item.id} />)}
       </nav>
     </header>
   )

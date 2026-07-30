@@ -44,7 +44,8 @@ export default function App() {
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && activeExperience !== 'home') openExperience(activeExperience === 'campaign' ? 'impact' : 'home')
+      const modalIsOpen = document.querySelector('[role="dialog"][aria-modal="true"]')
+      if (event.key === 'Escape' && activeExperience !== 'home' && !modalIsOpen) openExperience(activeExperience === 'campaign' ? 'impact' : 'home')
     }
     window.addEventListener('keydown', handleEscape)
     return () => window.removeEventListener('keydown', handleEscape)

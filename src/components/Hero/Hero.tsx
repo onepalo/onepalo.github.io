@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { CircleHelp, X } from 'lucide-react'
 import type { HeroContent, ExperienceId } from '../../content/contentTypes'
+import { useDialogController } from '../../utils/useDialogController'
 import { CharacterVisual } from '../CharacterVisual/CharacterVisual'
 import { WorldNav } from '../WorldNav/WorldNav'
 
@@ -12,21 +13,8 @@ interface HeroProps {
 export function Hero({ content, onOpenWorld }: HeroProps) {
   const signature = 'By Rafael Navarro'
   const [isAiPerspectiveOpen, setIsAiPerspectiveOpen] = useState(false)
-  const closeButtonRef = useRef<HTMLButtonElement>(null)
-
   const closeAiPerspective = () => setIsAiPerspectiveOpen(false)
-
-  useEffect(() => {
-    if (!isAiPerspectiveOpen) return
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closeAiPerspective()
-    }
-
-    closeButtonRef.current?.focus()
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
-  }, [isAiPerspectiveOpen])
+  const closeButtonRef = useDialogController<HTMLButtonElement>(isAiPerspectiveOpen, closeAiPerspective)
 
   return (
     <section className="hero" aria-labelledby="hero-title">

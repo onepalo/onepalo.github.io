@@ -54,7 +54,7 @@ export const featuredProjects: FeaturedProject[] = [
     collaboration: 'Worked across subsurface interpretation and asset analytics needs to define reusable reservoir units and a workflow that teams could inspect together.',
     outcome: 'Turned 72M log rows into 36k standardized reservoir units, reducing the analysis cycle from months to hours and creating reproducible datasets for scenario testing.',
     aiInPractice: 'AI assists people in exploring and explaining trends; governed rules and domain review remain at the centre of the decision.',
-    platforms: ['DataBricks', 'Spotfire', 'VSCode'],
+    platforms: ['Databricks', 'Spotfire', 'VS Code'],
   },
   {
     title: 'Yet2Find',
@@ -62,7 +62,7 @@ export const featuredProjects: FeaturedProject[] = [
     collaboration: 'Worked with geoscience, geomatics, and commercial-data contributors to bring the evidence behind the screening decision into one analytical workflow.',
     outcome: 'Created an integrated interface for prospect, lease, and volumetric assessment that reduced manual QC and made company-level attribution easier to test and discuss.',
     aiInPractice: 'The value starts with trusted, connected evidence: automation supports the workflow while technical and commercial judgment stays visible.',
-    platforms: ['FME', 'Spotfire', 'VSCode'],
+    platforms: ['FME', 'Spotfire', 'VS Code'],
   },
   {
     title: 'Shell Savoy',
@@ -70,7 +70,7 @@ export const featuredProjects: FeaturedProject[] = [
     collaboration: 'Worked with geology, petrophysics, reservoir, and WRFM perspectives to establish a governed well master and a shared analytical layer.',
     outcome: 'Created a more consistent starting point for interpretation, production diagnostics, and opportunity screening across the asset team.',
     aiInPractice: 'A strong data foundation makes advanced analytics and AI useful later; it is practical preparation, not AI for its own sake.',
-    platforms: ['DataBricks', 'Spotfire', 'VSCode'],
+    platforms: ['Databricks', 'Spotfire', 'VS Code'],
   },
 ]
 

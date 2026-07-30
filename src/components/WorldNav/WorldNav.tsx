@@ -26,6 +26,7 @@ export function WorldNav({ onOpenWorld }: WorldNavProps) {
           className={`world-node world-${world.id}`}
           type="button"
           key={world.id}
+          aria-label={world.title}
           onClick={() => onOpenWorld(world.id)}
           style={{ '--world-color': world.accentColor } as CSSProperties}
           animate={shouldReduceMotion || isCompactLayout ? undefined : { y: [0, index % 2 ? -9 : 9, 0] }}
@@ -33,7 +34,7 @@ export function WorldNav({ onOpenWorld }: WorldNavProps) {
         >
           <span className="world-orb" aria-hidden="true"><span /></span>
           <span className="world-content">
-            <span className="world-title">{world.title}</span>
+            <span className="world-title">{isCompactLayout ? world.shortTitle : world.title}</span>
           </span>
         </motion.button>
       ))}

@@ -2,6 +2,7 @@ import { useState, type CSSProperties, type RefObject } from 'react'
 import { ArrowLeft, ArrowRight, ChevronDown, CircleDot, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
 import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
+import { useDialogController } from '../../utils/useDialogController'
 import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
 import leaderIllustration from '../../assets/candidate/Leader.png'
@@ -104,12 +105,15 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
       {experience === 'leadership' && <Leadership />}
       {experience === 'impact' && <LeadershipProof onOpenCampaign={() => onNavigate('campaign')} />}
       <div className="stage-next">
-        <button type="button" className="stage-return" onClick={() => onNavigate('home')}>
+        <button type="button" className="stage-return" aria-label="Return to universe" onClick={() => onNavigate('home')}>
           <ArrowLeft size={16} aria-hidden="true" />
-          Return to universe
+          <span className="stage-action-label-full">Return to universe</span>
+          <span className="stage-action-label-mobile" aria-hidden="true">Return</span>
         </button>
-        <button type="button" className="stage-return" onClick={() => onNavigate(nextExperience(experience))}>
-          Continue the story <ArrowRight size={16} aria-hidden="true" />
+        <button type="button" className="stage-return" aria-label="Continue the story" onClick={() => onNavigate(nextExperience(experience))}>
+          <span className="stage-action-label-full">Continue the story</span>
+          <span className="stage-action-label-mobile" aria-hidden="true">Continue</span>
+          <ArrowRight size={16} aria-hidden="true" />
         </button>
       </div>
     </section>
@@ -169,7 +173,7 @@ function Journey() {
               </span>
               <div className="journey-card-heading">
                 <h2>{item.title}</h2>
-                <p className="journey-organization">{item.organization}<span className="journey-period">{item.period}</span></p>
+                <p className="journey-organization">{item.organization}{' '}<span className="journey-period">{item.period}</span></p>
                 <p className="journey-location"><MapPin size={14} aria-hidden="true" /> {item.location}</p>
               </div>
               <span className={`journey-discipline journey-discipline-${item.discipline.toLowerCase()}`}>{item.discipline}</span>
@@ -200,6 +204,8 @@ function FeaturedProjects() {
   const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null)
   const activeProject = activeProjectIndex === null ? null : featuredProjects[activeProjectIndex]
   const activeProjectHighlights = activeProject ? featuredProjectHighlights[activeProject.title] : null
+  const closeProjectDialog = () => setActiveProjectIndex(null)
+  const closeButtonRef = useDialogController<HTMLButtonElement>(activeProject !== null, closeProjectDialog)
 
   return (
     <section className="featured-projects" aria-labelledby="featured-projects-title">
@@ -219,11 +225,11 @@ function FeaturedProjects() {
         ))}
       </div>
       {activeProject && (
-        <div className="featured-project-dialog-backdrop" role="presentation" onMouseDown={() => setActiveProjectIndex(null)}>
+        <div className="featured-project-dialog-backdrop" role="presentation" onMouseDown={closeProjectDialog}>
           <section className="featured-project-dialog" role="dialog" aria-modal="true" aria-labelledby="featured-project-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
             <header>
               <div><p className="journey-proof-label">Project story</p><h2 id="featured-project-dialog-title">{activeProject.title}</h2></div>
-              <button className="featured-project-dialog-close" type="button" onClick={() => setActiveProjectIndex(null)} aria-label={`Close ${activeProject.title} project story`}><X size={20} aria-hidden="true" /></button>
+              <button ref={closeButtonRef} className="featured-project-dialog-close" type="button" onClick={closeProjectDialog} aria-label={`Close ${activeProject.title} project story`}><X size={20} aria-hidden="true" /></button>
             </header>
             <dl>
               <div><dt>Business moment</dt><dd>{renderHighlightedText(activeProject.businessMoment, activeProjectHighlights?.businessMoment ?? [])}</dd></div>
