@@ -39,9 +39,9 @@ const evolvingPhrases = [
 ] as const
 
 const operatingDeliveryStages = [
-  { step: '01', title: 'Find the decision that is stuck', duration: 'Monthly with asset teams', description: 'We talk with asset teams about decisions that are slow, contested, or simply harder than they need to be. We choose work where help would matter now, someone is ready to use it, and the lesson may travel to another asset.' },
-  { step: '02', title: 'Help with what is here', duration: 'Days to 2 weeks', description: 'The data will often be incomplete or spread across places. That is not a reason to wait. We use what we can trust, show the gaps and assumptions, and build a small, ad hoc workflow that helps someone make the next call. We stay within data and security boundaries, and bring in the right central team early when the need depends on a capability we do not own.' },
-  { step: '03', title: 'Grow what earns it', duration: '30-90 days to learn', description: 'We put the workflow in front of users early and let their experience decide what comes next. If it makes the work easier, we strengthen the data, product, and support around it so it can last and travel. If it does not, we learn quickly and stop.' },
+  { step: '01', title: 'Shape a useful outcome', duration: 'Intake and framing', description: 'Name the sponsor, user, decision, baseline, and definition of done. Then choose the smallest intervention that can help now.' },
+  { step: '02', title: 'Deliver in short cycles', duration: 'Protected delivery', description: 'Use the tools and data available, put a usable increment in front of people quickly, and adjust from evidence rather than assumptions.' },
+  { step: '03', title: 'Decide its next home', duration: 'Close, hand off, or grow', description: 'Name the owner and support path. Continue as a longer workstream only when value, readiness, and sponsorship justify the investment.' },
 ] as const
 
 type FeaturedProjectField = 'businessMoment' | 'collaboration' | 'outcome' | 'aiInPractice'
@@ -70,7 +70,7 @@ const featuredProjectHighlights: Record<string, Record<FeaturedProjectField, rea
 const flagSources = { us: usFlag, nl: nlFlag, ng: ngFlag, qa: qaFlag, ve: veFlag, co: coFlag, mx: mxFlag } as const
 
 const testimonials = [
-  { id: '01', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', quote: 'Rafael is at his best when a decision is stuck. He brings the right evidence and people together, makes the uncertainty visible, and helps the team move without pretending the answer is simpler than it is.' },
+  { id: '01', name: 'Emily G', role: 'Senior Geoscientist | NBD LA/SA', quote: 'Rafael is at his best when a decision is stuck. He brings the right evidence and people together, makes the uncertainty visible, and helps the team move without pretending the answer is simpler than it is.' },
   { id: '02', name: 'Example colleague 02', role: 'Product and delivery partner', quote: 'He can move comfortably between users, developers, and technical specialists. Rafael keeps the conversation anchored in the real job someone needs to do, which is why the work has a better chance of being used.' },
   { id: '03', name: 'Example colleague 03', role: 'Data and analytics partner', quote: 'Rafael does not wait for perfect data before helping. He is clear about what is trusted, what is missing, and what the next practical step should be.' },
   { id: '04', name: 'Example colleague 04', role: 'Subsurface technical lead', quote: 'He has deep enough subsurface experience to ask the difficult questions, but he does not use that expertise to close the room down. Rafael makes it easier for different disciplines to challenge each other and still reach a decision.' },
@@ -273,7 +273,6 @@ function CvProfile() {
 }
 
 function IntegrationMap() {
-  const [activeView, setActiveView] = useState<'map' | 'testimonials'>('testimonials')
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0)
   const activeTestimonial = testimonials[activeTestimonialIndex]
   const previousTestimonialIndex = (activeTestimonialIndex - 1 + testimonials.length) % testimonials.length
@@ -287,20 +286,7 @@ function IntegrationMap() {
 
   return (
     <div className="integration-map-panel">
-      <div className="integration-map-controls">
-        <div className="integration-map-switcher" role="tablist" aria-label="System map views">
-          <button id="testimonial-tab" type="button" role="tab" aria-selected={activeView === 'testimonials'} aria-controls="testimonial-panel" onClick={() => setActiveView('testimonials')}>Testimonials</button>
-          <button id="system-map-tab" type="button" role="tab" aria-selected={activeView === 'map'} aria-controls="system-map-panel" onClick={() => setActiveView('map')}>Where I connect</button>
-        </div>
-      </div>
-      {activeView === 'map' ? (
-        <div id="system-map-panel" className="integration-map" role="tabpanel" aria-labelledby="system-map-tab">
-          <svg viewBox="0 0 1000 700" aria-hidden="true">{integrationNodes.map((node) => <line key={node.id} x1="500" y1="350" x2={node.x * 10} y2={node.y * 7} />)}</svg>
-          <div className="integration-center"><img src={rafaelPortrait} alt="Rafael Navarro" /></div>
-          {integrationNodes.map((node) => <article className={`integration-node connection-${node.connectionType}`} key={node.id} style={{ '--node-x': `${node.x}%`, '--node-y': `${node.y}%` } as CSSProperties}><CircleDot size={15} aria-hidden="true" /><h2>{node.label}</h2><p>{node.description}</p></article>)}
-        </div>
-      ) : (
-        <section id="testimonial-panel" className="testimonial-carousel" role="tabpanel" aria-labelledby="testimonial-tab" aria-roledescription="carousel" aria-label="Candidate testimonials" tabIndex={0} onKeyDown={(event) => {
+      <section className="testimonial-carousel" aria-roledescription="carousel" aria-labelledby="testimonials-title" tabIndex={0} onKeyDown={(event) => {
           if (event.key === 'ArrowLeft') {
             event.preventDefault()
             moveTestimonial(-1)
@@ -311,6 +297,7 @@ function IntegrationMap() {
           }
         }}>
           <header className="testimonial-carousel-header">
+            <h2 className="how-i-work-section-title" id="testimonials-title">Testimonials</h2>
           </header>
           <div className="testimonial-carousel-deck">
             <button type="button" className="testimonial-carousel-preview testimonial-carousel-preview-previous" onClick={() => setActiveTestimonialIndex(previousTestimonialIndex)} aria-label={`Show previous testimonial by ${previousTestimonial.name}`}>
@@ -335,8 +322,15 @@ function IntegrationMap() {
             <p className="testimonial-carousel-progress" aria-live="polite">{activeTestimonialIndex + 1} <span aria-hidden="true">/</span> {testimonials.length}</p>
             <button type="button" className="testimonial-carousel-arrow" onClick={() => moveTestimonial(1)} aria-label="Show next testimonial" title="Next testimonial"><ArrowRight size={19} aria-hidden="true" /></button>
           </nav>
-        </section>
-      )}
+      </section>
+      <section className="integration-map-section" aria-labelledby="integration-map-title">
+        <h2 className="how-i-work-section-title" id="integration-map-title">Where I connect</h2>
+        <div className="integration-map">
+          <svg viewBox="0 0 1000 700" aria-hidden="true">{integrationNodes.map((node) => <line key={node.id} x1="500" y1="350" x2={node.x * 10} y2={node.y * 7} />)}</svg>
+          <div className="integration-center"><img src={rafaelPortrait} alt="Rafael Navarro" /></div>
+          {integrationNodes.map((node) => <article className={`integration-node connection-${node.connectionType}`} key={node.id} style={{ '--node-x': `${node.x}%`, '--node-y': `${node.y}%` } as CSSProperties}><CircleDot size={15} aria-hidden="true" /><h2>{node.label}</h2><p>{node.description}</p></article>)}
+        </div>
+      </section>
     </div>
   )
 }
@@ -350,7 +344,7 @@ function Leadership() {
         <header className="leadership-chapter-heading">
           <p>01</p>
           <div>
-            <p className="eyebrow">Leadership commitment</p>
+            <p className="eyebrow">The leadership I bring</p>
             <h2 id="leadership-commitment-title">What I have led, and how I would build from here.</h2>
           </div>
         </header>
@@ -370,48 +364,73 @@ function Leadership() {
         </figure>
       </section>
 
-      <section className="leadership-focus" aria-labelledby="leadership-operating-model-title">
-        <section className="operating-delivery-loop" aria-labelledby="operating-delivery-loop-title">
+      <section className="leadership-strategy" aria-labelledby="leadership-strategy-title">
+        <header className="leadership-chapter-heading">
+          <p>02</p>
+          <div>
+            <p className="eyebrow">My strategy</p>
+            <h2 id="leadership-strategy-title">Run AI Embedment as a rapid delivery and adoption capability.</h2>
+          </div>
+        </header>
+        <p className="leadership-strategy-thesis">The team would help operating groups resolve immediate needs through focused, ad hoc delivery. Capacity would scale with the delivery practitioners actually in post, not an assumed final headcount.</p>
+        <div className="leadership-strategy-capacity" aria-label="Delivery capacity guardrails">
+          <div><strong>2</strong><h3>Owned quarterly outcomes</h3><p>Target per delivery practitioner, adjusted for complexity. The manager is accountable for the portfolio, not included in this measure.</p></div>
+          <div><strong>2</strong><h3>Active projects maximum</h3><p>Protect focus and finish useful work before pulling more into delivery.</p></div>
+          <div><strong>1-12+</strong><h3>Weeks by engagement</h3><p>Quick interventions can land in 1-2 weeks, projects in 3-6, and proven workstreams continue through usable increments.</p></div>
+        </div>
+        <div className="leadership-strategy-story">
           <header>
-            <p className="eyebrow">How the team operates</p>
-            <h2 id="operating-delivery-loop-title">AI should make a real job easier to do.</h2>
-            <p>We start with a decision someone already needs to make. Then we work with the asset team to see whether the tools we have can make that decision easier, clearer, or more consistent.</p>
+            <p className="eyebrow">The portfolio logic</p>
+            <h3>Start small. Grow what proves useful.</h3>
           </header>
-          <ol>
-            {operatingDeliveryStages.map((stage) => (
-              <li key={stage.step}>
-                <span>{stage.step}</span>
-                <h3>{stage.title}</h3>
-                <strong>{stage.duration}</strong>
-                <p>{stage.description}</p>
-              </li>
-            ))}
-          </ol>
-          <div className="operating-delivery-rhythm">
-            <p>We keep the loop close to the work: weekly, we unblock decisions and share what changed for users; monthly, we decide with asset sponsors where our time can help most; quarterly, we put usable releases and lessons on the table, then choose what grows, needs support, or stops.</p>
-            <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
+          <div className="leadership-strategy-story-copy">
+            <p>Capacity is a choice, not a queue. Work enters only when an operating team has a pressing decision to improve or friction to remove. We choose for urgency, readiness, potential value, and speed to impact.</p>
+            <p>We begin with the smallest credible <strong>project</strong>: a usable result that can land within the quarter. When adoption and evidence reveal a larger opportunity, it can become a <strong>workstream</strong> delivered through successive increments. Each practitioner still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
           </div>
-        </section>
-        <section className="leadership-principles" aria-labelledby="leadership-principles-title">
-          <div className="leadership-section-heading">
-            <p className="eyebrow">How we choose and build</p>
-            <h2 id="leadership-principles-title">A few rules that keep us honest.</h2>
+          <p className="leadership-strategy-proof"><span>What earns the next investment</span> Less effort, better decisions, lower risk, sustained use, or a solution another team can reuse.</p>
+        </div>
+      </section>
+
+      <section className="leadership-focus operating-delivery-loop" aria-labelledby="operating-delivery-loop-title">
+        <header className="leadership-chapter-heading">
+          <p>03</p>
+          <div>
+            <p className="eyebrow">How the team operates</p>
+            <h2 id="operating-delivery-loop-title">Move from a clear outcome to a clear next home.</h2>
+            <p className="leadership-chapter-intro">A lightweight delivery loop keeps immediate work moving without allowing successful prototypes to become unsupported products.</p>
           </div>
-          <div className="leadership-practice-intro">
-            <p>I would rather see three workflows people use than a wall of AI pilots. That means staying close to the work, being thoughtful about risk, and changing course when the evidence calls for it.</p>
-          </div>
+        </header>
+        <ol>
+          {operatingDeliveryStages.map((stage) => (
+            <li key={stage.step}>
+              <span>{stage.step}</span>
+              <h3>{stage.title}</h3>
+              <strong>{stage.duration}</strong>
+              <p>{stage.description}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="operating-delivery-rhythm">
+          <p>Weekly, we unblock delivery and share what changed for users. Monthly, we rebalance the portfolio with sponsors. Quarterly, we review outcomes, value, and ownership before making the next investment decision.</p>
+          <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
+        </div>
+        <section className="operating-principles" aria-labelledby="operating-principles-title">
+          <header>
+            <p className="eyebrow">Operating principles</p>
+            <h3 id="operating-principles-title">Two rules that keep delivery honest.</h3>
+            <p>Speed does not lower the bar for usefulness, trust, or responsible technical choices.</p>
+          </header>
           <div className="operating-principles-grid">
             {leadershipPillars.map((pillar, index) => {
               const Icon = pillarIcons[index]
               return <article className="operating-principle-card" key={pillar.title}>
                 <Icon size={22} aria-hidden="true" />
-                <h3>{pillar.title}</h3>
+                <h4>{pillar.title}</h4>
                 <p>{pillar.statement}</p>
               </article>
             })}
           </div>
         </section>
-
       </section>
     </div>
   )
