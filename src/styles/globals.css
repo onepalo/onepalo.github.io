@@ -265,7 +265,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .testimonial-dialog-close:hover { border-color: var(--teal); color: var(--warm-white); background: var(--teal); }
 .testimonial-dialog-copy { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: clamp(34px, 4.6vw, 76px) clamp(38px, 5.5vw, 96px); scrollbar-gutter: stable; }
 .testimonial-dialog-copy p { max-width: 84ch; margin: 0; color: #43535c; font-size: clamp(16px, 1.15vw, 19px); line-height: 1.72; }
-.testimonial-dialog-copy p + p { margin-top: 1.65em; }
+.testimonial-dialog-paragraph + .testimonial-dialog-paragraph { margin-top: 1.65em; }
+.testimonial-evidence-toggle { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; border: 0; border-bottom: 1px solid currentColor; padding: 0 0 4px; color: var(--blue); background: transparent; cursor: pointer; font: inherit; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.testimonial-evidence-toggle svg { transition: transform .2s ease; }
+.testimonial-evidence-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.testimonial-evidence-toggle:hover { color: var(--teal); }
+.testimonial-evidence-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+.testimonial-evidence { display: grid; gap: 10px; width: min(100%, 1120px); margin: 22px 0 0; padding: 14px; border: 1px solid rgba(30, 37, 43, .13); background: rgba(46, 111, 149, .035); }
+.testimonial-evidence img { display: block; width: 100%; height: auto; border: 1px solid rgba(30, 37, 43, .1); background: var(--warm-white); }
+.testimonial-evidence figcaption { color: var(--muted); font-size: 12px; line-height: 1.45; }
 @keyframes testimonial-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .experience-leadership .stage-intro, .experience-cover .stage-intro { display: block; margin-bottom: 42px; text-align: center; }
 .experience-leadership .stage-intro h1, .experience-cover .stage-intro h1 { max-width: 720px; margin: 0 auto; }

@@ -5,6 +5,7 @@ import type { ExperienceId } from '../../content/contentTypes'
 import { useDialogController } from '../../utils/useDialogController'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
 import leaderIllustration from '../../assets/candidate/Leader.png'
+import manuelSwoProjectGraph from '../../assets/candidate/manuel-swo-project-graph.png'
 import usFlag from 'flag-icons/flags/4x3/us.svg'
 import nlFlag from 'flag-icons/flags/4x3/nl.svg'
 import ngFlag from 'flag-icons/flags/4x3/ng.svg'
@@ -74,6 +75,11 @@ interface Testimonial {
   role: string
   excerpt: string
   fullRecommendation?: readonly string[]
+  projectGraph?: {
+    src: string
+    alt: string
+    caption: string
+  }
   isDraft?: boolean
 }
 
@@ -89,6 +95,11 @@ const testimonials: readonly Testimonial[] = [
       'I was also aware of Rafael\'s environmental awareness campaign in Port Harcourt where black soot and particulate pollution had become a daily concern. Rafael took the lead and in a very short amount of time installed a real-time PM2.5 monitor at his home and made the readings public, providing residents and colleagues with a way to see the issue as it was happening.',
       'Rafael then took this evidence to management and pushed for changes in the mitigation plans. The growing visibility of the pollution issue led to practical measures such as air purifiers and daily air-quality reports. This was another example of Rafael\'s passion and leadership, taking a health concern and turning it into evidence and actions people could use.',
     ],
+    projectGraph: {
+      src: manuelSwoProjectGraph,
+      alt: 'Nigeria Shallow Water 2020-2021 technology deployment overview showing Rafael Navarro as the implementer of data science templates and their project impact.',
+      caption: 'Nigeria Shallow Water technology deployment, 2020-2021.',
+    },
   },
   {
     id: '02',
@@ -305,13 +316,22 @@ function CvProfile() {
 function TestimonialCarousel() {
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0)
   const [openRecommendation, setOpenRecommendation] = useState<Testimonial | null>(null)
+  const [isProjectGraphVisible, setIsProjectGraphVisible] = useState(false)
   const activeTestimonial = testimonials[activeTestimonialIndex]
   const previousTestimonialIndex = (activeTestimonialIndex - 1 + testimonials.length) % testimonials.length
   const nextTestimonialIndex = (activeTestimonialIndex + 1) % testimonials.length
   const previousTestimonial = testimonials[previousTestimonialIndex]
   const nextTestimonial = testimonials[nextTestimonialIndex]
-  const closeRecommendation = () => setOpenRecommendation(null)
+  const closeRecommendation = () => {
+    setOpenRecommendation(null)
+    setIsProjectGraphVisible(false)
+  }
   const closeRecommendationButtonRef = useDialogController<HTMLButtonElement>(openRecommendation !== null, closeRecommendation)
+
+  function openFullRecommendation(testimonial: Testimonial) {
+    setIsProjectGraphVisible(false)
+    setOpenRecommendation(testimonial)
+  }
 
   function moveTestimonial(direction: -1 | 1) {
     setActiveTestimonialIndex((currentIndex) => (currentIndex + direction + testimonials.length) % testimonials.length)
@@ -347,7 +367,7 @@ function TestimonialCarousel() {
               </div>
               <div className="testimonial-carousel-message">
                 <blockquote>{activeTestimonial.excerpt}</blockquote>
-                {activeTestimonial.fullRecommendation && <button type="button" className="testimonial-read-full" onClick={() => setOpenRecommendation(activeTestimonial)}>Read full recommendation <ArrowRight size={15} aria-hidden="true" /></button>}
+                {activeTestimonial.fullRecommendation && <button type="button" className="testimonial-read-full" onClick={() => openFullRecommendation(activeTestimonial)}>Read full recommendation <ArrowRight size={15} aria-hidden="true" /></button>}
               </div>
               <footer><strong>{activeTestimonial.name}</strong><span>{activeTestimonial.role}</span></footer>
             </article>
@@ -376,7 +396,25 @@ function TestimonialCarousel() {
               <button ref={closeRecommendationButtonRef} className="featured-project-dialog-close testimonial-dialog-close" type="button" onClick={closeRecommendation} aria-label={`Close recommendation from ${openRecommendation.name}`}><X size={20} aria-hidden="true" /></button>
             </header>
             <div className="testimonial-dialog-copy">
-              {openRecommendation.fullRecommendation?.map((paragraph, index) => <p key={`${openRecommendation.id}-paragraph-${index}`}>{paragraph}</p>)}
+              {openRecommendation.fullRecommendation?.map((paragraph, index) => (
+                <div className="testimonial-dialog-paragraph" key={`${openRecommendation.id}-paragraph-${index}`}>
+                  <p>{paragraph}</p>
+                  {index === 0 && openRecommendation.projectGraph && (
+                    <>
+                      <button type="button" className="testimonial-evidence-toggle" onClick={() => setIsProjectGraphVisible((isVisible) => !isVisible)} aria-expanded={isProjectGraphVisible} aria-controls="manuel-project-graph">
+                        {isProjectGraphVisible ? 'Hide referenced project graph' : 'View referenced project graph'}
+                        <ChevronDown size={16} aria-hidden="true" />
+                      </button>
+                      {isProjectGraphVisible && (
+                        <figure className="testimonial-evidence" id="manuel-project-graph">
+                          <img src={openRecommendation.projectGraph.src} alt={openRecommendation.projectGraph.alt} />
+                          <figcaption>{openRecommendation.projectGraph.caption}</figcaption>
+                        </figure>
+                      )}
+                    </>
+                  )}
+                </div>
+              ))}
             </div>
           </section>
         </div>
