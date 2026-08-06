@@ -74,6 +74,7 @@ interface Testimonial {
   name: string
   role: string
   excerpt: string
+  endorsementType?: 'leadership' | 'technical' | 'hybrid'
   fullRecommendation?: readonly string[]
   projectGraph?: {
     src: string
@@ -83,12 +84,13 @@ interface Testimonial {
   isDraft?: boolean
 }
 
-const testimonials: readonly Testimonial[] = [
+const testimonials: readonly Testimonial[] = ([
   {
-    id: '01',
+    id: '03',
     name: 'Manuel Poupon',
     role: 'Nigeria DW Principal',
-    excerpt: 'I had the privilege of working with Rafael on several exploration projects in Nigeria, both onshore and in Shallow Water. His curiosity, can-do attitude, enthusiasm, and solid G&G skills consistently pushed the boundaries of what was possible within project timelines. In the Nigeria Shallow Water offshore regional project, Rafael\'s contribution was a true game changer.',
+    excerpt: 'I had the privilege of working with Rafael on several exploration projects in Nigeria, both onshore and in Shallow Water. In the Nigeria Shallow Water offshore regional project, Rafael\'s contribution was a true game changer.',
+    endorsementType: 'hybrid',
     fullRecommendation: [
       'I had the privilege to work with Rafael on several Exploration projects in Nigeria (onshore and Shallow Water) and always appreciated his curiosity, can-do attitude and enthusiasm allied with solid G&G skills that allowed him to always push the boundaries of what is possible within the project timeline. Their is one particular project though where Rafael\'s contribution was a true game changer (see graph below).',
       'This Nigeria shallow water offshore regional project (2020-2021) was a poster child of one team member (Rafael) taking the lead and in a very short amount of time provided a tool to the entire team to all reservoirs, all wells, all production data at our findertips to reach a level of G&G and RE integration that was never achieved over this SWO basin.',
@@ -105,7 +107,8 @@ const testimonials: readonly Testimonial[] = [
     id: '02',
     name: "Michael O'Connell",
     role: 'Chief Analytics Officer, Spotfire',
-    excerpt: 'Rafael Navarro is one of the top few geoscientists and data scientists I have ever met. He sees through tough problems to an ideal solution, then figures out a way to get there with geoscience efficiency and statistical rigor. He is a highly capable scientist and software engineer, fluent in handling massive datasets and visual data science methodologies to surface hidden patterns that form a solid basis for business investments.',
+    excerpt: 'Rafael Navarro is one of the top few geoscientists and data scientists I have ever met. He sees through tough problems to an ideal solution, then figures out a way to get there with geoscience efficiency and statistical rigor.',
+    endorsementType: 'hybrid',
     fullRecommendation: [
       'Rafael Navarro is one of the top few geoscientists and data scientists I have ever met. He sees through tough problems to an ideal solution, then figures out a way to get there with geoscience efficiency and statistical rigor. He is a highly capable scientist and software engineer, fluent in handling massive datasets and using visual data science methodologies to surface hidden patterns that form a solid basis for business investments.',
       'I have seen Rafael build visual geoscience and data science solutions involving hundreds of millions of depth-indexed well log records, creating geologically meaningful reservoir summaries and sophisticated asset valuation applications. These solutions use innovative Python and Spotfire visual data science methods to estimate regional porosity-depth trends and uncertainty envelopes, accounting for spatial clustering, well over-representation, and petrophysical uncertainty in a rigorous and reproducible manner.',
@@ -113,13 +116,26 @@ const testimonials: readonly Testimonial[] = [
       'I have no hesitation in recommending Rafael for either an individual contributor or leadership position. His enthusiasm and passion for scientific discovery and business development put him in a good position to lead a team of visual data science and geoscience professionals, guiding Shell forward through business uncertainty and rapid technology innovation.',
     ],
   },
-  { id: '03', name: 'Brent Wignall', role: 'Senior Exploration Evaluation GPO - Assurance and Process', excerpt: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration. For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.' },
-  { id: '04', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', excerpt: 'In new business work, the picture is rarely complete and the decision rarely waits. Rafael is good at laying out what we know, where the uncertainty sits, and who needs to be part of the conversation. He gives the team enough structure to move forward without making the problem look simpler than it is.', isDraft: true },
-  { id: '05', name: 'Homerson Uy', role: 'Senior Product Owner', excerpt: 'Rafael brings a rare combination to product work: he understands the subsurface problem in depth, but he still listens before deciding what to build. He can translate between technical users and a delivery team without losing what matters to either side.', isDraft: true },
-  { id: '06', name: 'Francesco Menapace', role: 'GM Data and Digital Innovation', excerpt: 'What I value in Rafael is his focus on the outcome. He will test an idea quickly, listen to what users are telling us, and stop or change direction when the work is not helping. That makes it easier to invest in the opportunities where the team can make a real difference.', isDraft: true },
-  { id: '07', name: 'Craig Harvey', role: 'Exploration Manager EMEA', excerpt: 'A solution that works in one asset does not automatically work everywhere else. Rafael asks which parts are specific to the local problem and which parts are worth reusing. He helps teams share what they have learned without forcing every asset into the same answer.', isDraft: true },
+  { id: '04', name: 'Brent Wignall', role: 'Senior Exploration Evaluation GPO - Assurance and Process', excerpt: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration. For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.', endorsementType: 'technical' },
+  { id: '05', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', excerpt: 'In new business work, the picture is rarely complete and the decision rarely waits. Rafael is good at laying out what we know, where the uncertainty sits, and who needs to be part of the conversation. He gives the team enough structure to move forward without making the problem look simpler than it is.', isDraft: true },
+  { id: '06', name: 'Homerson Uy', role: 'Senior Product Owner', excerpt: 'Rafael brings a rare combination to product work: he understands the subsurface problem in depth, but he still listens before deciding what to build. He can translate between technical users and a delivery team without losing what matters to either side.', isDraft: true },
+  { id: '07', name: 'Francesco Menapace', role: 'GM Data and Digital Innovation', excerpt: 'What I value in Rafael is his focus on the outcome. He will test an idea quickly, listen to what users are telling us, and stop or change direction when the work is not helping. That makes it easier to invest in the opportunities where the team can make a real difference.', isDraft: true },
+  {
+    id: '01',
+    name: 'Craig Harvey',
+    role: 'Exploration Manager EMEA',
+    excerpt: 'I had the pleasure of working with Rafael in Qatar, where he was our resident Geophysicist within a highly multicultural team. He embraced the challenge of working in a new environment, strengthened his English along the way, and delivered the technical programme with confidence, personality and style.',
+    endorsementType: 'leadership',
+    fullRecommendation: [
+      'I had the pleasure of working with Rafael in Qatar, where he was our resident Geophysicist within a highly multicultural team. He embraced the challenge of working in a new environment, strengthened his English along the way, and delivered the technical programme with confidence, personality and style.',
+      'Rafael is a genuine catalyst. He moves quickly, brings people together and injects energy into everything he touches. He is passionate, dynamic and never afraid to challenge the status quo. From the moment we met, he has been excited by the potential of technology to create impact, deliver value and change the way organisations work.',
+      'What makes Rafael especially compelling is the breadth of his capability. He combines strong technical domain expertise in subsurface with leadership experience across data and digital. He understands the technology, but more importantly, he knows how to mobilise people around it and turn ambition into action.',
+      'His energy extends well beyond the workplace. Whether leading an environmental campaign in Port Harcourt or building an extraordinary social media movement in Venezuela that attracted more than two million followers, Rafael has repeatedly demonstrated his passion and energy for making a difference and his ability to inspire others at scale. Rafael consistently demonstrates the ability to engage communities, inspire action, and deliver meaningful change. These experiences speak volumes about his leadership, influence, and determination to leave a positive mark wherever he operates.',
+      'Rafael is bold, creative and full of momentum. If you have a role that needs technical credibility, digital ambition and a leader who can inspire, Rafa is your guy.',
+    ],
+  },
   { id: '08', name: 'Frederico Miranda', role: 'Principal Exploration Geoscientist • Subsurface Brazil', excerpt: 'Rafael expects me to say when I disagree or when I do not know something yet. He is direct about the standard we need to meet, but he also makes time to work through a difficult problem with me. I leave those conversations knowing what I own and where I can ask for help.', isDraft: true },
-]
+] satisfies Testimonial[]).sort((first, second) => first.id.localeCompare(second.id))
 
 function renderHighlightedText(text: string, highlights: readonly string[]) {
   const pattern = new RegExp(`(${highlights.map((highlight) => highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi')
@@ -327,6 +343,9 @@ function TestimonialCarousel() {
     setIsProjectGraphVisible(false)
   }
   const closeRecommendationButtonRef = useDialogController<HTMLButtonElement>(openRecommendation !== null, closeRecommendation)
+  const testimonialRibbonLabel = (testimonial: Testimonial) => testimonial.isDraft ? 'DRAFT' : testimonial.endorsementType?.toUpperCase()
+  const ribbonLabel = testimonialRibbonLabel(activeTestimonial)
+  const testimonialVariantClass = (testimonial: Testimonial) => testimonial.isDraft ? ' is-draft' : testimonial.endorsementType ? ` is-${testimonial.endorsementType}` : ''
 
   function openFullRecommendation(testimonial: Testimonial) {
     setIsProjectGraphVisible(false)
@@ -350,14 +369,14 @@ function TestimonialCarousel() {
           }
         }}>
           <div className="testimonial-carousel-deck">
-            <button type="button" className={`testimonial-carousel-preview testimonial-carousel-preview-previous${previousTestimonial.isDraft ? ' is-draft' : ''}`} onClick={() => setActiveTestimonialIndex(previousTestimonialIndex)} aria-label={`Show previous ${previousTestimonial.isDraft ? 'draft ' : ''}testimonial by ${previousTestimonial.name}`}>
+            <button type="button" className={`testimonial-carousel-preview testimonial-carousel-preview-previous${testimonialVariantClass(previousTestimonial)}`} data-ribbon={testimonialRibbonLabel(previousTestimonial)} onClick={() => setActiveTestimonialIndex(previousTestimonialIndex)} aria-label={`Show previous ${previousTestimonial.isDraft ? 'draft ' : ''}testimonial by ${previousTestimonial.name}`}>
               <span className="testimonial-preview-number">{previousTestimonial.id}</span>
               <strong>{previousTestimonial.name}</strong>
               <span className="testimonial-preview-role">{previousTestimonial.role}</span>
               <p>{previousTestimonial.excerpt}</p>
             </button>
-            <article className={`testimonial-carousel-slide${activeTestimonial.isDraft ? ' is-draft' : ''}`} key={activeTestimonial.id}>
-              {activeTestimonial.isDraft && <span className="testimonial-draft-ribbon">Draft</span>}
+            <article className={`testimonial-carousel-slide${testimonialVariantClass(activeTestimonial)}${ribbonLabel ? ' has-ribbon' : ''}`} key={activeTestimonial.id}>
+              {ribbonLabel && <span className={`testimonial-ribbon is-${activeTestimonial.isDraft ? 'draft' : activeTestimonial.endorsementType}`}>{ribbonLabel}</span>}
               <div className="testimonial-carousel-context" aria-hidden="true">
                 <span>{activeTestimonial.id} / {testimonials.length.toString().padStart(2, '0')}</span>
                 {activeTestimonial.isDraft && <span className="testimonial-draft-note">Awaiting final wording and confirmation</span>}
@@ -368,7 +387,7 @@ function TestimonialCarousel() {
               </div>
               <footer><strong>{activeTestimonial.name}</strong><span>{activeTestimonial.role}</span></footer>
             </article>
-            <button type="button" className={`testimonial-carousel-preview testimonial-carousel-preview-next${nextTestimonial.isDraft ? ' is-draft' : ''}`} onClick={() => setActiveTestimonialIndex(nextTestimonialIndex)} aria-label={`Show next ${nextTestimonial.isDraft ? 'draft ' : ''}testimonial by ${nextTestimonial.name}`}>
+            <button type="button" className={`testimonial-carousel-preview testimonial-carousel-preview-next${testimonialVariantClass(nextTestimonial)}`} data-ribbon={testimonialRibbonLabel(nextTestimonial)} onClick={() => setActiveTestimonialIndex(nextTestimonialIndex)} aria-label={`Show next ${nextTestimonial.isDraft ? 'draft ' : ''}testimonial by ${nextTestimonial.name}`}>
               <span className="testimonial-preview-number">{nextTestimonial.id}</span>
               <strong>{nextTestimonial.name}</strong>
               <span className="testimonial-preview-role">{nextTestimonial.role}</span>
