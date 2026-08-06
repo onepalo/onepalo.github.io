@@ -339,7 +339,7 @@ function TestimonialCarousel() {
 
   return (
     <>
-      <section className="testimonial-carousel" aria-roledescription="carousel" aria-labelledby="testimonials-title" tabIndex={0} onKeyDown={(event) => {
+      <section className="testimonial-carousel" aria-label="Testimonials" aria-roledescription="carousel" tabIndex={0} onKeyDown={(event) => {
           if (event.key === 'ArrowLeft') {
             event.preventDefault()
             moveTestimonial(-1)
@@ -349,9 +349,6 @@ function TestimonialCarousel() {
             moveTestimonial(1)
           }
         }}>
-          <header className="testimonial-carousel-header">
-            <h2 className="how-i-work-section-title" id="testimonials-title">Testimonial</h2>
-          </header>
           <div className="testimonial-carousel-deck">
             <button type="button" className={`testimonial-carousel-preview testimonial-carousel-preview-previous${previousTestimonial.isDraft ? ' is-draft' : ''}`} onClick={() => setActiveTestimonialIndex(previousTestimonialIndex)} aria-label={`Show previous ${previousTestimonial.isDraft ? 'draft ' : ''}testimonial by ${previousTestimonial.name}`}>
               <span className="testimonial-preview-number">{previousTestimonial.id}</span>

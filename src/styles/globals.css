@@ -545,10 +545,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 	.experience-how-i-work .testimonial-carousel-header { margin-bottom: 14px; }
 	.experience-how-i-work .testimonial-carousel-deck { display: block; padding: 0 0 16px; }
 	.experience-how-i-work .testimonial-carousel-preview { display: none; }
-	.experience-how-i-work .testimonial-carousel-slide { min-height: 0; height: auto; padding: 22px 18px 18px; }
-	.experience-how-i-work .testimonial-carousel-slide blockquote { overflow: visible; padding: 0; font-size: 20px; line-height: 1.32; }
+	.experience-how-i-work .testimonial-carousel-slide { min-height: 0; height: auto; padding: 26px 22px 22px; }
+	.experience-how-i-work .testimonial-carousel-slide blockquote { overflow: visible; padding: 0; color: var(--muted); font-size: 17px; line-height: 1.5; }
+	.experience-how-i-work .testimonial-carousel-slide.is-draft .testimonial-carousel-message { padding-top: 58px; }
 	.experience-how-i-work .testimonial-carousel-slide footer { width: 100%; margin-top: 20px; }
-	.experience-how-i-work .testimonial-carousel-navigation { grid-template-columns: 48px auto 48px; gap: 14px; }
+	.experience-how-i-work .testimonial-carousel-navigation { grid-template-columns: 48px auto 48px; gap: 14px; margin-bottom: 18px; }
 	.experience-how-i-work .testimonial-carousel-arrow { width: 48px; height: 48px; }
 	.testimonial-dialog-backdrop { padding: 12px; }
 	.testimonial-dialog { width: calc(100vw - 24px); height: calc(100dvh - 24px); grid-template-columns: 1fr; max-height: none; }

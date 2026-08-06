@@ -29,7 +29,14 @@ export default function App() {
   }
 
   useEffect(() => {
-    const syncWithHash = () => setActiveExperience(experienceFromHash(window.location.hash))
+    const syncWithHash = () => {
+      const experience = experienceFromHash(window.location.hash)
+      if (window.location.hash === '#how-i-work') {
+        window.history.replaceState(null, '', hashForExperience(experience))
+      }
+      setActiveExperience(experience)
+    }
+    syncWithHash()
     window.addEventListener('hashchange', syncWithHash)
     return () => window.removeEventListener('hashchange', syncWithHash)
   }, [])
