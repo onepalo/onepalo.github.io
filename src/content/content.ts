@@ -1,4 +1,4 @@
-import type { CampaignStory, FeaturedProject, HeroContent, IntegrationNode, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, World } from './contentTypes'
+import type { CampaignStory, FeaturedProject, HeroContent, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, World } from './contentTypes'
 import empathyAiLogo from './Asset 31.png'
 
 export const heroContent: HeroContent = {
@@ -12,7 +12,7 @@ export const heroContent: HeroContent = {
 export const worlds: World[] = [
   { id: 'cover', title: 'Why Me?', shortTitle: 'Why Me?', description: 'Why this role is the natural next step in my career.', accentColor: '#2e6f95', visualHint: 'personal statement' },
   { id: 'leadership', title: 'How I Will Lead', shortTitle: 'Leadership', description: 'How I would build a team that puts useful AI into everyday technical work.', accentColor: '#42a5a5', visualHint: 'team compass' },
-  { id: 'how-i-work', title: 'How I work', shortTitle: 'How I work', description: 'The connections behind my work, and what colleagues see in practice.', accentColor: '#b65f4a', visualHint: 'working connections' },
+  { id: 'how-i-work', title: 'Testimonial', shortTitle: 'Testimonial', description: 'What colleagues have experienced working alongside me.', accentColor: '#b65f4a', visualHint: 'professional recommendations' },
   { id: 'journey', title: 'Resume', shortTitle: 'Resume', description: 'From field geophysics to global product and analytics delivery.', accentColor: '#d6a94a', visualHint: 'constellation route' },
   { id: 'impact', title: 'Leadership Beyond My Role', shortTitle: 'Beyond my role', description: 'Work I have led, built, and carried beyond my day job.', accentColor: '#e07a5f', visualHint: 'proof points' },
 ]
@@ -72,15 +72,6 @@ export const featuredProjects: FeaturedProject[] = [
     aiInPractice: 'A strong data foundation makes advanced analytics and AI useful later; it is practical preparation, not AI for its own sake.',
     platforms: ['Databricks', 'Spotfire', 'VS Code'],
   },
-]
-
-export const integrationNodes: IntegrationNode[] = [
-  { id: 'domain', label: 'Subsurface & wells', description: 'Exploration, wells, reservoir, production, and technical judgement.', connectionType: 'domain', x: 25, y: 24 },
-  { id: 'evidence', label: 'Data & evidence', description: 'Source data, trusted definitions, visible gaps, and uncertainty.', connectionType: 'delivery', x: 75, y: 24 },
-  { id: 'workflow', label: 'AI-enabled workflows', description: 'Useful automation, models, and interfaces around the next call.', connectionType: 'capability', x: 75, y: 76 },
-  { id: 'product', label: 'Product & experience', description: 'Discovery, design, feedback, and delivery people can use.', connectionType: 'delivery', x: 25, y: 76 },
-  { id: 'central', label: 'Central AI & technology', description: 'Data platforms, GenAI capabilities, security, and specialist help.', connectionType: 'alignment', x: 50, y: 12 },
-  { id: 'adoption', label: 'Use, learn & improve', description: 'User feedback, adoption, support, and evidence of value.', connectionType: 'alignment', x: 50, y: 88 },
 ]
 
 export const leadershipProofs: LeadershipProof[] = [

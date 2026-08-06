@@ -19,7 +19,7 @@ interface NavigationButtonProps {
 const homeNavigationItem: NavigationItem = { id: 'home', label: 'Home', icon: Home }
 
 const navigationItems: NavigationItem[] = [
-  { id: 'how-i-work', label: 'Testimonials', materialIcon: 'taunt' },
+  { id: 'how-i-work', label: 'Testimonial', materialIcon: 'taunt' },
   { id: 'journey', label: 'Resume', materialIcon: 'work_history' },
   { id: 'impact', label: 'Beyond my role', materialIcon: 'cheer' },
 ]

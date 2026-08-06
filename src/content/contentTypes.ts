@@ -52,15 +52,6 @@ export interface FeaturedProject {
   platforms: string[]
 }
 
-export interface IntegrationNode {
-  id: string
-  label: string
-  description: string
-  connectionType: string
-  x: number
-  y: number
-}
-
 export interface LeadershipProof {
   theme: string
   title: string

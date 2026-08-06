@@ -1,9 +1,8 @@
-import { useState, type CSSProperties, type RefObject } from 'react'
-import { ArrowLeft, ArrowRight, ChevronDown, CircleDot, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
-import { featuredProjects, integrationNodes, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
+import { useState, type RefObject } from 'react'
+import { ArrowLeft, ArrowRight, ChevronDown, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
+import { featuredProjects, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import { useDialogController } from '../../utils/useDialogController'
-import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
 import leaderIllustration from '../../assets/candidate/Leader.png'
 import usFlag from 'flag-icons/flags/4x3/us.svg'
@@ -22,7 +21,7 @@ interface ExperienceStageProps {
 
 const stageMeta = {
   cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The value I would bring as Manager - AI Embedment.' },
-  'how-i-work': { eyebrow: 'Working across disciplines', title: 'How I work', intro: 'Two perspectives on how I work: the disciplines I bring together around a decision, and what colleagues experience working alongside me.' },
+  'how-i-work': { eyebrow: 'Professional recommendations', title: 'Testimonial', intro: 'What colleagues have experienced working alongside me.' },
   journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead', intro: '' },
   impact: { eyebrow: 'Beyond the day job', title: 'Leadership beyond my role', intro: '' },
@@ -69,15 +68,46 @@ const featuredProjectHighlights: Record<string, Record<FeaturedProjectField, rea
 
 const flagSources = { us: usFlag, nl: nlFlag, ng: ngFlag, qa: qaFlag, ve: veFlag, co: coFlag, mx: mxFlag } as const
 
-const testimonials = [
-  { id: '01', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', quote: 'In new business work, the picture is rarely complete and the decision rarely waits. Rafael is good at laying out what we know, where the uncertainty sits, and who needs to be part of the conversation. He gives the team enough structure to move forward without making the problem look simpler than it is.' },
-  { id: '02', name: 'Brent Wignall', role: 'ProducSenior Exploration Evaluation GPO', quote: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration.  For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.' },
-  { id: '03', name: 'Manuel Poupon', role: 'Nigeria DW Principal', quote: 'Deepwater decisions do not come with perfect information. Rafael was clear about which data we could trust, which assumptions still needed testing, and what the next practical step should be. That honesty helped us keep moving while staying conscious of the risk.' },
-  { id: '04', name: 'Homerson Uy', role: 'Senior Product Owner', quote: 'Rafael brings a rare combination to product work: he understands the subsurface problem in depth, but he still listens before deciding what to build. He can translate between technical users and a delivery team without losing what matters to either side.' },
-  { id: '05', name: 'Francesco Menapace', role: 'Asset sponsor', quote: 'What I value in Rafael is his focus on the outcome. He will test an idea quickly, listen to what users are telling us, and stop or change direction when the work is not helping. That makes it easier to invest in the opportunities where the team can make a real difference.' },
-  { id: '06', name: 'Michael OConell', role: 'Spotfire Chief Analyst Officer', quote: 'Rafael does not treat a dashboard as finished simply because it works. He pays attention to whether users understand it, trust the data, and come back to it when they have another decision to make. That practical focus is what turns analytics into adoption.' },
-  { id: '07', name: 'Example colleague 07', role: 'Global portfolio colleague', quote: 'A solution that works in one asset does not automatically work everywhere else. Rafael asks which parts are specific to the local problem and which parts are worth reusing. He helps teams share what they have learned without forcing every asset into the same answer.' },
-  { id: '08', name: 'Example colleague 08', role: 'Team member', quote: 'Rafael expects me to say when I disagree or when I do not know something yet. He is direct about the standard we need to meet, but he also makes time to work through a difficult problem with me. I leave those conversations knowing what I own and where I can ask for help.' },
+interface Testimonial {
+  id: string
+  name: string
+  role: string
+  excerpt: string
+  fullRecommendation?: readonly string[]
+  isDraft?: boolean
+}
+
+const testimonials: readonly Testimonial[] = [
+  {
+    id: '01',
+    name: 'Manuel Poupon',
+    role: 'Nigeria DW Principal',
+    excerpt: 'I had the privilege of working with Rafael on several exploration projects in Nigeria, both onshore and in Shallow Water. His curiosity, can-do attitude, enthusiasm, and solid G&G skills consistently pushed the boundaries of what was possible within project timelines. In the Nigeria Shallow Water offshore regional project, Rafael\'s contribution was a true game changer.',
+    fullRecommendation: [
+      'I had the privilege to work with Rafael on several Exploration projects in Nigeria (onshore and Shallow Water) and always appreciated his curiosity, can-do attitude and enthusiasm allied with solid G&G skills that allowed him to always push the boundaries of what is possible within the project timeline. Their is one particular project though where Rafael\'s contribution was a true game changer (see graph below).',
+      'This Nigeria shallow water offshore regional project (2020-2021) was a poster child of one team member (Rafael) taking the lead and in a very short amount of time provided a tool to the entire team to all reservoirs, all wells, all production data at our findertips to reach a level of G&G and RE integration that was never achieved over this SWO basin.',
+      'I was also aware of Rafael\'s environmental awareness campaign in Port Harcourt where black soot and particulate pollution had become a daily concern. Rafael took the lead and in a very short amount of time installed a real-time PM2.5 monitor at his home and made the readings public, providing residents and colleagues with a way to see the issue as it was happening.',
+      'Rafael then took this evidence to management and pushed for changes in the mitigation plans. The growing visibility of the pollution issue led to practical measures such as air purifiers and daily air-quality reports. This was another example of Rafael\'s passion and leadership, taking a health concern and turning it into evidence and actions people could use.',
+    ],
+  },
+  {
+    id: '02',
+    name: "Michael O'Connell",
+    role: 'Chief Analytics Officer, Spotfire',
+    excerpt: 'Rafael Navarro is one of the top few geoscientists and data scientists I have ever met. He sees through tough problems to an ideal solution, then figures out a way to get there with geoscience efficiency and statistical rigor. He is a highly capable scientist and software engineer, fluent in handling massive datasets and visual data science methodologies to surface hidden patterns that form a solid basis for business investments.',
+    fullRecommendation: [
+      'Rafael Navarro is one of the top few geoscientists and data scientists I have ever met. He sees through tough problems to an ideal solution, then figures out a way to get there with geoscience efficiency and statistical rigor. He is a highly capable scientist and software engineer, fluent in handling massive datasets and using visual data science methodologies to surface hidden patterns that form a solid basis for business investments.',
+      'I have seen Rafael build visual geoscience and data science solutions involving hundreds of millions of depth-indexed well log records, creating geologically meaningful reservoir summaries and sophisticated asset valuation applications. These solutions use innovative Python and Spotfire visual data science methods to estimate regional porosity-depth trends and uncertainty envelopes, accounting for spatial clustering, well over-representation, and petrophysical uncertainty in a rigorous and reproducible manner.',
+      'During 2026, I have seen Rafael adopt best-of-breed emerging AI capabilities to interrogate data and build these applications, guiding exploratory analysis and accelerating insight generation through code generation and natural-language interaction. The methodologies Rafael brings together are clearly accelerating prospect evaluation, with rapid assessment of reservoir property ranges, trends, and uncertainty across business regions of interest.',
+      'I have no hesitation in recommending Rafael for either an individual contributor or leadership position. His enthusiasm and passion for scientific discovery and business development put him in a good position to lead a team of visual data science and geoscience professionals, guiding Shell forward through business uncertainty and rapid technology innovation.',
+    ],
+  },
+  { id: '03', name: 'Brent Wignall', role: 'Senior Exploration Evaluation GPO - Assurance and Process', excerpt: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration. For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.' },
+  { id: '04', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', excerpt: 'In new business work, the picture is rarely complete and the decision rarely waits. Rafael is good at laying out what we know, where the uncertainty sits, and who needs to be part of the conversation. He gives the team enough structure to move forward without making the problem look simpler than it is.', isDraft: true },
+  { id: '05', name: 'Homerson Uy', role: 'Senior Product Owner', excerpt: 'Rafael brings a rare combination to product work: he understands the subsurface problem in depth, but he still listens before deciding what to build. He can translate between technical users and a delivery team without losing what matters to either side.', isDraft: true },
+  { id: '06', name: 'Francesco Menapace', role: 'GM Data and Digital Innovation', excerpt: 'What I value in Rafael is his focus on the outcome. He will test an idea quickly, listen to what users are telling us, and stop or change direction when the work is not helping. That makes it easier to invest in the opportunities where the team can make a real difference.', isDraft: true },
+  { id: '07', name: 'Craig Harvey', role: 'Exploration Manager EMEA', excerpt: 'A solution that works in one asset does not automatically work everywhere else. Rafael asks which parts are specific to the local problem and which parts are worth reusing. He helps teams share what they have learned without forcing every asset into the same answer.', isDraft: true },
+  { id: '08', name: 'Frederico Miranda', role: 'Principal Exploration Geoscientist • Subsurface Brazil', excerpt: 'Rafael expects me to say when I disagree or when I do not know something yet. He is direct about the standard we need to meet, but he also makes time to work through a difficult problem with me. I leave those conversations knowing what I own and where I can ask for help.', isDraft: true },
 ]
 
 function renderHighlightedText(text: string, highlights: readonly string[]) {
@@ -272,20 +302,23 @@ function CvProfile() {
   )
 }
 
-function IntegrationMap() {
+function TestimonialCarousel() {
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0)
+  const [openRecommendation, setOpenRecommendation] = useState<Testimonial | null>(null)
   const activeTestimonial = testimonials[activeTestimonialIndex]
   const previousTestimonialIndex = (activeTestimonialIndex - 1 + testimonials.length) % testimonials.length
   const nextTestimonialIndex = (activeTestimonialIndex + 1) % testimonials.length
   const previousTestimonial = testimonials[previousTestimonialIndex]
   const nextTestimonial = testimonials[nextTestimonialIndex]
+  const closeRecommendation = () => setOpenRecommendation(null)
+  const closeRecommendationButtonRef = useDialogController<HTMLButtonElement>(openRecommendation !== null, closeRecommendation)
 
   function moveTestimonial(direction: -1 | 1) {
     setActiveTestimonialIndex((currentIndex) => (currentIndex + direction + testimonials.length) % testimonials.length)
   }
 
   return (
-    <div className="integration-map-panel">
+    <>
       <section className="testimonial-carousel" aria-roledescription="carousel" aria-labelledby="testimonials-title" tabIndex={0} onKeyDown={(event) => {
           if (event.key === 'ArrowLeft') {
             event.preventDefault()
@@ -297,24 +330,32 @@ function IntegrationMap() {
           }
         }}>
           <header className="testimonial-carousel-header">
-            <h2 className="how-i-work-section-title" id="testimonials-title">Testimonials</h2>
+            <h2 className="how-i-work-section-title" id="testimonials-title">Testimonial</h2>
           </header>
           <div className="testimonial-carousel-deck">
-            <button type="button" className="testimonial-carousel-preview testimonial-carousel-preview-previous" onClick={() => setActiveTestimonialIndex(previousTestimonialIndex)} aria-label={`Show previous testimonial by ${previousTestimonial.name}`}>
+            <button type="button" className={`testimonial-carousel-preview testimonial-carousel-preview-previous${previousTestimonial.isDraft ? ' is-draft' : ''}`} onClick={() => setActiveTestimonialIndex(previousTestimonialIndex)} aria-label={`Show previous ${previousTestimonial.isDraft ? 'draft ' : ''}testimonial by ${previousTestimonial.name}`}>
               <span className="testimonial-preview-number">{previousTestimonial.id}</span>
               <strong>{previousTestimonial.name}</strong>
               <span className="testimonial-preview-role">{previousTestimonial.role}</span>
-              <p>&quot;{previousTestimonial.quote}&quot;</p>
+              <p>{previousTestimonial.excerpt}</p>
             </button>
-            <article className="testimonial-carousel-slide" key={activeTestimonial.id}>
-              <blockquote>&quot;{activeTestimonial.quote}&quot;</blockquote>
+            <article className={`testimonial-carousel-slide${activeTestimonial.isDraft ? ' is-draft' : ''}`} key={activeTestimonial.id}>
+              {activeTestimonial.isDraft && <span className="testimonial-draft-ribbon">Draft</span>}
+              <div className="testimonial-carousel-context" aria-hidden="true">
+                <span>{activeTestimonial.id} / {testimonials.length.toString().padStart(2, '0')}</span>
+                {activeTestimonial.isDraft && <span className="testimonial-draft-note">Awaiting final wording and confirmation</span>}
+              </div>
+              <div className="testimonial-carousel-message">
+                <blockquote>{activeTestimonial.excerpt}</blockquote>
+                {activeTestimonial.fullRecommendation && <button type="button" className="testimonial-read-full" onClick={() => setOpenRecommendation(activeTestimonial)}>Read full recommendation <ArrowRight size={15} aria-hidden="true" /></button>}
+              </div>
               <footer><strong>{activeTestimonial.name}</strong><span>{activeTestimonial.role}</span></footer>
             </article>
-            <button type="button" className="testimonial-carousel-preview testimonial-carousel-preview-next" onClick={() => setActiveTestimonialIndex(nextTestimonialIndex)} aria-label={`Show next testimonial by ${nextTestimonial.name}`}>
+            <button type="button" className={`testimonial-carousel-preview testimonial-carousel-preview-next${nextTestimonial.isDraft ? ' is-draft' : ''}`} onClick={() => setActiveTestimonialIndex(nextTestimonialIndex)} aria-label={`Show next ${nextTestimonial.isDraft ? 'draft ' : ''}testimonial by ${nextTestimonial.name}`}>
               <span className="testimonial-preview-number">{nextTestimonial.id}</span>
               <strong>{nextTestimonial.name}</strong>
               <span className="testimonial-preview-role">{nextTestimonial.role}</span>
-              <p>&quot;{nextTestimonial.quote}&quot;</p>
+              <p>{nextTestimonial.excerpt}</p>
             </button>
           </div>
           <nav className="testimonial-carousel-navigation" aria-label="Testimonial navigation">
@@ -323,15 +364,24 @@ function IntegrationMap() {
             <button type="button" className="testimonial-carousel-arrow" onClick={() => moveTestimonial(1)} aria-label="Show next testimonial" title="Next testimonial"><ArrowRight size={19} aria-hidden="true" /></button>
           </nav>
       </section>
-      <section className="integration-map-section" aria-labelledby="integration-map-title">
-        <h2 className="how-i-work-section-title" id="integration-map-title">Where I connect</h2>
-        <div className="integration-map">
-          <svg viewBox="0 0 1000 700" aria-hidden="true">{integrationNodes.map((node) => <line key={node.id} x1="500" y1="350" x2={node.x * 10} y2={node.y * 7} />)}</svg>
-          <div className="integration-center"><img src={rafaelPortrait} alt="Rafael Navarro" /></div>
-          {integrationNodes.map((node) => <article className={`integration-node connection-${node.connectionType}`} key={node.id} style={{ '--node-x': `${node.x}%`, '--node-y': `${node.y}%` } as CSSProperties}><CircleDot size={15} aria-hidden="true" /><h2>{node.label}</h2><p>{node.description}</p></article>)}
+      {openRecommendation && (
+        <div className="featured-project-dialog-backdrop testimonial-dialog-backdrop" role="presentation" onMouseDown={closeRecommendation}>
+          <section className="featured-project-dialog testimonial-dialog" role="dialog" aria-modal="true" aria-labelledby="testimonial-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+            <header>
+              <div>
+                <p className="journey-proof-label">Full recommendation</p>
+                <h2 id="testimonial-dialog-title">{openRecommendation.name}</h2>
+                <p className="testimonial-dialog-role">{openRecommendation.role}</p>
+              </div>
+              <button ref={closeRecommendationButtonRef} className="featured-project-dialog-close testimonial-dialog-close" type="button" onClick={closeRecommendation} aria-label={`Close recommendation from ${openRecommendation.name}`}><X size={20} aria-hidden="true" /></button>
+            </header>
+            <div className="testimonial-dialog-copy">
+              {openRecommendation.fullRecommendation?.map((paragraph, index) => <p key={`${openRecommendation.id}-paragraph-${index}`}>{paragraph}</p>)}
+            </div>
+          </section>
         </div>
-      </section>
-    </div>
+      )}
+    </>
   )
 }
 
@@ -438,8 +488,8 @@ function Leadership() {
 
 function HowIWork() {
   return (
-    <section className="how-i-work-view" aria-label="How I work">
-      <IntegrationMap />
+    <section className="how-i-work-view" aria-label="Testimonial">
+      <TestimonialCarousel />
     </section>
   )
 }
