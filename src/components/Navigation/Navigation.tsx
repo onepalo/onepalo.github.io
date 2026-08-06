@@ -21,7 +21,7 @@ const homeNavigationItem: NavigationItem = { id: 'home', label: 'Home', icon: Ho
 const navigationItems: NavigationItem[] = [
   { id: 'how-i-work', label: 'Testimonials', materialIcon: 'taunt' },
   { id: 'journey', label: 'Resume', materialIcon: 'work_history' },
-  { id: 'impact', label: 'Proof', materialIcon: 'cheer' },
+  { id: 'impact', label: 'Beyond my role', materialIcon: 'cheer' },
 ]
 
 const approachItems: Array<{ id: Extract<ExperienceId, 'cover' | 'leadership'>; label: string; materialIcon?: string }> = [

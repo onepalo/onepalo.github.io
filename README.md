@@ -52,7 +52,7 @@ Below $760px$, each interactive component uses its established compact layout fo
 ## Content and assets
 
 - Candidate images live in `src/assets/candidate/`.
-- `CoverLetterLeadAIEmbedment.md`, `cover-letter-template.md`, `guide-me.html`, and the source documents in `src/content/` are local working material. They are excluded from Git to avoid publishing non-runtime source material.
+- `CoverLetterLeadAIEmbedment.txt`, `cover-letter-template.md`, `guide-me.html`, and the source documents in `src/content/` are local working material. They are excluded from Git to avoid publishing non-runtime source material.
 
 ## Publishing to GitHub Pages
 

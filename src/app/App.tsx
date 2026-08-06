@@ -14,7 +14,7 @@ const titles: Record<ExperienceId, string> = {
   'how-i-work': "How I Work | Rafael's Exploration Journal",
   leadership: "How I Will Lead the Team | Rafael's Exploration Journal",
   journey: "Resume | Rafael's Exploration Journal",
-  impact: "Proof of Leadership | Rafael's Exploration Journal",
+  impact: "Leadership Beyond My Role | Rafael's Exploration Journal",
   campaign: "Environmental Awareness Campaign | Rafael's Exploration Journal",
 }
 

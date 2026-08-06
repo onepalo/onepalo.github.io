@@ -11,7 +11,7 @@ interface EnvironmentalCampaignProps {
 }
 
 export function EnvironmentalCampaign({ headingRef, onReturn }: EnvironmentalCampaignProps) {
-  const campaignReferences = leadershipProofs.find((proof) => proof.title === 'Environmental Awareness Campaign, Nigeria')?.references ?? []
+  const campaignReferences = leadershipProofs.find((proof) => proof.title === 'Environmental Awareness Campaign - Nigeria')?.references ?? []
   const shouldReduceMotion = useReducedMotion()
 
   return (

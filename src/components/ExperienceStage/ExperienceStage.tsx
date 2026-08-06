@@ -25,7 +25,7 @@ const stageMeta = {
   'how-i-work': { eyebrow: 'Working across disciplines', title: 'How I work', intro: 'Two perspectives on how I work: the disciplines I bring together around a decision, and what colleagues experience working alongside me.' },
   journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead', intro: '' },
-  impact: { eyebrow: 'Leadership is a practice, not a title.', title: 'Proof of Leadership', intro: '' },
+  impact: { eyebrow: 'Beyond the day job', title: 'Leadership beyond my role', intro: '' },
 } as const
 
 const evolvingPhrases = [
@@ -70,14 +70,14 @@ const featuredProjectHighlights: Record<string, Record<FeaturedProjectField, rea
 const flagSources = { us: usFlag, nl: nlFlag, ng: ngFlag, qa: qaFlag, ve: veFlag, co: coFlag, mx: mxFlag } as const
 
 const testimonials = [
-  { id: '01', name: 'Emily G', role: 'Senior Geoscientist | NBD LA/SA', quote: 'Rafael is at his best when a decision is stuck. He brings the right evidence and people together, makes the uncertainty visible, and helps the team move without pretending the answer is simpler than it is.' },
-  { id: '02', name: 'Example colleague 02', role: 'Product and delivery partner', quote: 'He can move comfortably between users, developers, and technical specialists. Rafael keeps the conversation anchored in the real job someone needs to do, which is why the work has a better chance of being used.' },
-  { id: '03', name: 'Example colleague 03', role: 'Data and analytics partner', quote: 'Rafael does not wait for perfect data before helping. He is clear about what is trusted, what is missing, and what the next practical step should be.' },
-  { id: '04', name: 'Example colleague 04', role: 'Subsurface technical lead', quote: 'He has deep enough subsurface experience to ask the difficult questions, but he does not use that expertise to close the room down. Rafael makes it easier for different disciplines to challenge each other and still reach a decision.' },
-  { id: '05', name: 'Example colleague 05', role: 'Asset sponsor', quote: 'Rafael has a good instinct for where a team can make a difference. He does not confuse activity with progress, and he is willing to pause work that is not helping.' },
-  { id: '06', name: 'Example colleague 06', role: 'UX and engineering partner', quote: 'Working with Rafael means the technical work stays connected to the person using it. He asks what will make a workflow easier to trust, challenge, and return to.' },
-  { id: '07', name: 'Example colleague 07', role: 'Global portfolio colleague', quote: 'He sees both the local problem and the pattern that could travel. Rafael is thoughtful about what should be adapted for an asset and what should become reusable.' },
-  { id: '08', name: 'Example colleague 08', role: 'Team member', quote: 'Rafael creates room for people to be honest about what they do not know yet. He sets a high bar, gives clear direction, and makes the work feel owned together.' },
+  { id: '01', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', quote: 'In new business work, the picture is rarely complete and the decision rarely waits. Rafael is good at laying out what we know, where the uncertainty sits, and who needs to be part of the conversation. He gives the team enough structure to move forward without making the problem look simpler than it is.' },
+  { id: '02', name: 'Brent Wignall', role: 'ProducSenior Exploration Evaluation GPO', quote: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration.  For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.' },
+  { id: '03', name: 'Manuel Poupon', role: 'Nigeria DW Principal', quote: 'Deepwater decisions do not come with perfect information. Rafael was clear about which data we could trust, which assumptions still needed testing, and what the next practical step should be. That honesty helped us keep moving while staying conscious of the risk.' },
+  { id: '04', name: 'Homerson Uy', role: 'Senior Product Owner', quote: 'Rafael brings a rare combination to product work: he understands the subsurface problem in depth, but he still listens before deciding what to build. He can translate between technical users and a delivery team without losing what matters to either side.' },
+  { id: '05', name: 'Francesco Menapace', role: 'Asset sponsor', quote: 'What I value in Rafael is his focus on the outcome. He will test an idea quickly, listen to what users are telling us, and stop or change direction when the work is not helping. That makes it easier to invest in the opportunities where the team can make a real difference.' },
+  { id: '06', name: 'Michael OConell', role: 'Spotfire Chief Analyst Officer', quote: 'Rafael does not treat a dashboard as finished simply because it works. He pays attention to whether users understand it, trust the data, and come back to it when they have another decision to make. That practical focus is what turns analytics into adoption.' },
+  { id: '07', name: 'Example colleague 07', role: 'Global portfolio colleague', quote: 'A solution that works in one asset does not automatically work everywhere else. Rafael asks which parts are specific to the local problem and which parts are worth reusing. He helps teams share what they have learned without forcing every asset into the same answer.' },
+  { id: '08', name: 'Example colleague 08', role: 'Team member', quote: 'Rafael expects me to say when I disagree or when I do not know something yet. He is direct about the standard we need to meet, but he also makes time to work through a difficult problem with me. I leave those conversations knowing what I own and where I can ask for help.' },
 ]
 
 function renderHighlightedText(text: string, highlights: readonly string[]) {
@@ -185,8 +185,8 @@ function Journey() {
                   <p className="journey-proof-label">Selected contributions</p>
                   <ul className="journey-evidence">{item.evidence.map((point, evidenceIndex) => <li key={`evidence-${evidenceIndex}`}>{point}</li>)}</ul>
                 </div>
-                <section className="journey-learning-core" aria-label="Learning core">
-                  <p className="journey-proof-label">Learning core</p>
+                <section className="journey-learning-core" aria-label="What I learned">
+                  <p className="journey-proof-label">What I learned</p>
                   <p>{item.learningCore}</p>
                   <ul className="chips">{item.capabilities.map((capability, capabilityIndex) => <li key={`capability-${capabilityIndex}`}>{capability}</li>)}</ul>
                 </section>
@@ -232,10 +232,10 @@ function FeaturedProjects() {
               <button ref={closeButtonRef} className="featured-project-dialog-close" type="button" onClick={closeProjectDialog} aria-label={`Close ${activeProject.title} project story`}><X size={20} aria-hidden="true" /></button>
             </header>
             <dl>
-              <div><dt>Business moment</dt><dd>{renderHighlightedText(activeProject.businessMoment, activeProjectHighlights?.businessMoment ?? [])}</dd></div>
-              <div><dt>How I embedded</dt><dd>{renderHighlightedText(activeProject.collaboration, activeProjectHighlights?.collaboration ?? [])}</dd></div>
-              <div><dt>What changed</dt><dd>{renderHighlightedText(activeProject.outcome, activeProjectHighlights?.outcome ?? [])}</dd></div>
-              <div><dt>AI in practice</dt><dd>{renderHighlightedText(activeProject.aiInPractice, activeProjectHighlights?.aiInPractice ?? [])}</dd></div>
+              <div><dt>The problem</dt><dd>{renderHighlightedText(activeProject.businessMoment, activeProjectHighlights?.businessMoment ?? [])}</dd></div>
+              <div><dt>What I did</dt><dd>{renderHighlightedText(activeProject.collaboration, activeProjectHighlights?.collaboration ?? [])}</dd></div>
+              <div><dt>The result</dt><dd>{renderHighlightedText(activeProject.outcome, activeProjectHighlights?.outcome ?? [])}</dd></div>
+              <div><dt>Where AI helped</dt><dd>{renderHighlightedText(activeProject.aiInPractice, activeProjectHighlights?.aiInPractice ?? [])}</dd></div>
             </dl>
             <footer className="featured-project-platforms"><span>Platforms used</span><ul>{activeProject.platforms.map((platform) => <li key={platform}>{platform}</li>)}</ul></footer>
           </section>
@@ -380,7 +380,7 @@ function Leadership() {
         </div>
         <div className="leadership-strategy-story">
           <header>
-            <p className="eyebrow">The portfolio logic</p>
+            <p className="eyebrow">How I would choose the work</p>
             <h3>Start small. Grow what proves useful.</h3>
           </header>
           <div className="leadership-strategy-story-copy">
@@ -450,9 +450,9 @@ function CoverLetter() {
       <section className="leadership-opening" aria-label="Why I want this job">
         <p className="eyebrow">Why I want this job</p>
         <div className="leadership-opening-copy">
-          <p>I want this job because <span className="cover-letter-emphasis">I have worked on both sides of the gap this role is meant to close</span>: the pressure of a subsurface decision, and the digital work that loses force when it becomes disconnected from the people and workflows it is meant to serve. In my current work, I spend a lot of time with people who are trying to make sense of fragmented data, competing interpretations, and decisions that cannot wait for perfect information. AI can help, but only when it makes the work clearer for the people who carry the responsibility for the decision.</p>
-          <p>That matters to me because I have spent my career close to that responsibility: first in subsurface interpretation and operational work, then in product delivery, analytics, and now AI-enabled workflows. I have learned that a solution is only useful when people understand it, can challenge it, and choose to use it again.</p>
-          <p>My leadership has grown through leading the work itself: coordinating an approximately ten-person subsurface team and bringing development and UX teams together around shared outcomes. This role is the next responsibility I am ready to take on: helping a global AI Embedment team grow, make good calls, and do work they can be proud of.</p>
+          <p>I want this job because <span className="cover-letter-emphasis">I have worked on both sides of the gap this role is meant to close</span>: making subsurface decisions under pressure, and building digital tools for the people responsible for those decisions. In my current work, I help people make sense of fragmented data, competing interpretations, and decisions that cannot wait for perfect information. AI can help, but only when it makes that work clearer.</p>
+          <p>My career has stayed close to those decisions: first in subsurface interpretation and operations, then in product delivery, analytics, and now AI-enabled workflows. I have learned that a solution is useful only when people understand it, can challenge it, and choose to use it again.</p>
+          <p>I have coordinated an approximately ten-person subsurface team and led development and UX teams through product delivery. This role is the next responsibility I am ready to take on: helping a global AI Embedment team grow, make good calls, and do work they can be proud of.</p>
         </div>
         <blockquote className="leadership-pullquote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
         <figure className="leadership-designer-bridge">
