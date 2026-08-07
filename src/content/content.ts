@@ -1,5 +1,4 @@
 import type { CampaignStory, FeaturedProject, HeroContent, JourneyCvProfile, JourneyItem, LeadershipPillar, LeadershipProof, World } from './contentTypes'
-import empathyAiLogo from './Asset 31.png'
 
 export const heroContent: HeroContent = {
   eyebrow: 'Rafael Navarro / Manager - AI Embedment candidate',
@@ -75,9 +74,8 @@ export const featuredProjects: FeaturedProject[] = [
 ]
 
 export const leadershipProofs: LeadershipProof[] = [
-  { theme: 'Lead', title: 'Environmental Awareness Campaign - Nigeria', description: 'Took responsibility for making an unmeasured health and safety concern visible: turning a personal observation about Port Harcourt air quality into a public-data initiative. The monitoring supported public discussion about environmental exposure, transparency, and wellbeing, and was documented by international reporting on air pollution in Nigeria.', references: [{ label: 'Undark: Port Harcourt investigation', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'France24 / AFP: demand for air-quality data', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }, { label: 'IQAir: Revealing the Invisible - Rafael in Nigeria', url: 'https://www.iqair.com/newsroom/air-quality-in-africa' }] },
-  { theme: 'Lead', title: 'Leading Across Subsurface & Data', description: 'Led developer and UX teams while aligning IRM and IDT stakeholders around delivery that met security, compliance, and real operating needs. Earlier, as Technical Lead, coordinated a ten-person multidisciplinary team to rejuvenate Play-Based Exploration in Nigeria’s shallow-water portfolio, bringing shared evidence, refreshed play maps, and decision-ready volume and risk assessments into one working picture.' },
-  { theme: 'Build', title: 'EmpathyAI - Founder', description: 'Founded EmpathyAI, an independent applied-AI initiative exploring how organizations can hear workforce ideas and act on them. Its first concept, Connectify, reimagines idea sharing across hierarchy, language, and fear of judgment, combining inclusive participation with AI-assisted insight to help leaders surface patterns they might otherwise miss.', logoSrc: empathyAiLogo, logoAlt: 'EmpathyAI logo' },
+  { theme: 'Lead', title: 'Environmental Awareness Campaign - Nigeria', description: 'Took responsibility for making an unmeasured health and safety concern visible: turning a personal observation about Port Harcourt air quality into a public-data initiative. The monitoring supported public discussion about environmental exposure, transparency, and wellbeing, and was documented by international reporting on air pollution in Nigeria.', references: [{ label: 'Undark investigation', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'France24 / AFP report', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }, { label: 'IQAir feature', url: 'https://www.iqair.com/newsroom/air-quality-in-africa' }] },
+  { theme: 'Build', title: 'EmpathyAI - Founder', description: 'Founded EmpathyAI, an independent applied-AI initiative exploring how organizations can hear workforce ideas and act on them. Its first concept, Connectify, creates an inclusive space for people to share ideas anonymously or openly, across hierarchy and language. AI-assisted synthesis helps leaders identify patterns, sentiment, and practical opportunities for action.', link: { label: 'Explore Connectify', url: 'https://www.empathyailab.com/connectify' } },
   { theme: 'Compete', title: 'Competitive Pickleball - DUPR 4.0', description: 'Applies the same disciplined, iterative improvement mindset used in analytics and technical product work to competitive sport. Deliberate practice, direct feedback, clear communication with a partner, and calm decisions under pressure give me a clear lesson for the next match.' },
 ]
 
@@ -91,7 +89,7 @@ export const campaignStory: CampaignStory = {
       id: 'trace',
       chapter: '01 / The trace',
       title: 'It began after a ride.',
-      body: 'After cycling through Port Harcourt, a fine black residue began appearing on clothes, at home, and across nearby surfaces. Many people had noticed it, but there was no public data showing what was in the air.',
+      body: 'After cycling through Port Harcourt, a fine black residue began appearing on clothes, at home, and across nearby surfaces. One afternoon, I saw the same residue on my young son\'s hands and clothes after only a few minutes at a nearby playground. The concern was no longer abstract. Many people had noticed it, but there was no public data showing what was in the air.',
     },
     {
       id: 'signal',
@@ -118,6 +116,6 @@ export const campaignStory: CampaignStory = {
 }
 
 export const leadershipPillars: LeadershipPillar[] = [
-  { title: 'Start with the people doing the work', statement: 'Learn where the work slows, what people need to trust, and what would make the next decision easier. The best solution is the one that fits the work, not simply the most technical one.' },
-  { title: 'Use the right tool for the job', statement: 'Use lightweight utilities and prototypes for immediate needs. When work must be shared, trusted, and sustained, build through the platforms people already use. Connect and extend what works before rebuilding it.' },
+  { title: 'Start with the decision, not the technology', statement: 'Find the decision that is blocked, who needs to make it, and what would help them move forward. Work alongside the people closest to the problem before deciding what to build. A simple tool that makes the next decision easier is more useful than an impressive model people cannot question or use.' },
+  { title: 'Build for the way people already work', statement: 'Use a lightweight intervention when a team needs help quickly. When a solution needs to be shared and used again, build it into the platforms and workflows people already rely on. Reuse what is working before creating something new.' },
 ]

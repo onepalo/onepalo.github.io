@@ -15,12 +15,12 @@ Vite prints the local URL in the terminal, normally `http://localhost:5173`.
 
 ## Commands
 
-| Command             | Purpose                                                  |
-| ------------------- | -------------------------------------------------------- |
-| `npm run dev`     | Start the local development server.                      |
-| `npm run build`   | Type-check and create the production bundle in`dist/`. |
-| `npm run lint`    | Run ESLint across the project.                           |
-| `npm run preview` | Serve the production bundle locally.                     |
+| Command                | Purpose                                                  |
+| ---------------------- | -------------------------------------------------------- |
+| `npm run dev`        | Start the local development server.                      |
+| `npm run build`      | Type-check and create the production bundle in`dist/`. |
+| <br />`npm run lint` | Run ESLint across the project.                           |
+| `npm run preview`    | Serve the production bundle locally.                     |
 
 ## Project structure
 

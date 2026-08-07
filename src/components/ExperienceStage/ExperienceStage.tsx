@@ -22,7 +22,7 @@ interface ExperienceStageProps {
 
 const stageMeta = {
   cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The value I would bring as Manager - AI Embedment.' },
-  'how-i-work': { eyebrow: 'Professional recommendations', title: 'Testimonial', intro: 'What colleagues have experienced working alongside me.' },
+  'how-i-work': { eyebrow: 'Professional recommendations', title: 'Testimonials', intro: 'What colleagues have experienced working alongside me.' },
   journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
   leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead', intro: '' },
   impact: { eyebrow: 'Beyond the day job', title: 'Leadership beyond my role', intro: '' },
@@ -117,7 +117,7 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   { id: '04', name: 'Brent Wignall', role: 'Senior Exploration Evaluation GPO - Assurance and Process', excerpt: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration. For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.', endorsementType: 'technical' },
-  { id: '05', name: 'Emily Guidry', role: 'Senior Geoscientist | NBD LA/SA', excerpt: 'In new business work, the picture is rarely complete and the decision rarely waits. Rafael is good at laying out what we know, where the uncertainty sits, and who needs to be part of the conversation. He gives the team enough structure to move forward without making the problem look simpler than it is.', isDraft: true },
+  { id: '05', name: 'Emily Guidry', role: 'Senior Geoscientist | Global Growth', excerpt: 'I\'ve worked closely with Rafael on multiple confidential new business opportunities where decisions need to be made quickly with imperfect information. What stands out most about my experience working with him is his ability to balance technical skills with a pragmatic approach. Rafael has deep knowledge of the cutting-edge tools available to Shell and across different projects he connected our team with the right people from other Shell technology team, unlocking tools that led to improved outcomes. On top of his technical expertise, Rafael is easy to work with. Making him a go to person for me when I need AI and digital support.', endorsementType: 'hybrid' },
   { id: '06', name: 'Homerson Uy', role: 'Senior Product Owner', excerpt: 'Rafael brings a rare combination to product work: he understands the subsurface problem in depth, but he still listens before deciding what to build. He can translate between technical users and a delivery team without losing what matters to either side.', isDraft: true },
   { id: '07', name: 'Francesco Menapace', role: 'GM Data and Digital Innovation', excerpt: 'What I value in Rafael is his focus on the outcome. He will test an idea quickly, listen to what users are telling us, and stop or change direction when the work is not helping. That makes it easier to invest in the opportunities where the team can make a real difference.', isDraft: true },
   {
@@ -476,20 +476,20 @@ function Leadership() {
             <h2 id="leadership-strategy-title">Run AI Embedment as a rapid delivery and adoption capability.</h2>
           </div>
         </header>
-        <p className="leadership-strategy-thesis">The team would help operating groups resolve immediate needs through focused, ad hoc delivery. Capacity would scale with the delivery practitioners actually in post, not an assumed final headcount.</p>
+        <p className="leadership-strategy-thesis">The team would help operating teams solve immediate problems through focused pieces of work. We would only take on work where the likely value is clear, and only as much as the AI specialists on the team can realistically deliver.</p>
         <div className="leadership-strategy-capacity" aria-label="Delivery capacity guardrails">
-          <div><strong>2</strong><h3>Owned quarterly outcomes</h3><p>Target per delivery practitioner, adjusted for complexity. The manager is accountable for the portfolio, not included in this measure.</p></div>
-          <div><strong>2</strong><h3>Active projects maximum</h3><p>Protect focus and finish useful work before pulling more into delivery.</p></div>
-          <div><strong>1-12+</strong><h3>Weeks by engagement</h3><p>Quick interventions can land in 1-2 weeks, projects in 3-6, and proven workstreams continue through usable increments.</p></div>
+          <div><strong>3-4</strong><h3>Completed pieces of work per quarter</h3><p>Target per AI specialist, adjusted for complexity. Work ranges from short interventions to complex projects. With ten specialists, that means roughly 30 completed pieces of work each quarter.</p></div>
+          <div><strong>2</strong><h3>Active pieces of work maximum</h3><p>Per AI specialist at any one time. This protects focus and gives people room to finish useful work before taking on more.</p></div>
+          <div><strong>Up to 12</strong><h3>Weeks per piece of work</h3><p>Short interventions take up to 2 weeks. Projects take 3-6 weeks. Complex projects can run for up to a quarter.</p></div>
         </div>
         <div className="leadership-strategy-story">
           <header>
             <p className="eyebrow">How I would choose the work</p>
-            <h3>Start small. Grow what proves useful.</h3>
+            <h3>Start small. Scale what delivers.</h3>
           </header>
           <div className="leadership-strategy-story-copy">
-            <p>Capacity is a choice, not a queue. Work enters only when an operating team has a pressing decision to improve or friction to remove. We choose for urgency, readiness, potential value, and speed to impact.</p>
-            <p>We begin with the smallest credible <strong>project</strong>: a usable result that can land within the quarter. When adoption and evidence reveal a larger opportunity, it can become a <strong>workstream</strong> delivered through successive increments. Each practitioner still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
+            <p>Capacity is a choice, not a queue. Work enters only when an operating team has a pressing decision to improve or friction to remove, and a clear value case. We choose for urgency, readiness, likely value, and speed to impact.</p>
+            <p>We begin with a short <strong>intervention</strong> that can deliver a usable result within two weeks. If the need is larger, it becomes a <strong>project</strong> delivered over three to six weeks, or a <strong>complex project</strong> completed within the quarter. Work that repeatedly delivers value can continue as a <strong>workstream</strong>, with a quarterly decision to invest again. Each AI specialist still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
           </div>
           <p className="leadership-strategy-proof"><span>What earns the next investment</span> Less effort, better decisions, lower risk, sustained use, or a solution another team can reuse.</p>
         </div>
@@ -515,7 +515,7 @@ function Leadership() {
           ))}
         </ol>
         <div className="operating-delivery-rhythm">
-          <p>Weekly, we unblock delivery and share what changed for users. Monthly, we rebalance the portfolio with sponsors. Quarterly, we review outcomes, value, and ownership before making the next investment decision.</p>
+          <p>Weekly, we unblock delivery and share what changed for customers. Monthly, we rebalance the portfolio with sponsors. Quarterly, we review outcomes, value, and ownership before making the next projects decision.</p>
           <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
         </div>
         <section className="operating-principles" aria-labelledby="operating-principles-title">
@@ -585,15 +585,18 @@ function CoverLetter() {
 }
 
 function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
+  const proofVariant = (title: string) => title === 'Environmental Awareness Campaign - Nigeria' ? ' is-campaign' : title === 'EmpathyAI - Founder' ? ' is-empathy' : ' is-practice'
+
   return <div className="leadership-proof-view">
     <section className="personal-leadership" aria-label="Leadership evidence beyond the day job">
       <div className="leadership-proof-heading">
         <div>
+          <p className="leadership-proof-kicker">Independent proof</p>
           <p>The same habits behind my technical work also shape what I create, lead, and pursue beyond the day job.</p>
         </div>
       </div>
       <div className="personal-leadership-grid">
-        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.logoSrc ? ' has-logo' : ''}`} key={proof.title}><span>{proof.theme}</span><div className="personal-leadership-card-title"><h3>{proof.title}</h3>{proof.logoSrc && <img src={proof.logoSrc} alt={proof.logoAlt ?? ''} />}</div><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Click here for more <ArrowRight size={14} aria-hidden="true" /></button>}</article>)}
+        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.title === 'Environmental Awareness Campaign - Nigeria' ? ' is-featured' : ''}${proofVariant(proof.title)}`} key={proof.title}><span>{proof.theme}</span><h3>{proof.title}</h3><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Explore the campaign <ArrowRight size={14} aria-hidden="true" /></button>}{proof.link && <a className="leadership-proof-cta" href={proof.link.url} target="_blank" rel="noopener noreferrer">{proof.link.label} <ArrowRight size={14} aria-hidden="true" /></a>}</article>)}
       </div>
     </section>
   </div>

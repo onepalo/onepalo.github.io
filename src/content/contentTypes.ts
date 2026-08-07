@@ -56,8 +56,10 @@ export interface LeadershipProof {
   theme: string
   title: string
   description: string
-  logoSrc?: string
-  logoAlt?: string
+  link?: {
+    label: string
+    url: string
+  }
   references?: Array<{
     label: string
     url: string

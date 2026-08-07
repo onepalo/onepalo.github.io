@@ -3,6 +3,7 @@ import type { RefObject } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import cyclist from '../../assets/candidate/Cycling/DirtyCycling.png'
 import monitor from '../../assets/candidate/Cycling/RN_AirMonitor.png'
+import playgroundResidue from '../IMG2018_8516.jpeg'
 import { campaignStory, leadershipProofs } from '../../content/content'
 
 interface EnvironmentalCampaignProps {
@@ -51,6 +52,18 @@ export function EnvironmentalCampaign({ headingRef, onReturn }: EnvironmentalCam
                     <a className="campaign-source-link" href={act.reference.url} target="_blank" rel="noopener noreferrer">
                       {act.reference.label} <ExternalLink size={13} aria-hidden="true" />
                     </a>
+                  )}
+                  {act.id === 'trace' && (
+                    <motion.figure
+                      className="campaign-personal-evidence"
+                      initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+                      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.28 }}
+                      transition={{ duration: 0.7, ease: 'easeOut', delay: shouldReduceMotion ? 0 : 0.18 }}
+                    >
+                      <img src={playgroundResidue} alt="Rafael Navarro's young son at a Port Harcourt playground, holding up hands marked with dark residue." />
+                      <figcaption>A few minutes at a playground / the concern became personal.</figcaption>
+                    </motion.figure>
                   )}
                   {act.id === 'signal' && (
                     <motion.figure
