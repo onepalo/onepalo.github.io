@@ -56,10 +56,10 @@ export interface LeadershipProof {
   theme: string
   title: string
   description: string
-  link?: {
+  links?: Array<{
     label: string
     url: string
-  }
+  }>
   references?: Array<{
     label: string
     url: string

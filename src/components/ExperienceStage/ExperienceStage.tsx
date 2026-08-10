@@ -134,7 +134,19 @@ const testimonials: readonly Testimonial[] = ([
       'Rafael is bold, creative and full of momentum. If you have a role that needs technical credibility, digital ambition and a leader who can inspire, Rafa is your guy.',
     ],
   },
-  { id: '08', name: 'Frederico Miranda', role: 'Principal Exploration Geoscientist • Subsurface Brazil', excerpt: 'Rafael expects me to say when I disagree or when I do not know something yet. He is direct about the standard we need to meet, but he also makes time to work through a difficult problem with me. I leave those conversations knowing what I own and where I can ask for help.', isDraft: true },
+  {
+    id: '08',
+    name: 'Frederico Miranda',
+    role: 'Principal Exploration Geoscientist • Subsurface Brazil',
+    excerpt: 'Shortly after joining Shell, the Brazil Exploration Growth team needed a portfolio visualization tool to improve the understanding, communication, and management of our BPA2 prospect portfolio. Appointed by Brent Wignall to support this effort, I reached out to Rafael Navarro. From our very first interaction, Rafael stood out for his openness, responsiveness, and genuine commitment to finding solutions.',
+    endorsementType: 'hybrid',
+    fullRecommendation: [
+      'Shortly after joining Shell, the Brazil Exploration Growth team needed a portfolio visualization tool to improve the understanding, communication, and management of our BPA2 prospect portfolio. Appointed by Brent Wignall to support this effort, I reached out to Rafael Navarro. From our very first interaction, Rafael stood out for his openness, responsiveness, and genuine commitment to finding solutions.',
+      'It was a privilege to work with Rafael on the development of the BPA2 Brazil Spotfire Tool. Rafael played a pivotal role in transforming complex exploration portfolio data into a clear, intuitive, and highly effective visualization platform. His ability to bridge technical expertise with business needs significantly improved transparency and the quality of portfolio discussions and decision-making.',
+      'Throughout the project, Rafael consistently demonstrated exceptional collaboration and leadership. He proactively engaged stakeholders and ensured that different perspectives were incorporated into practical and impactful solutions. His reliability, ownership, and focus on delivering value were critical to the success of the initiative.',
+      'Beyond his technical capabilities, Rafael is a trusted partner and an inspiring colleague. He works through a genuine desire to help others succeed. He creates an environment where collaboration thrives, people feel supported, and teams can perform at their best. I am confident he will make a significant positive impact wherever he serves.',
+    ],
+  },
 ] satisfies Testimonial[]).sort((first, second) => first.id.localeCompare(second.id))
 
 function renderHighlightedText(text: string, highlights: readonly string[]) {
@@ -596,7 +608,7 @@ function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
         </div>
       </div>
       <div className="personal-leadership-grid">
-        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.title === 'Environmental Awareness Campaign - Nigeria' ? ' is-featured' : ''}${proofVariant(proof.title)}`} key={proof.title}><span>{proof.theme}</span><h3>{proof.title}</h3><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Explore the campaign <ArrowRight size={14} aria-hidden="true" /></button>}{proof.link && <a className="leadership-proof-cta" href={proof.link.url} target="_blank" rel="noopener noreferrer">{proof.link.label} <ArrowRight size={14} aria-hidden="true" /></a>}</article>)}
+        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.title === 'Environmental Awareness Campaign - Nigeria' ? ' is-featured' : ''}${proofVariant(proof.title)}`} key={proof.title}><span>{proof.theme}</span><h3>{proof.title}</h3><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Explore the campaign <ArrowRight size={14} aria-hidden="true" /></button>}{proof.links && <div className="leadership-proof-cta-group">{proof.links.map((link) => <a className="leadership-proof-cta" href={link.url} target="_blank" rel="noopener noreferrer" key={link.url}>{link.label} <ArrowRight size={14} aria-hidden="true" /></a>)}</div>}</article>)}
       </div>
     </section>
   </div>
