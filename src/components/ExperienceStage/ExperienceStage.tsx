@@ -1,4 +1,4 @@
-import { useState, type RefObject } from 'react'
+import { useEffect, useState, type RefObject } from 'react'
 import { ArrowLeft, ArrowRight, ChevronDown, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
 import { featuredProjects, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
@@ -18,6 +18,9 @@ interface ExperienceStageProps {
   experience: Exclude<ExperienceId, 'home' | 'campaign'>
   headingRef: RefObject<HTMLHeadingElement | null>
   onNavigate: (experience: ExperienceId) => void
+  testimonialSlug: string | null
+  onOpenTestimonial: (slug: string) => void
+  onCloseTestimonial: () => void
 }
 
 const stageMeta = {
@@ -71,6 +74,7 @@ const flagSources = { us: usFlag, nl: nlFlag, ng: ngFlag, qa: qaFlag, ve: veFlag
 
 interface Testimonial {
   id: string
+  slug: string
   name: string
   role: string
   excerpt: string
@@ -87,6 +91,7 @@ interface Testimonial {
 const testimonials: readonly Testimonial[] = ([
   {
     id: '03',
+    slug: 'manuel-poupon',
     name: 'Manuel Poupon',
     role: 'Nigeria DW Principal',
     excerpt: 'I had the privilege of working with Rafael on several exploration projects in Nigeria, both onshore and in Shallow Water. In the Nigeria Shallow Water offshore regional project, Rafael\'s contribution was a true game changer.',
@@ -105,6 +110,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '02',
+    slug: 'michael-oconnell',
     name: "Michael O'Connell",
     role: 'Chief Analytics Officer, Spotfire',
     excerpt: 'Rafael Navarro is one of the top few geoscientists and data scientists I have ever met. He sees through tough problems to an ideal solution, then figures out a way to get there with geoscience efficiency and statistical rigor.',
@@ -118,6 +124,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '04',
+    slug: 'brent-wignall',
     name: 'Brent Wignall',
     role: 'Senior Exploration Evaluation GPO - Assurance and Process',
     excerpt: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration.',
@@ -130,6 +137,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '05',
+    slug: 'emily-guidry',
     name: 'Emily Guidry',
     role: 'Senior Geoscientist | Global Growth',
     excerpt: 'He is able to get to the heart of a problem quickly, while still being thoughtful about the uncertainty and constraints around it. This makes it easier to have practical conversations about what can be done now, what needs more work, and where the right digital or analytical support can make a real difference.',
@@ -144,6 +152,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '06',
+    slug: 'homerson-uy',
     name: 'Homerson Uy',
     role: 'Senior Product Owner • Subsurface Evaluation',
     excerpt: "I've worked with Rafael on a range of initiatives involving BPA2, GeoX, analytics, and data accessibility. Throughout our interactions, he consistently demonstrated initiative in improving access to exploration data, modernizing analytics workflows, and identifying opportunities to create greater value from existing platforms and datasets.",
@@ -159,6 +168,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '07',
+    slug: 'nathan-suurmeyer',
     name: 'Nathan Suurmeyer',
     role: 'ThinkOnward Head of Innovation',
     excerpt: "The clearest reflection of Rafael's character is what he chooses to build when he sees a problem worth solving.",
@@ -170,6 +180,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '01',
+    slug: 'craig-harvey',
     name: 'Craig Harvey',
     role: 'Exploration Manager EMEA',
     excerpt: 'I had the pleasure of working with Rafael in Qatar, where he was our resident Geophysicist within a highly multicultural team. He embraced the challenge of working in a new environment, strengthened his English along the way, and delivered the technical programme with confidence, personality and style.',
@@ -184,6 +195,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '08',
+    slug: 'frederico-miranda',
     name: 'Frederico Miranda',
     role: 'Principal Exploration Geoscientist • Subsurface Brazil',
     excerpt: 'From our first conversation, Rafael made a complicated portfolio problem feel manageable. He understood what the Brazil team needed, then turned complex prospect data into a tool that gave us a clearer view of the portfolio and made the conversations around it far more useful.',
@@ -197,6 +209,7 @@ const testimonials: readonly Testimonial[] = ([
   },
   {
     id: '09',
+    slug: 'lisa-walz',
     name: 'Lisa Walz',
     role: 'Senior Geoscientist • Technical Project Lead Paleogene',
     excerpt: 'Having worked with Rafael on numerous projects in the past I would like to highlight his recent work and collaboration with the Paleogene Team as part of his Subsurface analytics role. With his technical geoscience background Rafael is uniquely equipped to help the business understand and unravel complex subsurface issues and ensures solutions translate into sustainable value and adoption at scale.',
@@ -219,7 +232,7 @@ function renderHighlightedText(text: string, highlights: readonly string[]) {
   return text.split(pattern).map((part, index) => normalizedHighlights.has(part.toLowerCase()) ? <strong className="featured-project-emphasis" key={`${part}-${index}`}>{part}</strong> : part)
 }
 
-export function ExperienceStage({ experience, headingRef, onNavigate }: ExperienceStageProps) {
+export function ExperienceStage({ experience, headingRef, onNavigate, testimonialSlug, onOpenTestimonial, onCloseTestimonial }: ExperienceStageProps) {
   const meta = stageMeta[experience]
 
   return (
@@ -232,7 +245,7 @@ export function ExperienceStage({ experience, headingRef, onNavigate }: Experien
         </>
       </header>
       {experience === 'cover' && <CoverLetter />}
-      {experience === 'how-i-work' && <HowIWork />}
+      {experience === 'how-i-work' && <HowIWork testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />}
       {experience === 'journey' && <Journey />}
       {experience === 'leadership' && <Leadership />}
       {experience === 'impact' && <LeadershipProof onOpenCampaign={() => onNavigate('campaign')} />}
@@ -404,7 +417,13 @@ function CvProfile() {
   )
 }
 
-function TestimonialCarousel() {
+interface TestimonialCarouselProps {
+  testimonialSlug: string | null
+  onOpenTestimonial: (slug: string) => void
+  onCloseTestimonial: () => void
+}
+
+function TestimonialCarousel({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: TestimonialCarouselProps) {
   const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0)
   const [openRecommendation, setOpenRecommendation] = useState<Testimonial | null>(null)
   const [isProjectGraphVisible, setIsProjectGraphVisible] = useState(false)
@@ -416,15 +435,30 @@ function TestimonialCarousel() {
   const closeRecommendation = () => {
     setOpenRecommendation(null)
     setIsProjectGraphVisible(false)
+    onCloseTestimonial()
   }
   const closeRecommendationButtonRef = useDialogController<HTMLButtonElement>(openRecommendation !== null, closeRecommendation)
   const testimonialRibbonLabel = (testimonial: Testimonial) => testimonial.isDraft ? 'DRAFT' : testimonial.endorsementType?.toUpperCase()
   const ribbonLabel = testimonialRibbonLabel(activeTestimonial)
   const testimonialVariantClass = (testimonial: Testimonial) => testimonial.isDraft ? ' is-draft' : testimonial.endorsementType ? ` is-${testimonial.endorsementType}` : ''
 
+  useEffect(() => {
+    const matchingTestimonial = testimonials.find((testimonial) => testimonial.slug === testimonialSlug)
+    if (!matchingTestimonial) {
+      setOpenRecommendation(null)
+      setIsProjectGraphVisible(false)
+      return
+    }
+
+    setActiveTestimonialIndex(testimonials.indexOf(matchingTestimonial))
+    setOpenRecommendation(matchingTestimonial)
+    setIsProjectGraphVisible(false)
+  }, [testimonialSlug])
+
   function openFullRecommendation(testimonial: Testimonial) {
     setIsProjectGraphVisible(false)
     setOpenRecommendation(testimonial)
+    onOpenTestimonial(testimonial.slug)
   }
 
   function moveTestimonial(direction: -1 | 1) {
@@ -615,10 +649,16 @@ function Leadership() {
   )
 }
 
-function HowIWork() {
+interface HowIWorkProps {
+  testimonialSlug: string | null
+  onOpenTestimonial: (slug: string) => void
+  onCloseTestimonial: () => void
+}
+
+function HowIWork({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: HowIWorkProps) {
   return (
     <section className="how-i-work-view" aria-label="Testimonial">
-      <TestimonialCarousel />
+      <TestimonialCarousel testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />
     </section>
   )
 }

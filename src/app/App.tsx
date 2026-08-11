@@ -6,7 +6,7 @@ import { ExperienceStage } from '../components/ExperienceStage/ExperienceStage'
 import { EnvironmentalCampaign } from '../components/EnvironmentalCampaign/EnvironmentalCampaign'
 import { heroContent } from '../content/content'
 import type { ExperienceId } from '../content/contentTypes'
-import { experienceFromHash, hashForExperience } from '../utils/hashNavigation'
+import { experienceFromHash, hashForExperience, hashForTestimonial, testimonialSlugFromHash } from '../utils/hashNavigation'
 
 const titles: Record<ExperienceId, string> = {
   home: "Rafael's Exploration Journal",
@@ -20,25 +20,44 @@ const titles: Record<ExperienceId, string> = {
 
 export default function App() {
   const [activeExperience, setActiveExperience] = useState<ExperienceId>(() => experienceFromHash(window.location.hash))
+  const [testimonialSlug, setTestimonialSlug] = useState(() => testimonialSlugFromHash(window.location.hash))
   const stageHeadingRef = useRef<HTMLHeadingElement>(null)
   const shouldReduceMotion = useReducedMotion()
 
   const openExperience = (experience: ExperienceId) => {
     window.history.pushState(null, '', hashForExperience(experience))
     setActiveExperience(experience)
+    setTestimonialSlug(null)
+  }
+
+  const openTestimonial = (slug: string) => {
+    window.history.pushState(null, '', hashForTestimonial(slug))
+    setActiveExperience('how-i-work')
+    setTestimonialSlug(slug)
+  }
+
+  const closeTestimonial = () => {
+    window.history.replaceState(null, '', hashForExperience('how-i-work'))
+    setTestimonialSlug(null)
   }
 
   useEffect(() => {
     const syncWithHash = () => {
       const experience = experienceFromHash(window.location.hash)
+      const slug = testimonialSlugFromHash(window.location.hash)
       if (window.location.hash === '#how-i-work') {
         window.history.replaceState(null, '', hashForExperience(experience))
       }
       setActiveExperience(experience)
+      setTestimonialSlug(slug)
     }
     syncWithHash()
     window.addEventListener('hashchange', syncWithHash)
-    return () => window.removeEventListener('hashchange', syncWithHash)
+    window.addEventListener('popstate', syncWithHash)
+    return () => {
+      window.removeEventListener('hashchange', syncWithHash)
+      window.removeEventListener('popstate', syncWithHash)
+    }
   }, [])
 
   useEffect(() => {
@@ -87,7 +106,7 @@ export default function App() {
             exit={shouldReduceMotion ? undefined : { opacity: 0, y: -12 }}
             transition={{ duration: 0.42, ease: 'easeOut' }}
           >
-            <ExperienceStage experience={activeExperience} headingRef={stageHeadingRef} onNavigate={openExperience} />
+            <ExperienceStage experience={activeExperience} headingRef={stageHeadingRef} onNavigate={openExperience} testimonialSlug={testimonialSlug} onOpenTestimonial={openTestimonial} onCloseTestimonial={closeTestimonial} />
           </motion.main>
         )}
       </AnimatePresence>
