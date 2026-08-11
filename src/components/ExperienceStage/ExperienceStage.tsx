@@ -1,4 +1,4 @@
-import { useEffect, useState, type RefObject } from 'react'
+import { useState, type RefObject } from 'react'
 import { ArrowLeft, ArrowRight, ChevronDown, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
 import { featuredProjects, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
@@ -424,8 +424,11 @@ interface TestimonialCarouselProps {
 }
 
 function TestimonialCarousel({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: TestimonialCarouselProps) {
-  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0)
-  const [openRecommendation, setOpenRecommendation] = useState<Testimonial | null>(null)
+  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(() => {
+    const linkedTestimonialIndex = testimonials.findIndex((testimonial) => testimonial.slug === testimonialSlug)
+    return linkedTestimonialIndex === -1 ? 0 : linkedTestimonialIndex
+  })
+  const [openRecommendation, setOpenRecommendation] = useState(() => testimonials.find((testimonial) => testimonial.slug === testimonialSlug) ?? null)
   const [isProjectGraphVisible, setIsProjectGraphVisible] = useState(false)
   const activeTestimonial = testimonials[activeTestimonialIndex]
   const previousTestimonialIndex = (activeTestimonialIndex - 1 + testimonials.length) % testimonials.length
@@ -441,19 +444,6 @@ function TestimonialCarousel({ testimonialSlug, onOpenTestimonial, onCloseTestim
   const testimonialRibbonLabel = (testimonial: Testimonial) => testimonial.isDraft ? 'DRAFT' : testimonial.endorsementType?.toUpperCase()
   const ribbonLabel = testimonialRibbonLabel(activeTestimonial)
   const testimonialVariantClass = (testimonial: Testimonial) => testimonial.isDraft ? ' is-draft' : testimonial.endorsementType ? ` is-${testimonial.endorsementType}` : ''
-
-  useEffect(() => {
-    const matchingTestimonial = testimonials.find((testimonial) => testimonial.slug === testimonialSlug)
-    if (!matchingTestimonial) {
-      setOpenRecommendation(null)
-      setIsProjectGraphVisible(false)
-      return
-    }
-
-    setActiveTestimonialIndex(testimonials.indexOf(matchingTestimonial))
-    setOpenRecommendation(matchingTestimonial)
-    setIsProjectGraphVisible(false)
-  }, [testimonialSlug])
 
   function openFullRecommendation(testimonial: Testimonial) {
     setIsProjectGraphVisible(false)
@@ -658,7 +648,7 @@ interface HowIWorkProps {
 function HowIWork({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: HowIWorkProps) {
   return (
     <section className="how-i-work-view" aria-label="Testimonial">
-      <TestimonialCarousel testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />
+      <TestimonialCarousel key={testimonialSlug ?? 'carousel'} testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />
     </section>
   )
 }
