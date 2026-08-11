@@ -116,10 +116,58 @@ const testimonials: readonly Testimonial[] = ([
       'I have no hesitation in recommending Rafael for either an individual contributor or leadership position. His enthusiasm and passion for scientific discovery and business development put him in a good position to lead a team of visual data science and geoscience professionals, guiding Shell forward through business uncertainty and rapid technology innovation.',
     ],
   },
-  { id: '04', name: 'Brent Wignall', role: 'Senior Exploration Evaluation GPO - Assurance and Process', excerpt: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration. For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.', endorsementType: 'technical' },
-  { id: '05', name: 'Emily Guidry', role: 'Senior Geoscientist | Global Growth', excerpt: 'I\'ve worked closely with Rafael on multiple confidential new business opportunities where decisions need to be made quickly with imperfect information. What stands out most about my experience working with him is his ability to balance technical skills with a pragmatic approach. Rafael has deep knowledge of the cutting-edge tools available to Shell and across different projects he connected our team with the right people from other Shell technology team, unlocking tools that led to improved outcomes. On top of his technical expertise, Rafael is easy to work with. Making him a go to person for me when I need AI and digital support.', endorsementType: 'hybrid' },
-  { id: '06', name: 'Homerson Uy', role: 'Senior Product Owner', excerpt: 'Rafael brings a rare combination to product work: he understands the subsurface problem in depth, but he still listens before deciding what to build. He can translate between technical users and a delivery team without losing what matters to either side.', isDraft: true },
-  { id: '07', name: 'Francesco Menapace', role: 'GM Data and Digital Innovation', excerpt: 'What I value in Rafael is his focus on the outcome. He will test an idea quickly, listen to what users are telling us, and stop or change direction when the work is not helping. That makes it easier to invest in the opportunities where the team can make a real difference.', isDraft: true },
+  {
+    id: '04',
+    name: 'Brent Wignall',
+    role: 'Senior Exploration Evaluation GPO - Assurance and Process',
+    excerpt: 'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration.',
+    endorsementType: 'technical',
+    fullRecommendation: [
+      'Rafael has always shown a keen interest in the different problems we have brought to him, and has developed innovative approaches to combine and examine the different datasets held by Exploration. For Rafael there are no organizational boundaries or barriers- only different spheres of activity that can benefit from joining together to develop new insights from otherwise disconnected and stale datasets.',
+      'Our work on Pinon is a practical example. Rafael built the Spotfire interface for this play-assessment capability, connecting users to a spatialized Oracle-SDE dataset of play outlines, geological attributes, lead portfolios, and discovery history. The interface made it easier to filter, compare, and contrast plays through a consistent view of the portfolio.',
+      'He translated the needs of the exploration users into an accessible analytical experience, helping the team look across play risk, maturity, uncertainty, yet-to-find potential, and resilience without adding unnecessary complexity. This gave users a more transparent way to examine the data behind the scoring and use it in portfolio discussions and prioritization decisions.',
+    ],
+  },
+  {
+    id: '05',
+    name: 'Emily Guidry',
+    role: 'Senior Geoscientist | Global Growth',
+    excerpt: 'He is able to get to the heart of a problem quickly, while still being thoughtful about the uncertainty and constraints around it. This makes it easier to have practical conversations about what can be done now, what needs more work, and where the right digital or analytical support can make a real difference.',
+    endorsementType: 'hybrid',
+    fullRecommendation: [
+      "I've worked closely with Rafael on multiple confidential new business opportunities where decisions need to be made quickly with imperfect information. What stands out most about my experience working with him is his ability to balance technical skills with a pragmatic approach.",
+      'He is able to get to the heart of a problem quickly, while still being thoughtful about the uncertainty and constraints around it. This makes it easier to have practical conversations about what can be done now, what needs more work, and where the right digital or analytical support can make a real difference.',
+      'Over the past year, I have seen this directly across three projects we delivered together, each involving large and complex datasets. One was a highly confidential opportunity with an especially tight delivery window. Rafael worked through the technical detail quickly, kept us focused on the decision we were trying to support, and helped us put something useful in front of the team when it mattered.',
+      'Rafael has deep knowledge of the cutting-edge tools available to Shell and, across different projects, he connected our team with the right people from other Shell technology teams, unlocking tools that led to improved outcomes. He brings the technical context needed to assess an option, but stays focused on whether it will genuinely help the people doing the work.',
+      'On top of his technical expertise, Rafael is easy to work with. He is responsive, constructive, and comfortable working across disciplines when a problem needs different perspectives. That combination makes him a go-to person for me when I need AI and digital support.',
+    ],
+  },
+  {
+    id: '06',
+    name: 'Homerson Uy',
+    role: 'Senior Product Owner • Subsurface Evaluation',
+    excerpt: "I've worked with Rafael on a range of initiatives involving BPA2, GeoX, analytics, and data accessibility. Throughout our interactions, he consistently demonstrated initiative in improving access to exploration data, modernizing analytics workflows, and identifying opportunities to create greater value from existing platforms and datasets.",
+    endorsementType: 'hybrid',
+    fullRecommendation: [
+      "I've worked with Rafael on a range of initiatives involving BPA2, GeoX, analytics, and data accessibility. Throughout our interactions, he consistently demonstrated initiative in improving access to exploration data, modernizing analytics workflows, and identifying opportunities to create greater value from existing platforms and datasets.",
+      'One example was a solution Rafael developed for the Gulf of America portfolio. It consumed governed prospect and lead data from BPA2 and combined it with other relevant data sources to create an integrated view of the current portfolio. The result gave the team a clearer, more consistent way to assess opportunities, rather than working from fragmented spreadsheets, systems, and spatial layers.',
+      'Rafael built this capability end to end himself, drawing on his detailed understanding of how the relevant systems and data fit together. It allowed the portfolio to be partitioned by lease, operator, and shareholder, helping the team examine exposure and ownership from the perspectives needed for more reliable commercial and technical decisions.',
+      'Rafael is particularly effective at bringing together people who look at the same problem from different angles. He listens carefully to what users need, understands the constraints of the existing tools and data, and turns those conversations into practical next steps. This helps the team make progress without losing sight of the bigger opportunity.',
+      'He combines a genuine interest in the technical detail with an ability to keep the work focused on what will create value. Whether the task is making data easier to find, improving an analytics workflow, or getting more from an established platform, he looks for solutions that are useful, workable, and aligned with the realities of delivery.',
+      'What stands out is his ability to see opportunities where others see constraints, combining technical curiosity with a strong focus on user value. I enjoy collaborating with him because it simply makes life easier. He understands the timelines and challenges we face and works with us to find practical compromises that move things forward.',
+    ],
+  },
+  {
+    id: '07',
+    name: 'Nathan Suurmeyer',
+    role: 'ThinkOnward Head of Innovation',
+    excerpt: "The clearest reflection of Rafael's character is what he chooses to build when he sees a problem worth solving.",
+    endorsementType: 'hybrid',
+    fullRecommendation: [
+      "The clearest reflection of Rafael's character is what he chooses to build when he sees a problem worth solving. The air quality project he started while living abroad has always stood out to me. It showed someone who cared enough to take initiative, bring others along, and create something useful for the broader community.",
+      'That same energy and sense of purpose carries through to his work for Shell customers. Whether developing an application or creating a straightforward Spotfire dashboard, Rafael has a knack for turning data into something people can understand and act on.',
+    ],
+  },
   {
     id: '01',
     name: 'Craig Harvey',
@@ -138,13 +186,28 @@ const testimonials: readonly Testimonial[] = ([
     id: '08',
     name: 'Frederico Miranda',
     role: 'Principal Exploration Geoscientist • Subsurface Brazil',
-    excerpt: 'Shortly after joining Shell, the Brazil Exploration Growth team needed a portfolio visualization tool to improve the understanding, communication, and management of our BPA2 prospect portfolio. Appointed by Brent Wignall to support this effort, I reached out to Rafael Navarro. From our very first interaction, Rafael stood out for his openness, responsiveness, and genuine commitment to finding solutions.',
+    excerpt: 'From our first conversation, Rafael made a complicated portfolio problem feel manageable. He understood what the Brazil team needed, then turned complex prospect data into a tool that gave us a clearer view of the portfolio and made the conversations around it far more useful.',
     endorsementType: 'hybrid',
     fullRecommendation: [
       'Shortly after joining Shell, the Brazil Exploration Growth team needed a portfolio visualization tool to improve the understanding, communication, and management of our BPA2 prospect portfolio. Appointed by Brent Wignall to support this effort, I reached out to Rafael Navarro. From our very first interaction, Rafael stood out for his openness, responsiveness, and genuine commitment to finding solutions.',
       'It was a privilege to work with Rafael on the development of the BPA2 Brazil Spotfire Tool. Rafael played a pivotal role in transforming complex exploration portfolio data into a clear, intuitive, and highly effective visualization platform. His ability to bridge technical expertise with business needs significantly improved transparency and the quality of portfolio discussions and decision-making.',
       'Throughout the project, Rafael consistently demonstrated exceptional collaboration and leadership. He proactively engaged stakeholders and ensured that different perspectives were incorporated into practical and impactful solutions. His reliability, ownership, and focus on delivering value were critical to the success of the initiative.',
       'Beyond his technical capabilities, Rafael is a trusted partner and an inspiring colleague. He works through a genuine desire to help others succeed. He creates an environment where collaboration thrives, people feel supported, and teams can perform at their best. I am confident he will make a significant positive impact wherever he serves.',
+    ],
+  },
+  {
+    id: '09',
+    name: 'Lisa Walz',
+    role: 'Senior Geoscientist • Technical Project Lead Paleogene',
+    excerpt: 'Having worked with Rafael on numerous projects in the past I would like to highlight his recent work and collaboration with the Paleogene Team as part of his Subsurface analytics role. With his technical geoscience background Rafael is uniquely equipped to help the business understand and unravel complex subsurface issues and ensures solutions translate into sustainable value and adoption at scale.',
+    endorsementType: 'hybrid',
+    fullRecommendation: [
+      'Having worked with Rafael on numerous projects in the past I would like to highlight his recent work and collaboration with the Paleogene Team as part of his Subsurface analytics role.',
+      'With his technical geoscience background Rafael is uniquely equipped to help the business understand and unravel complex subsurface issues and ensures solutions translate into sustainable value and adoption at scale.',
+      'Our collaboration on Yet2Find (Y2F) is a tangible example of this. Rafael helped bring prospect data from BPA2, Oracle, spreadsheets, and spatial layers into an integrated Gulf of America portfolio workflow. This created a clearer, more consistent way to explore opportunities and consider leases and ownership alongside the technical portfolio view.',
+      'His work on the PSI-Shell GoA PP SmartTrends project demonstrated the same ability to turn a complex subsurface data challenge into something useful for interpreters and decision makers. By standardizing large volumes of well-log data into consistent reservoir units and making the results accessible through interactive analysis, he helped create a workflow that supports faster comparison, screening, and technical conversations across the team.',
+      'He can connect business challenges with innovative solutions while keeping the end users in mind. While he maintains an enterprise first mindset he focuses on problems that matter most to the business, delivering independent of reporting lines, business units, or other artificial boundaries.',
+      'It has always been a pleasure working with Rafael and his positive impact to projects can always be felt.',
     ],
   },
 ] satisfies Testimonial[]).sort((first, second) => first.id.localeCompare(second.id))
@@ -414,7 +477,7 @@ function TestimonialCarousel() {
       </section>
       {openRecommendation && (
         <div className="featured-project-dialog-backdrop testimonial-dialog-backdrop" role="presentation" onMouseDown={closeRecommendation}>
-          <section className="featured-project-dialog testimonial-dialog" role="dialog" aria-modal="true" aria-labelledby="testimonial-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
+          <section className={`featured-project-dialog testimonial-dialog${testimonialVariantClass(openRecommendation)}`} role="dialog" aria-modal="true" aria-labelledby="testimonial-dialog-title" onMouseDown={(event) => event.stopPropagation()}>
             <header>
               <div>
                 <p className="journey-proof-label">Full recommendation</p>
