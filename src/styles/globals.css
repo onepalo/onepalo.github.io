@@ -197,7 +197,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; }
 .journey-chevron { justify-self: end; color: var(--blue); transition: transform .22s ease; }
 .journey-card[open] .journey-chevron { transform: rotate(180deg); }
 .journey-detail { display: grid; gap: 0; margin: 0 28px 30px 86px; padding: 22px 0 0; border-top: 1px solid rgba(30, 37, 43, .13); }
-.journey-summary { max-width: 960px; margin: 0; color: #465760; font-size: 16px; line-height: 1.58; }
+.journey-summary { max-width: 980px; margin: 0; color: #465760; font-size: 16px; line-height: 1.58; }
 .journey-evidence-group { margin-top: 25px; padding: 19px 0 0; border-top: 1px solid rgba(30, 37, 43, .1); }
 .journey-proof-label { margin: 0 0 12px; color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .journey-evidence { display: grid; gap: 0; margin: 0; padding: 0; counter-reset: contribution; list-style: none; color: #334e59; font-size: 14px; line-height: 1.55; }
