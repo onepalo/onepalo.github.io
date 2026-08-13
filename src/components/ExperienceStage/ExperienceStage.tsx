@@ -123,7 +123,7 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   {
-    id: '04',
+    id: '05',
     slug: 'brent-wignall',
     name: 'Brent Wignall',
     role: 'Senior Exploration Evaluation GPO - Assurance and Process',
@@ -136,7 +136,7 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   {
-    id: '05',
+    id: '06',
     slug: 'emily-guidry',
     name: 'Emily Guidry',
     role: 'Senior Geoscientist | Global Growth',
@@ -151,7 +151,7 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   {
-    id: '06',
+    id: '07',
     slug: 'homerson-uy',
     name: 'Homerson Uy',
     role: 'Senior Product Owner • Subsurface Evaluation',
@@ -167,7 +167,7 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   {
-    id: '07',
+    id: '08',
     slug: 'nathan-suurmeyer',
     name: 'Nathan Suurmeyer',
     role: 'ThinkOnward Head of Innovation',
@@ -194,7 +194,7 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   {
-    id: '08',
+    id: '09',
     slug: 'frederico-miranda',
     name: 'Frederico Miranda',
     role: 'Principal Exploration Geoscientist • Subsurface Brazil',
@@ -208,7 +208,7 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   {
-    id: '09',
+    id: '10',
     slug: 'lisa-walz',
     name: 'Lisa Walz',
     role: 'Senior Geoscientist • Technical Project Lead Paleogene',
@@ -221,6 +221,21 @@ const testimonials: readonly Testimonial[] = ([
       'His work on the PSI-Shell GoA PP SmartTrends project demonstrated the same ability to turn a complex subsurface data challenge into something useful for interpreters and decision makers. By standardizing large volumes of well-log data into consistent reservoir units and making the results accessible through interactive analysis, he helped create a workflow that supports faster comparison, screening, and technical conversations across the team.',
       'He can connect business challenges with innovative solutions while keeping the end users in mind. While he maintains an enterprise first mindset he focuses on problems that matter most to the business, delivering independent of reporting lines, business units, or other artificial boundaries.',
       'It has always been a pleasure working with Rafael and his positive impact to projects can always be felt.',
+    ],
+  },
+  {
+    id: '04',
+    slug: 'luke-buskie',
+    name: 'Luke Buskie',
+    role: 'Senior Innovation Lead • Innovation Program (WRFM)',
+    excerpt: 'Rafael has been a valuable partner in helping our WRFM innovation team turn technical needs into practical diagnostic tools and workflows that users can build on.',
+    endorsementType: 'hybrid',
+    isDraft: true,
+    fullRecommendation: [
+      'I have worked with Rafael to create a sandbox environment that enables our WRFM innovation team to develop and test diagnostic tools around real business needs. He helped establish a practical space where the team can explore ideas, learn quickly, and move toward solutions that are useful to the ultimate users.',
+      'Rafael has provided consistent, hands-on support as we develop features involving scripting, functions, well-log data, and new generations of workflows. This includes helping connect Spotfire to Databricks and Data on Demand, while preparing for future push-compute capabilities that can make demanding analysis more practical for the team. He combines strong technical knowledge with an understanding of the WRFM context, helping us work through implementation questions while keeping the focus on the user cases we need to solve.',
+      'More recently, Rafael has been advancing agentic-AI development in the sandbox environment. This work has the potential to become an important enabler for the WRFM Innovation Program, helping the team explore, develop, and scale diagnostic workflows around the needs of their users.',
+      'What I value most is his collaborative approach. Rafael is responsive and constructive, and he helps translate complex technical possibilities into practical next steps. His support has made it easier for our team to build diagnostic capabilities with greater confidence and momentum.',
     ],
   },
 ] satisfies Testimonial[]).sort((first, second) => first.id.localeCompare(second.id))
