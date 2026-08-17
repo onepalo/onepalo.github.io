@@ -224,6 +224,22 @@ const testimonials: readonly Testimonial[] = ([
     ],
   },
   {
+    id: '11',
+    slug: 'david-reed',
+    name: 'David Reed',
+    role: 'Integrated Activity Planner | Exploration North America F/E',
+    excerpt: 'I have known Rafael since the early stages of our careers, including geological field training together in the Pyrenees in Spain. Over the years, I have had the opportunity to work closely with him across several exploration and digital initiatives.',
+    endorsementType: 'hybrid',
+    isDraft: true,
+    fullRecommendation: [
+      'I have known Rafael since the early stages of our careers, including geological field training together in the Pyrenees in Spain. Over the years, I have had the opportunity to work closely with him across several exploration and digital initiatives, and one of the things that consistently stands out is his ability to bridge the gap between complex subsurface challenges and practical business solutions.',
+      'Our collaboration on the Yet2Find (Y2F) portfolio workflow is a good example. What impressed me most was Rafael\'s willingness to work directly with users, challenge assumptions, and continuously improve the product based on feedback.',
+      'Beyond Y2F, Rafael has been a key contributor to several initiatives aimed at improving how we access and use technical subsurface information. Whether working with large well-log datasets, BPA2 integrations, portfolio analytics, or AI-enabled workflows, he has a natural ability to understand both the business question and the technical path needed to address it.',
+      'What differentiates Rafael is that he combines a strong geoscience foundation with hands-on digital and analytics expertise. He understands how exploration teams think, but he is also capable of building solutions, simplifying workflows, and helping others adopt new ways of working. That combination is relatively rare and allows him to contribute well beyond the boundaries of any single team or discipline.',
+      'That combination is reflected in the way Rafael consistently looks for opportunities to improve how work gets done, bringing energy and curiosity that positively influence the people around him. It has been a pleasure working with him, and I look forward to seeing the impact he continues to make in the future.',
+    ],
+  },
+  {
     id: '04',
     slug: 'luke-buskie',
     name: 'Luke Buskie',
