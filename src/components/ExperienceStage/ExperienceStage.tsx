@@ -590,7 +590,7 @@ function Leadership() {
             <h2 id="leadership-strategy-title">Run AI Embedment as a rapid delivery and adoption capability.</h2>
           </div>
         </header>
-        <p className="leadership-strategy-thesis">The team would help operating teams solve immediate problems through focused pieces of work. We would only take on work where the likely value is clear, and only as much as the AI specialists on the team can realistically deliver.</p>
+        <p className="leadership-strategy-thesis">The team would help operating teams solve immediate problems through focused pieces of work. Every engagement should create a useful signal early, even when the full solution needs more time. We would only take on work where the likely value is clear, and only as much as the AI specialists on the team can realistically deliver.</p>
         <div className="leadership-strategy-capacity" aria-label="Delivery capacity guardrails">
           <div><strong>3-4</strong><h3>Completed pieces of work per quarter</h3><p>Target per AI specialist, adjusted for complexity. Work ranges from short interventions to complex projects. With ten specialists, that means roughly 30 completed pieces of work each quarter.</p></div>
           <div><strong>2</strong><h3>Active pieces of work maximum</h3><p>Per AI specialist at any one time. This protects focus and gives people room to finish useful work before taking on more.</p></div>
@@ -603,7 +603,7 @@ function Leadership() {
           </header>
           <div className="leadership-strategy-story-copy">
             <p>Capacity is a choice, not a queue. Work enters only when an operating team has a pressing decision to improve or friction to remove, and a clear value case. We choose for urgency, readiness, likely value, and speed to impact.</p>
-            <p>We begin with a short <strong>intervention</strong> that can deliver a usable result within two weeks. If the need is larger, it becomes a <strong>project</strong> delivered over three to six weeks, or a <strong>complex project</strong> completed within the quarter. Work that repeatedly delivers value can continue as a <strong>workstream</strong>, with a quarterly decision to invest again. Each AI specialist still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
+            <p>We begin with a short <strong>intervention</strong> that can deliver a usable result within two weeks. If the need is larger, it becomes a <strong>project</strong> delivered over three to six weeks, or a <strong>complex project</strong> completed within the quarter. Complex work still has to show an early usable signal; its longer horizon is for finishing, integrating, and proving the full solution. Work that repeatedly delivers value can continue as a <strong>workstream</strong>, with a quarterly decision to invest again. Each AI specialist still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
           </div>
           <p className="leadership-strategy-proof"><span>What earns the next investment</span> Less effort, better decisions, lower risk, sustained use, or a solution another team can reuse.</p>
         </div>
@@ -674,9 +674,8 @@ function CoverLetter() {
       <section className="leadership-opening" aria-label="Why I want this job">
         <p className="eyebrow">Why I want this job</p>
         <div className="leadership-opening-copy">
-          <p>I want this job because <span className="cover-letter-emphasis">I have worked on both sides of the gap this role is meant to close</span>: making subsurface decisions under pressure, and building digital tools for the people responsible for those decisions. In my current work, I help people make sense of fragmented data, competing interpretations, and decisions that cannot wait for perfect information. AI can help, but only when it makes that work clearer.</p>
-          <p>My career has stayed close to those decisions: first in subsurface interpretation and operations, then in product delivery, analytics, and now AI-enabled workflows. I have learned that a solution is useful only when people understand it, can challenge it, and choose to use it again.</p>
-          <p>I have coordinated an approximately ten-person subsurface team and led development and UX teams through product delivery. This role is the next responsibility I am ready to take on: helping a global AI Embedment team grow, make good calls, and do work they can be proud of.</p>
+          <p>This role feels like the natural next step for me. My career has brought together a grounding in subsurface exploration, hands-on work in technology, and experience of making decisions under pressure. It has taught me what it takes to turn both into something useful for the people making those decisions. In my current work, I help people make sense of fragmented data, competing interpretations, and decisions that cannot wait for perfect information. AI can help, but only when it makes that work clearer. The aim is to use the evidence available responsibly, then standardize what proves worth scaling.</p>
+          <p>I have coordinated an approximately ten-person subsurface team and led development and UX teams through product delivery. This role is the next responsibility I am ready to take on: helping a global AI Embedment team grow, make good calls, and build the confidence, ownership, and shared purpose that lets people do work they are proud of.</p>
         </div>
         <blockquote className="leadership-pullquote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
         <figure className="leadership-designer-bridge">
