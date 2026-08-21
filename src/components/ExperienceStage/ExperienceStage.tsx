@@ -1,4 +1,5 @@
-import { useState, type RefObject } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
+import lottie from 'lottie-web'
 import { ArrowLeft, ArrowRight, ChevronDown, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
 import { featuredProjects, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
@@ -571,6 +572,22 @@ function TestimonialCarousel({ testimonialSlug, onOpenTestimonial, onCloseTestim
 
 function Leadership() {
   const pillarIcons = [ShieldCheck, Lightbulb]
+  const lottieContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = lottieContainerRef.current
+    if (!container) return
+
+    const animation = lottie.loadAnimation({
+      container,
+      renderer: 'svg',
+      loop: 2,
+      autoplay: true,
+      path: 'https://lottie.host/1d731108-5505-47fb-82a2-0f0ee3a6cde2/EjIZm4fcts.json',
+    })
+
+    return () => animation.destroy()
+  }, [])
 
   return (
     <div className="leadership-view">
@@ -585,7 +602,7 @@ function Leadership() {
         <div className="leadership-intent-copy">
           <p>In the Netherlands, I coordinated an approximately ten-person team across geology, geophysics, basin modelling, and data engineering to refresh the Nigeria Shallow Water portfolio. We had to turn a wide, messy body of evidence into regional play maps, volumes, and risk that people could work with together.</p>
           <p>Later, as a Product Owner, I worked with development and UX teams, geoscientists, and business stakeholders to turn real workflow needs into products. More recently, I have built data and analytics workflows that help teams get from fragmented information to something they can use to make a decision.</p>
-          <p>That is the kind of leadership I know: make the decision clear, bring the right people into the room, let the evidence be challenged, and stay close enough to know whether the work is helping. I will set a high bar, but I do not want people to perform confidence when they are uncertain. In AI work especially, we need people who can say, &quot;I do not know yet,&quot; &quot;the data is not ready,&quot; or &quot;this is not solving the right problem.&quot;</p>
+          <p>Coordinating that work taught me that alignment does not come from making disagreement disappear. It comes from helping people work from the same evidence, challenge it openly, and decide what to do next. I will set a high bar, but I do not want people to perform confidence when they are uncertain. In AI work especially, we need people who can say, &quot;I do not know yet,&quot; &quot;the data is not ready,&quot; or &quot;this is not solving the right problem.&quot;</p>
           <div className="leadership-intent-commitments">
             <p><strong>What I ask of the team:</strong> Bring your curiosity, say what you see, and own your part of the outcome. We will make mistakes. The important thing is to notice them early, learn, and keep going together.</p>
             <p><strong>What the team can expect from me:</strong> I will make time to listen, give clear feedback, and help you grow. I will also be honest about priorities and boundaries, so you know where you can decide for yourself.</p>
@@ -606,22 +623,23 @@ function Leadership() {
             <h2 id="leadership-strategy-title">Run AI Embedment as a rapid delivery and adoption capability.</h2>
           </div>
         </header>
-        <p className="leadership-strategy-thesis">The team would help operating teams solve immediate problems through focused pieces of work. Every engagement should create a useful signal early, even when the full solution needs more time. We would only take on work where the likely value is clear, and only as much as the AI specialists on the team can realistically deliver.</p>
+        <p className="leadership-strategy-thesis">The team would help operating teams solve immediate problems through focused AI engagements. Every engagement should produce an early signal that someone can use: a clearer decision, less repeated effort, a risk surfaced sooner, or a pattern another team can reuse. The full solution may take longer, but the work should not stay theoretical while it does. We would only take on work where the likely value is clear, and only as much as the AI specialists on the team can realistically deliver.</p>
         <div className="leadership-strategy-capacity" aria-label="Delivery capacity guardrails">
-          <div><strong>3-4</strong><h3>Completed pieces of work per quarter</h3><p>Target per AI specialist, adjusted for complexity. Work ranges from short interventions to complex projects. With ten specialists, that means roughly 30 completed pieces of work each quarter.</p></div>
-          <div><strong>2</strong><h3>Active pieces of work maximum</h3><p>Per AI specialist at any one time. This protects focus and gives people room to finish useful work before taking on more.</p></div>
-          <div><strong>Up to 12</strong><h3>Weeks per piece of work</h3><p>Short interventions take up to 2 weeks. Projects take 3-6 weeks. Complex projects can run for up to a quarter.</p></div>
+          <div><strong>2</strong><h3>Active AI engagements maximum in parallel</h3><p>Per AI specialist at any one time. This protects focus and gives people room to finish useful work before taking on more.</p></div>
+          <div><strong>Up to 12</strong><h3>Weeks per AI engagement</h3><p>Short interventions take up to 2 weeks. Projects take 3-6 weeks. Complex projects can run for up to a quarter.</p></div>
+          <div><strong>30-40</strong><h3>Completed AI engagements per quarter</h3><p>Across a ten-person team, depending on the mix of interventions, projects, and complex work. A complex project is a larger commitment, not one interchangeable item.</p></div>
         </div>
         <div className="leadership-strategy-story">
           <header>
             <p className="eyebrow">How I would choose the work</p>
             <h3>Start small. Scale what delivers.</h3>
+            <div className="leadership-strategy-lottie" ref={lottieContainerRef} aria-hidden="true" />
           </header>
           <div className="leadership-strategy-story-copy">
-            <p>Capacity is a choice, not a queue. Work enters only when an operating team has a pressing decision to improve or friction to remove, and a clear value case. We choose for urgency, readiness, likely value, and speed to impact.</p>
-            <p>We begin with a short <strong>intervention</strong> that can deliver a usable result within two weeks. If the need is larger, it becomes a <strong>project</strong> delivered over three to six weeks, or a <strong>complex project</strong> completed within the quarter. Complex work still has to show an early usable signal; its longer horizon is for finishing, integrating, and proving the full solution. Work that repeatedly delivers value can continue as a <strong>workstream</strong>, with a quarterly decision to invest again. Each AI specialist still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
+            <p>Capacity is a choice, not a queue. Work enters only when an operating team has a pressing decision to improve or friction to remove, and a clear value case. We choose for urgency, readiness, likely value, and speed to impact. Readiness is not just whether the technology can work. It means the operating team can name the decision, provide access to the right people and data, and stay involved long enough to put the result into practice.</p>
+            <p>We begin with a short <strong>intervention</strong> that can deliver a usable result within two weeks. If the need is larger, it becomes a <strong>project</strong> delivered over three to six weeks, or a <strong>complex project</strong> completed within the quarter. Complex work can run for a quarter, but it must produce an early usable outcome before the team commits to the full delivery path. Work that repeatedly delivers value can continue as a <strong>workstream</strong>, with a quarterly decision to invest again. Each AI specialist still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
+            <p className="leadership-strategy-proof"><span>What earns the next investment</span> Less effort, better decisions, lower risk, sustained use, or a solution another team can reuse.</p>
           </div>
-          <p className="leadership-strategy-proof"><span>What earns the next investment</span> Less effort, better decisions, lower risk, sustained use, or a solution another team can reuse.</p>
         </div>
       </section>
 
@@ -645,7 +663,7 @@ function Leadership() {
           ))}
         </ol>
         <div className="operating-delivery-rhythm">
-          <p>Weekly, we unblock delivery and share what changed for customers. Monthly, we rebalance the portfolio with sponsors. Quarterly, we review outcomes, value, and ownership before making the next projects decision.</p>
+          <p>Weekly, we unblock delivery and share what changed for customers, with facilitation rotating across the team. Monthly, we rebalance the portfolio with sponsors. Quarterly, we review outcomes, value, and ownership before deciding what continues, changes hands, or stops.</p>
           <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
         </div>
         <section className="operating-principles" aria-labelledby="operating-principles-title">
