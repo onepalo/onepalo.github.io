@@ -510,7 +510,7 @@ html:has(.testimonial-dialog), body:has(.testimonial-dialog) { overflow: hidden;
 .campaign-references ul { display: grid; gap: 10px; margin: 12px 0 0; padding: 0; list-style: none; }
 .campaign-references a { display: inline-flex; align-items: center; gap: 4px; color: var(--ink); font-size: 13px; font-weight: 700; text-decoration: underline; text-decoration-color: rgba(46, 111, 149, .48); text-underline-offset: 4px; }
 .campaign-references a:hover { color: var(--blue); }
-@media (max-width: 860px) { .campaign-scroll-shell { display: block; }.campaign-story-column { display: contents; }.campaign-rider-stage { position: relative; display: grid; height: min(72svh, 620px); padding: 46px 24px 28px; border-top: 1px solid var(--line); border-left: 0; }.campaign-rider { width: min(100%, 690px); }.campaign-rider-caption { bottom: 22px; left: 22px; }.campaign-narrative { padding: 94px 22px 8svh; }.campaign-intro { min-height: 74svh; }.campaign-act { min-height: 85svh; }.campaign-closing { min-height: auto; gap: 48px; padding: 70px 22px 94px; }.campaign-references { align-self: auto; }.campaign-back { top: 20px; left: 22px; } }
+@media (max-width: 860px) { .campaign-scroll-shell { display: block; }.campaign-story-column { display: contents; }.campaign-rider-stage { display: none; }.campaign-rider-stage-mobile { position: relative; display: grid; height: min(58svh, 500px); margin: 0 -22px 8svh; padding: 32px 22px 28px; place-items: end center; border-top: 1px solid var(--line); background: var(--canvas); }.campaign-rider { align-self: stretch; width: min(100%, 690px); height: 100%; min-height: 0; }.campaign-rider img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; object-position: center bottom; }.campaign-rider-stage-mobile .campaign-rider { width: min(100%, 540px); }.campaign-rider-caption, .campaign-rider-stage-mobile .campaign-rider-caption { bottom: 22px; left: 22px; }.campaign-narrative { padding: 94px 22px 8svh; }.campaign-intro { min-height: 74svh; }.campaign-act { min-height: 85svh; }.campaign-closing { min-height: auto; gap: 48px; padding: 70px 22px 94px; }.campaign-references { align-self: auto; }.campaign-back { top: 20px; left: 22px; } }
 @media (max-width: 520px) { .campaign-rider-stage { height: min(62svh, 520px); }.campaign-intro h1 { font-size: clamp(40px, 12vw, 58px); }.campaign-lede { font-size: 19px; }.campaign-act h2 { font-size: 36px; }.campaign-act-copy > p:last-child { font-size: 19px; }.campaign-monitor { margin-top: 32px; } }
 
 @media (max-width: 760px) {
@@ -531,10 +531,6 @@ html:has(.testimonial-dialog), body:has(.testimonial-dialog) { overflow: hidden;
 	.journey-discipline { position: static; grid-area: discipline; justify-self: start; }
 	.journey-chevron { grid-area: chevron; align-self: center; }
 	.journey-detail { margin: 0 14px 24px; }
-	.campaign-rider-stage { display: none; }
-	.campaign-rider-stage-mobile { position: relative; display: grid; height: min(58svh, 500px); margin: 0 -22px 8svh; padding: 32px 22px 28px; place-items: end center; border-top: 1px solid var(--line); background: var(--canvas); }
-	.campaign-rider-stage-mobile .campaign-rider { width: min(100%, 540px); }
-	.campaign-rider-stage-mobile .campaign-rider-caption { bottom: 22px; left: 22px; }
 }
 
 @media (max-width: 760px) {
