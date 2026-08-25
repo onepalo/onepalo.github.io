@@ -59,10 +59,10 @@ export function Hero({ content, onOpenWorld }: HeroProps) {
               </button>
             </header>
             <div className="hero-ai-perspective-copy">
-              <p>I use AI openly. It helps me explore ideas, test assumptions, and learn faster. Having worked across countries, disciplines, languages, and increasingly complex data environments, I've learned that valuable insights often emerge at the intersection of different perspectives. AI is exceptionally useful in that space: it helps me connect concepts, surface patterns, and explore lines of inquiry that might otherwise remain undiscovered.</p>
-              <p>But generating possibilities is not the same as creating understanding. The most important work still happens after the options appear: deciding which signals matter, questioning what seems obvious, evaluating uncertainty, and determining what actions are worth pursuing. Those decisions require context, experience, and accountability. AI can inform them, but it cannot own them.</p>
-              <p><strong>AI expands the space of possibilities. Human judgment determines which possibilities become reality.</strong></p>
-              <p><em>If AI eventually evolves into something approaching AGI, many of today's assumptions about expertise, work, responsibility, and value creation may need to be reconsidered. Until then, I view AI not as a replacement for human thinking, but as a powerful tool that amplifies our ability to explore, learn, and make sense of an increasingly complex world.</em></p>
+              <p>I use AI openly. It helps me explore ideas, test assumptions, and learn faster. Working across countries, disciplines, languages, and increasingly complex data has taught me that useful insight often comes from bringing different perspectives together. AI is helpful there: it can connect concepts, surface patterns, and open up questions I might not have considered.</p>
+              <p>But producing options is not the same as understanding a problem. The important work starts after the options appear: deciding which signals matter, questioning what seems obvious, judging uncertainty, and choosing what is worth doing. That takes context, experience, and accountability. AI can inform those decisions, but it cannot own them.</p>
+              <p><strong>AI opens possibilities. Human judgment makes them real.</strong></p>
+              <p><em>If AI eventually develops into something approaching AGI, we may need to revisit many of today's assumptions about expertise, work, responsibility, and value creation. Until then, I see AI as a powerful tool for extending human thinking, not replacing it.</em></p>
             </div>
           </section>
         </div>
