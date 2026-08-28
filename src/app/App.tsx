@@ -10,9 +10,8 @@ import { experienceFromHash, hashForExperience, hashForTestimonial, testimonialS
 
 const titles: Record<ExperienceId, string> = {
   home: "Rafael's Exploration Journal",
-  cover: "Why This Role, Why Now | Rafael's Exploration Journal",
+  cover: "Why Me | Rafael's Exploration Journal",
   'how-i-work': "Testimonial | Rafael's Exploration Journal",
-  leadership: "How I Will Lead the Team | Rafael's Exploration Journal",
   journey: "Resume | Rafael's Exploration Journal",
   impact: "Leadership Beyond My Role | Rafael's Exploration Journal",
   campaign: "Environmental Awareness Campaign | Rafael's Exploration Journal",

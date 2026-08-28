@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState, type RefObject } from 'react'
-import lottie from 'lottie-web'
-import { ArrowLeft, ArrowRight, ChevronDown, Lightbulb, MapPin, ShieldCheck, X } from 'lucide-react'
-import { featuredProjects, journeyCvProfile, journeyItems, journeyStatement, leadershipPillars, leadershipProofs } from '../../content/content'
+import { useState, type RefObject } from 'react'
+import { ArrowLeft, ArrowRight, ChevronDown, MapPin, X } from 'lucide-react'
+import { featuredProjects, journeyCvProfile, journeyItems, journeyStatement, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import { useDialogController } from '../../utils/useDialogController'
 import designerBridge from '../../assets/candidate/DesignerRN.png'
@@ -25,10 +24,9 @@ interface ExperienceStageProps {
 }
 
 const stageMeta = {
-  cover: { eyebrow: 'Cover letter', title: 'Why this role. Why now.', intro: 'The value I would bring as Manager - AI Embedment.' },
+  cover: { eyebrow: 'Professional profile', title: 'Why me.', intro: 'The experience and perspective I bring to complex technical and digital work.' },
   'how-i-work': { eyebrow: 'Professional recommendations', title: 'Testimonials', intro: 'What colleagues have experienced working alongside me.' },
   journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
-  leadership: { eyebrow: 'Leading the AI Embedment Team', title: 'How I will lead', intro: '' },
   impact: { eyebrow: 'Beyond the day job', title: 'Leadership beyond my role', intro: '' },
 } as const
 
@@ -40,12 +38,6 @@ const evolvingPhrases = [
   'New puzzle. Same curiosity.',
   'Upgraded after every good question.',
   'Surprise: still evolving.',
-] as const
-
-const operatingDeliveryStages = [
-  { step: '01', title: 'Shape a useful outcome', duration: 'Intake and framing', description: 'Name the sponsor, user, decision, baseline, and definition of done. Then choose the smallest intervention that can help now.' },
-  { step: '02', title: 'Deliver in short cycles', duration: 'Protected delivery', description: 'Use the tools and data available, put a usable increment in front of people quickly, and adjust from evidence rather than assumptions.' },
-  { step: '03', title: 'Decide its next home', duration: 'Close, hand off, or grow', description: 'Name the owner and support path. Continue as a longer workstream only when value, readiness, and sponsorship justify the investment.' },
 ] as const
 
 type FeaturedProjectField = 'businessMoment' | 'collaboration' | 'outcome' | 'aiInPractice'
@@ -278,7 +270,6 @@ export function ExperienceStage({ experience, headingRef, onNavigate, testimonia
       {experience === 'cover' && <CoverLetter />}
       {experience === 'how-i-work' && <HowIWork testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />}
       {experience === 'journey' && <Journey />}
-      {experience === 'leadership' && <Leadership />}
       {experience === 'impact' && <LeadershipProof onOpenCampaign={() => onNavigate('campaign')} />}
       <div className="stage-next">
         <button type="button" className="stage-return" aria-label="Return to universe" onClick={() => onNavigate('home')}>
@@ -569,124 +560,6 @@ function TestimonialCarousel({ testimonialSlug, onOpenTestimonial, onCloseTestim
   )
 }
 
-function Leadership() {
-  const pillarIcons = [ShieldCheck, Lightbulb]
-  const lottieContainerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const container = lottieContainerRef.current
-    if (!container) return
-
-    const animation = lottie.loadAnimation({
-      container,
-      renderer: 'svg',
-      loop: 2,
-      autoplay: true,
-      path: 'https://lottie.host/1d731108-5505-47fb-82a2-0f0ee3a6cde2/EjIZm4fcts.json',
-    })
-
-    return () => animation.destroy()
-  }, [])
-
-  return (
-    <div className="leadership-view">
-      <section className="leadership-intent" aria-labelledby="leadership-commitment-title">
-        <header className="leadership-chapter-heading">
-          <p>01</p>
-          <div>
-            <p className="eyebrow">The leadership I bring</p>
-            <h2 id="leadership-commitment-title">What I have led, and how I would build from here.</h2>
-          </div>
-        </header>
-        <div className="leadership-intent-copy">
-          <p>In the Netherlands, I coordinated an approximately ten-person team across geology, geophysics, basin modelling, and data engineering to refresh the Nigeria Shallow Water portfolio. We had to turn a wide, messy body of evidence into regional play maps, volumes, and risk that people could work with together.</p>
-          <p>Later, as a Product Owner, I worked with development and UX teams, geoscientists, and business stakeholders to turn real workflow needs into products. More recently, I have built data and analytics workflows that help teams get from fragmented information to something they can use to make a decision.</p>
-          <p>Coordinating that work taught me that alignment does not come from making disagreement disappear. It comes from helping people work from the same evidence, challenge it openly, and decide what to do next. I will set a high bar, but I do not want people to perform confidence when they are uncertain. In AI work especially, we need people who can say, &quot;I do not know yet,&quot; &quot;the data is not ready,&quot; or &quot;this is not solving the right problem.&quot;</p>
-          <div className="leadership-intent-commitments">
-            <p><strong>What I ask of the team:</strong> Bring your curiosity, say what you see, and own your part of the outcome. We will make mistakes. The important thing is to notice them early, learn, and keep going together.</p>
-            <p><strong>What the team can expect from me:</strong> I will make time to listen, give clear feedback, and help you grow. I will also be honest about priorities and boundaries, so you know where you can decide for yourself.</p>
-          </div>
-        </div>
-        <blockquote className="leadership-pullquote">I want people to leave this team more capable, more confident, and more connected than when they joined.</blockquote>
-        <figure className="leadership-shared-effort">
-          <img src={leaderIllustration} alt="A leader pulling alongside the team." />
-          <figcaption>Good work moves faster when no one has to pull alone.</figcaption>
-        </figure>
-      </section>
-
-      <section className="leadership-strategy" aria-labelledby="leadership-strategy-title">
-        <header className="leadership-chapter-heading">
-          <p>02</p>
-          <div>
-            <p className="eyebrow">My strategy</p>
-            <h2 id="leadership-strategy-title">Run AI Embedment as a rapid delivery and adoption capability.</h2>
-          </div>
-        </header>
-        <p className="leadership-strategy-thesis">The team would help operating teams solve immediate problems through focused AI engagements. Every engagement should produce an early signal that someone can use: a clearer decision, less repeated effort, a risk surfaced sooner, or a pattern another team can reuse. The full solution may take longer, but the work should not stay theoretical while it does. We would only take on work where the likely value is clear, and only as much as the AI specialists on the team can realistically deliver.</p>
-        <div className="leadership-strategy-capacity" aria-label="Delivery capacity guardrails">
-          <div><strong>2</strong><h3>Active AI engagements maximum in parallel</h3><p>Per AI specialist at any one time. This protects focus and gives people room to finish useful work before taking on more.</p></div>
-          <div><strong>Up to 12</strong><h3>Weeks per AI engagement</h3><p>Short interventions take up to 2 weeks. Projects take 3-6 weeks. Complex projects can run for up to a quarter.</p></div>
-          <div><strong>30-40</strong><h3>Completed AI engagements per quarter</h3><p>Across a ten-person team, depending on the mix of interventions, projects, and complex work. A complex project is a larger commitment, not one interchangeable item.</p></div>
-        </div>
-        <div className="leadership-strategy-story">
-          <header>
-            <p className="eyebrow">How I would choose the work</p>
-            <h3>Start small. Scale what delivers.</h3>
-            <div className="leadership-strategy-lottie" ref={lottieContainerRef} aria-hidden="true" />
-          </header>
-          <div className="leadership-strategy-story-copy">
-            <p>Capacity is a choice, not a queue. Work enters only when an operating team has a pressing decision to improve or friction to remove, and a clear value case. We choose for urgency, readiness, likely value, and speed to impact. Readiness is not just whether the technology can work. It means the operating team can name the decision, provide access to the right people and data, and stay involved long enough to put the result into practice.</p>
-            <p>We begin with a short <strong>intervention</strong> that can deliver a usable result within two weeks. If the need is larger, it becomes a <strong>project</strong> delivered over three to six weeks, or a <strong>complex project</strong> completed within the quarter. Complex work can run for a quarter, but it must produce an early usable outcome before the team commits to the full delivery path. Work that repeatedly delivers value can continue as a <strong>workstream</strong>, with a quarterly decision to invest again. Each AI specialist still owns a clear <strong>quarterly outcome</strong>, so broader ambition never obscures accountability.</p>
-            <p className="leadership-strategy-proof"><span>What earns the next investment</span> Less effort, better decisions, lower risk, sustained use, or a solution another team can reuse.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="leadership-focus operating-delivery-loop" aria-labelledby="operating-delivery-loop-title">
-        <header className="leadership-chapter-heading">
-          <p>03</p>
-          <div>
-            <p className="eyebrow">How the team operates</p>
-            <h2 id="operating-delivery-loop-title">Move from a clear outcome to a clear next home.</h2>
-            <p className="leadership-chapter-intro">A lightweight delivery loop keeps immediate work moving without allowing successful prototypes to become unsupported products.</p>
-          </div>
-        </header>
-        <ol>
-          {operatingDeliveryStages.map((stage) => (
-            <li key={stage.step}>
-              <span>{stage.step}</span>
-              <h3>{stage.title}</h3>
-              <strong>{stage.duration}</strong>
-              <p>{stage.description}</p>
-            </li>
-          ))}
-        </ol>
-        <div className="operating-delivery-rhythm">
-          <p>Weekly, we unblock delivery and share what changed for customers, with facilitation rotating across the team. Monthly, we rebalance the portfolio with sponsors. Quarterly, we review outcomes, value, and ownership before deciding what continues, changes hands, or stops.</p>
-          <p>Updates, decisions, and notes belong in writing. Meeting time is for the conversations that need judgement, challenge, or help from other people.</p>
-        </div>
-        <section className="operating-principles" aria-labelledby="operating-principles-title">
-          <header>
-            <p className="eyebrow">Operating principles</p>
-            <h3 id="operating-principles-title">Two rules that keep delivery honest.</h3>
-            <p>Speed does not lower the bar for usefulness, trust, or responsible technical choices.</p>
-          </header>
-          <div className="operating-principles-grid">
-            {leadershipPillars.map((pillar, index) => {
-              const Icon = pillarIcons[index]
-              return <article className="operating-principle-card" key={pillar.title}>
-                <Icon size={22} aria-hidden="true" />
-                <h4>{pillar.title}</h4>
-                <p>{pillar.statement}</p>
-              </article>
-            })}
-          </div>
-        </section>
-      </section>
-    </div>
-  )
-}
-
 interface HowIWorkProps {
   testimonialSlug: string | null
   onOpenTestimonial: (slug: string) => void
@@ -704,33 +577,45 @@ function HowIWork({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: Ho
 function CoverLetter() {
   return (
     <div className="leadership-view">
-      <section className="leadership-opening" aria-label="Why I want this job">
-        <p className="eyebrow">Why I want this job</p>
+      <section className="leadership-opening" aria-label="What I bring">
+        <p className="eyebrow">What I bring</p>
         <div className="leadership-opening-copy">
-          <p>This role feels like the natural next step for me. My career has brought together a grounding in subsurface exploration, hands-on work in technology, and experience of making decisions under pressure. It has taught me what it takes to turn both into something useful for the people making those decisions. In my current work, I help people make sense of fragmented data, competing interpretations, and decisions that cannot wait for perfect information. AI can help, but only when it makes that work clearer. The aim is to use the evidence available responsibly, then standardize what proves worth scaling.</p>
-          <p>I have coordinated an approximately ten-person subsurface team and led development and UX teams through product delivery. This role is the next responsibility I am ready to take on: helping a global AI Embedment team grow, make good calls, and build the confidence, ownership, and shared purpose that lets people do work they are proud of.</p>
+          <p>My career brings together more than fifteen years of subsurface experience with digital product delivery, data, and AI. I help turn complex evidence into practical decisions and workflows that people can trust and use.</p>
+          <p>I work comfortably across geoscience, technology, product, and design. What I bring is the ability to connect those perspectives around a clear problem, make uncertainty visible, and keep the work moving toward a useful outcome.</p>
         </div>
-        <blockquote className="leadership-pullquote">I do not want the next chapter of my career to be a story about what I can do alone.</blockquote>
         <figure className="leadership-designer-bridge">
           <img src={designerBridge} alt="A person connecting subsurface expertise with technology and AI." />
         </figure>
       </section>
 
-      <section className="leadership-readiness" aria-label="The career that led me here">
-        <p className="eyebrow">The career that led me here</p>
+      <section className="leadership-readiness" aria-label="The experience behind my work">
+        <p className="eyebrow">The experience behind my work</p>
         <div className="leadership-narrative-copy">
-          <p>For more than fifteen years, I have worked where technical judgment has consequences: prospects, high-pressure wells, portfolio renewal, risk, and the handover from an uncertain subsurface picture to a decision someone has to own. The real work, I learned, is helping specialists see the same evidence, disagree productively, and decide what to do next.</p>
-          <p>Leading a multidisciplinary team during a regional rejuvenation effort in the Netherlands showed me what happens when diverse experts work from the same evidence. Over the last six years, I have carried that lesson into digital products, analytics, and AI: the work succeeds when it solves a real problem and becomes part of daily practice.</p>
+          <p>I have worked where technical judgment has consequences: prospects, high-pressure wells, portfolio renewal, risk, and the handover from an uncertain subsurface picture to a decision someone has to own.</p>
+          <p>Over the last six years, I have carried that foundation into digital products, analytics, and AI. The lesson has stayed consistent: technology creates value when it solves a real problem and fits the way people actually work.</p>
         </div>
       </section>
 
-      <section className="leadership-choice" aria-label="Why lead now">
-        <p className="eyebrow">Why lead now</p>
+      <section className="leadership-choice" aria-label="How I work">
+        <p className="eyebrow">How I work</p>
         <div className="leadership-narrative-copy">
-          <p>This role needs someone who can work comfortably with geoscientists, data scientists, product owners, and asset teams. I have been learning how to bring those perspectives into the same conversation.</p>
-          <p>AI is accessible to many of us. The harder work is taking a real problem from the first conversation to something people trust enough to use in their everyday work. That means listening closely, bringing the right people together, and <span className="cover-letter-emphasis">making something useful before the moment has passed.</span></p>
-          <p>I want to use that experience to help people grow, make room for others to lead, and build a team that does useful work people can stand behind.</p>
+          <p>I start with the decision that needs to be made, bring the right people and evidence into the conversation, and build with the people closest to the work.</p>
+          <p>I value honest challenge, clear priorities, and practical progress. I test ideas early and scale what proves useful rather than adding technology for its own sake.</p>
         </div>
+      </section>
+
+      <section className="leadership-intent" aria-label="What it is like to work with me">
+        <div className="leadership-intent-copy">
+          <div className="leadership-intent-commitments">
+            <p><strong>What I ask of the team:</strong> Bring your curiosity, say what you see, and own your part of the outcome. We will make mistakes. The important thing is to notice them early, learn, and keep going together.</p>
+            <p><strong>What the team can expect from me:</strong> I will make time to listen, give clear feedback, and help you grow. I will also be honest about priorities and boundaries, so you know where you can decide for yourself.</p>
+          </div>
+        </div>
+        <blockquote className="leadership-pullquote">I want people to leave this team more capable, more confident, and more connected than when they joined.</blockquote>
+        <figure className="leadership-shared-effort">
+          <img src={leaderIllustration} alt="A leader and team sharing the effort of moving forward." />
+          <figcaption>Good work moves faster when no one has to pull alone.</figcaption>
+        </figure>
       </section>
     </div>
   )
@@ -755,6 +640,6 @@ function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
 }
 
 function nextExperience(current: Exclude<ExperienceId, 'home' | 'campaign'>): Exclude<ExperienceId, 'home' | 'campaign'> {
-  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'how-i-work', 'leadership', 'journey', 'impact']
+  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'how-i-work', 'journey', 'impact']
   return order[(order.indexOf(current) + 1) % order.length]
 }

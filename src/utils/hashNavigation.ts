@@ -1,6 +1,6 @@
 import type { ExperienceId } from '../content/contentTypes'
 
-const experiences: ExperienceId[] = ['home', 'cover', 'how-i-work', 'leadership', 'journey', 'impact', 'campaign']
+const experiences: ExperienceId[] = ['home', 'cover', 'how-i-work', 'journey', 'impact', 'campaign']
 
 export function experienceFromHash(hash: string): ExperienceId {
   const candidate = hash.replace('#', '')
