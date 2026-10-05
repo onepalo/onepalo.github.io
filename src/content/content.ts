@@ -12,7 +12,7 @@ export const worlds: World[] = [
   { id: 'cover', title: 'Why Me?', shortTitle: 'Why Me?', description: 'How my experience connects subsurface judgment, digital product delivery, and multidisciplinary collaboration.', accentColor: '#2e6f95', visualHint: 'personal statement' },
   { id: 'how-i-work', title: 'Testimonial', shortTitle: 'Testimonial', description: 'What colleagues have experienced working alongside me.', accentColor: '#b65f4a', visualHint: 'professional recommendations' },
   { id: 'journey', title: 'Resume', shortTitle: 'Resume', description: 'From field geophysics to global product and analytics delivery.', accentColor: '#d6a94a', visualHint: 'constellation route' },
-  { id: 'impact', title: 'Leadership Beyond My Role', shortTitle: 'Beyond my role', description: 'Work I have led, built, and carried beyond my day job.', accentColor: '#e07a5f', visualHint: 'proof points' },
+  { id: 'impact', title: 'Leadership', shortTitle: 'Leadership', description: 'Work I have led, built, and carried beyond my day job.', accentColor: '#e07a5f', visualHint: 'proof points' },
 ]
 
 export const journeyItems: JourneyItem[] = [
@@ -26,7 +26,7 @@ export const journeyItems: JourneyItem[] = [
 
 export const journeyStatement = {
   firstParagraph: 'My career began in exploration and subsurface interpretation, working with uncertainty and technical decisions that had real consequences. Over time, I carried that experience into analytics, software-enabled workflows, AI, and digital product leadership.',
-  keyStatement: 'Today, with more than 15 years across geoscience and technology',
+  keyStatement: 'Today, with nearly two decades across geoscience and technology',
   conclusion: ', I bring domain expertise together with data, software, and product delivery to help teams make better decisions and build workflows they can use again.',
 }
 
@@ -50,6 +50,7 @@ export const featuredProjects: FeaturedProject[] = [
     title: 'GoA PP SmartTrends',
     businessMoment: 'Regional interpretation needed standardized reservoir insight, but raw well-log data was too granular to use consistently and too important to simplify by hand.',
     collaboration: 'Worked across subsurface interpretation and asset analytics needs to define reusable reservoir units and a workflow that teams could inspect together.',
+    decisionSupported: 'Compare regional reservoir-property ranges, trends, and uncertainty using consistent reservoir units rather than raw well-log data.',
     outcome: 'Turned 72M log rows into 36k standardized reservoir units, reducing the analysis cycle from months to hours and creating reproducible datasets for scenario testing.',
     aiInPractice: 'AI assists people in exploring and explaining trends; governed rules and domain review remain at the centre of the decision.',
     platforms: ['Databricks', 'Spotfire', 'VS Code'],
@@ -58,6 +59,7 @@ export const featuredProjects: FeaturedProject[] = [
     title: 'Yet2Find',
     businessMoment: 'Opportunity screening relied on prospect, lease, spatial, and tabular data held across separate sources, making a shared view of yet-to-find potential difficult to establish.',
     collaboration: 'Worked with geoscience, geomatics, and commercial-data contributors to bring the evidence behind the screening decision into one analytical workflow.',
+    decisionSupported: 'Screen opportunities through a consistent view of technical potential, leases, ownership, and volumetric evidence.',
     outcome: 'Created an integrated interface for prospect, lease, and volumetric assessment that reduced manual QC and made company-level attribution easier to test and discuss.',
     aiInPractice: 'The value starts with trusted, connected evidence: automation supports the workflow while technical and commercial judgment stays visible.',
     platforms: ['FME', 'Spotfire', 'VS Code'],
@@ -66,6 +68,7 @@ export const featuredProjects: FeaturedProject[] = [
     title: 'Shell Savoy',
     businessMoment: 'Production, well, log, deviation, and coordinate data used inconsistent identifiers and definitions, slowing cross-discipline readiness for interpretation and candidate screening.',
     collaboration: 'Worked with geology, petrophysics, reservoir, and WRFM perspectives to establish a governed well master and a shared analytical layer.',
+    decisionSupported: 'Establish which well and production evidence is ready for interpretation, production diagnostics, and opportunity screening.',
     outcome: 'Created a more consistent starting point for interpretation, production diagnostics, and opportunity screening across the asset team.',
     aiInPractice: 'A strong data foundation makes advanced analytics and AI useful later; it is practical preparation, not AI for its own sake.',
     platforms: ['Databricks', 'Spotfire', 'VS Code'],
@@ -73,8 +76,8 @@ export const featuredProjects: FeaturedProject[] = [
 ]
 
 export const leadershipProofs: LeadershipProof[] = [
+  { theme: 'Build', title: 'EmpathyAI - Founder', description: 'EmpathyAI is the platform through which I am shaping a technical-partnership offer for integrated subsurface studies. The focus is to connect geoscience judgment, data integration, and fit-for-purpose workflows so teams can assess opportunities with a clear evidence base.', secondaryDescription: 'Alongside this, EmpathyAI is an independent applied-AI initiative exploring how organisations can hear workforce ideas and act on them. Its first concept, Connectify, gives people a space to share ideas anonymously or openly, across hierarchy and language. AI-assisted synthesis helps leaders spot patterns, understand sentiment, and identify practical opportunities for action.', links: [{ label: 'Open EmpathyAI App', url: 'https://dev.empathyailab.com/' }] },
   { theme: 'Lead', title: 'Environmental Awareness Campaign - Nigeria', description: 'Made an unmeasured health and safety concern visible after observing Port Harcourt air quality, then turned that observation into a public-data initiative. The monitoring informed public discussion about environmental exposure, transparency, and wellbeing, and international reporting documented the air-pollution issue in Nigeria.', references: [{ label: 'Undark investigation', url: 'https://undark.org/2018/10/22/air-pollution-lagos' }, { label: 'France24 / AFP report', url: 'https://www.france24.com/en/20180423-nigerians-demand-air-quality-data-over-pollution-fears' }, { label: 'IQAir feature', url: 'https://www.iqair.com/newsroom/air-quality-in-africa' }] },
-  { theme: 'Build', title: 'EmpathyAI - Founder', description: 'Founded EmpathyAI, an independent applied-AI initiative exploring how organisations can hear workforce ideas and act on them. Its first concept, Connectify, gives people a space to share ideas anonymously or openly, across hierarchy and language. AI-assisted synthesis helps leaders spot patterns, understand sentiment, and identify practical opportunities for action.', links: [{ label: 'Open EmpathyAI App', url: 'https://dev.empathyailab.com/' }] },
   { theme: 'Compete', title: 'Competitive Pickleball - DUPR 4.0', description: 'Brings the same disciplined, iterative improvement mindset used in analytics and technical product work to competitive sport. Deliberate practice, direct feedback, clear communication with a partner, and calm decisions under pressure all shape the lesson taken from each match.' },
 ]
 

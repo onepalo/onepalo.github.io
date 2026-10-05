@@ -47,6 +47,7 @@ export interface FeaturedProject {
   title: string
   businessMoment: string
   collaboration: string
+  decisionSupported: string
   outcome: string
   aiInPractice: string
   platforms: string[]
@@ -56,6 +57,7 @@ export interface LeadershipProof {
   theme: string
   title: string
   description: string
+  secondaryDescription?: string
   links?: Array<{
     label: string
     url: string

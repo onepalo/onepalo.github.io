@@ -24,9 +24,9 @@ interface ExperienceStageProps {
 }
 
 const stageMeta = {
-  cover: { eyebrow: 'Professional profile', title: 'Why me.', intro: 'The experience and perspective I bring to complex technical and digital work.' },
+  cover: { eyebrow: 'Professional profile', title: 'Why me. Why us.', intro: 'Subsurface expertise, integrated evaluation, and practical decisions.' },
   'how-i-work': { eyebrow: 'Professional recommendations', title: 'Testimonials', intro: 'What colleagues have experienced working alongside me.' },
-  journey: { eyebrow: 'Career overview', title: 'Resume', intro: '' },
+  journey: { eyebrow: 'Experience and study capability', title: 'Resume', intro: '' },
   impact: { eyebrow: 'Beyond the day job', title: 'Leadership beyond my role', intro: '' },
 } as const
 
@@ -297,7 +297,7 @@ function Journey() {
         <CvProfile />
         <div className="journey-overview-main">
           <section className="journey-statement" aria-labelledby="career-statement-title">
-            <h2 id="career-statement-title">Career statement</h2>
+              <h2 id="career-statement-title">Experience behind integrated studies</h2>
             <p>{journeyStatement.firstParagraph}</p>
             <p><span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
             <p className="journey-evolving">
@@ -377,15 +377,15 @@ function FeaturedProjects() {
   return (
     <section className="featured-projects" aria-labelledby="featured-projects-title">
       <header className="journey-statement featured-projects-heading">
-        <h2 id="featured-projects-title">Recent AI-enabled work</h2>
-        <p>Three recent examples of using domain expertise, data, and AI to improve decisions people need to make now.</p>
+        <h2 id="featured-projects-title">Integrated study examples</h2>
+        <p>Three examples of bringing subsurface judgment, connected data, and fit-for-purpose digital workflows together around decisions that need to move forward.</p>
       </header>
       <div className="featured-project-list">
         {featuredProjects.map((project, index) => (
           <button className="featured-project" type="button" key={project.title} onClick={() => setActiveProjectIndex(index)} aria-haspopup="dialog">
             <div className="featured-project-content">
               <h3>{project.title}</h3>
-              <p>Click here to view the project story</p>
+              <p>View the study example</p>
             </div>
             <ArrowRight size={18} aria-hidden="true" />
           </button>
@@ -401,8 +401,9 @@ function FeaturedProjects() {
             <dl>
               <div><dt>The problem</dt><dd>{renderHighlightedText(activeProject.businessMoment, activeProjectHighlights?.businessMoment ?? [])}</dd></div>
               <div><dt>What I did</dt><dd>{renderHighlightedText(activeProject.collaboration, activeProjectHighlights?.collaboration ?? [])}</dd></div>
+              <div><dt>Decision supported</dt><dd>{activeProject.decisionSupported}</dd></div>
               <div><dt>The result</dt><dd>{renderHighlightedText(activeProject.outcome, activeProjectHighlights?.outcome ?? [])}</dd></div>
-              <div><dt>Where AI helped</dt><dd>{renderHighlightedText(activeProject.aiInPractice, activeProjectHighlights?.aiInPractice ?? [])}</dd></div>
+              <div className="featured-project-ai-practice"><dt>Where AI helped</dt><dd>{renderHighlightedText(activeProject.aiInPractice, activeProjectHighlights?.aiInPractice ?? [])}</dd></div>
             </dl>
             <footer className="featured-project-platforms"><span>Platforms used</span><ul>{activeProject.platforms.map((platform) => <li key={platform}>{platform}</li>)}</ul></footer>
           </section>
@@ -577,27 +578,35 @@ function HowIWork({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: Ho
 function CoverLetter() {
   return (
     <div className="leadership-view">
-      <section className="leadership-opening" aria-label="What I bring">
-        <p className="eyebrow">What I bring</p>
+      <section className="leadership-opening" aria-label="A technical partnership">
+        <p className="eyebrow">A technical partnership</p>
         <div className="leadership-opening-copy">
-          <p>My career brings together more than fifteen years of subsurface experience with digital product delivery, data, and AI. I help turn complex evidence into practical decisions and workflows that people can trust and use.</p>
-          <p>I work comfortably across geoscience, technology, product, and design. What I bring is the ability to connect those perspectives around a clear problem, make uncertainty visible, and keep the work moving toward a useful outcome.</p>
+          <p>I bring nearly two decades of subsurface experience together with digital product delivery, data, and AI. Whether contributing as a specialist, working as part of a staff team, or representing a trusted technical partner, I help turn complex evidence into practical decisions and workflows people can trust and use.</p>
+          <p>I work across geoscience, technology, product, and design to integrate evidence, evaluate subsurface studies, and make uncertainty visible. The aim is simple: connect the right perspectives around a clear problem and keep the work moving toward a useful outcome.</p>
         </div>
         <figure className="leadership-designer-bridge">
           <img src={designerBridge} alt="A person connecting subsurface expertise with technology and AI." />
         </figure>
       </section>
 
-      <section className="leadership-readiness" aria-label="The experience behind my work">
-        <p className="eyebrow">The experience behind my work</p>
+      <section className="leadership-choice" aria-label="When to engage">
+        <p className="eyebrow">When to engage</p>
+        <div className="leadership-narrative-copy">
+          <p>Bring me in when a subsurface decision is stalled by fragmented evidence, competing interpretations, or a study that needs a shared technical view.</p>
+          <p>I help define the decision, connect the relevant evidence, make uncertainty explicit, and create a view that technical and business stakeholders can interrogate together.</p>
+        </div>
+      </section>
+
+      <section className="leadership-readiness" aria-label="Evidence behind the partnership">
+        <p className="eyebrow">Evidence behind the partnership</p>
         <div className="leadership-narrative-copy">
           <p>I have worked where technical judgment has consequences: prospects, high-pressure wells, portfolio renewal, risk, and the handover from an uncertain subsurface picture to a decision someone has to own.</p>
           <p>Over the last six years, I have carried that foundation into digital products, analytics, and AI. The lesson has stayed consistent: technology creates value when it solves a real problem and fits the way people actually work.</p>
         </div>
       </section>
 
-      <section className="leadership-choice" aria-label="How I work">
-        <p className="eyebrow">How I work</p>
+      <section className="leadership-choice" aria-label="How a study moves forward">
+        <p className="eyebrow">How a study moves forward</p>
         <div className="leadership-narrative-copy">
           <p>I start with the decision that needs to be made, bring the right people and evidence into the conversation, and build with the people closest to the work.</p>
           <p>I value honest challenge, clear priorities, and practical progress. I test ideas early and scale what proves useful rather than adding technology for its own sake.</p>
@@ -633,7 +642,16 @@ function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
         </div>
       </div>
       <div className="personal-leadership-grid">
-        {leadershipProofs.map((proof) => <article className={`personal-leadership-card${proof.title === 'Environmental Awareness Campaign - Nigeria' ? ' is-featured' : ''}${proofVariant(proof.title)}`} key={proof.title}><span>{proof.theme}</span><h3>{proof.title}</h3><p>{proof.description}</p>{proof.title === 'Environmental Awareness Campaign - Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Explore the campaign <ArrowRight size={14} aria-hidden="true" /></button>}{proof.links && <div className="leadership-proof-cta-group">{proof.links.map((link) => <a className="leadership-proof-cta" href={link.url} target="_blank" rel="noopener noreferrer" key={link.url}>{link.label} <ArrowRight size={14} aria-hidden="true" /></a>)}</div>}</article>)}
+        {leadershipProofs.map((proof) => (
+          <article className={`personal-leadership-card${proof.title === 'EmpathyAI - Founder' ? ' is-featured' : ''}${proofVariant(proof.title)}`} key={proof.title}>
+            <span>{proof.theme}</span>
+            <h3>{proof.title}</h3>
+            <p>{proof.description}</p>
+            {proof.secondaryDescription && <p>{proof.secondaryDescription}</p>}
+            {proof.title === 'Environmental Awareness Campaign - Nigeria' && <button className="leadership-proof-cta" type="button" onClick={onOpenCampaign}>Explore the campaign <ArrowRight size={14} aria-hidden="true" /></button>}
+            {proof.links && <div className="leadership-proof-cta-group">{proof.links.map((link) => <a className="leadership-proof-cta" href={link.url} target="_blank" rel="noopener noreferrer" key={link.url}>{link.label} <ArrowRight size={14} aria-hidden="true" /></a>)}</div>}
+          </article>
+        ))}
       </div>
     </section>
   </div>
