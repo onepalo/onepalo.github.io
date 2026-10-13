@@ -1,8 +1,8 @@
 import { ArrowLeft, ExternalLink } from 'lucide-react'
 import type { RefObject } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import cyclist from '../../assets/candidate/Cycling/DirtyCycling.png'
-import monitor from '../../assets/candidate/Cycling/RN_AirMonitor.png'
+import cyclist from '../../assets/candidate/optimized/DirtyCycling.webp'
+import monitor from '../../assets/candidate/optimized/RN_AirMonitor.webp'
 import playgroundResidue from '../IMG2018_8516.jpeg'
 import { campaignStory, leadershipProofs } from '../../content/content'
 
@@ -61,7 +61,7 @@ export function EnvironmentalCampaign({ headingRef, onReturn }: EnvironmentalCam
                       viewport={{ once: true, amount: 0.28 }}
                       transition={{ duration: 0.7, ease: 'easeOut', delay: shouldReduceMotion ? 0 : 0.18 }}
                     >
-                      <img src={playgroundResidue} alt="Rafael Navarro's young son at a Port Harcourt playground, holding up hands marked with dark residue." />
+                      <img src={playgroundResidue} alt="Rafael Navarro's young son at a Port Harcourt playground, holding up hands marked with dark residue." loading="lazy" decoding="async" />
                       <figcaption>A few minutes at a playground / the concern became personal.</figcaption>
                     </motion.figure>
                   )}
@@ -73,7 +73,7 @@ export function EnvironmentalCampaign({ headingRef, onReturn }: EnvironmentalCam
                       viewport={{ once: true, amount: 0.28 }}
                       transition={{ duration: 0.7, ease: 'easeOut', delay: shouldReduceMotion ? 0 : 0.18 }}
                     >
-                      <img src={monitor} alt="Rafael Navarro holding the air-quality monitor used for the public measurements." />
+                      <img src={monitor} alt="Rafael Navarro holding the air-quality monitor used for the public measurements." loading="lazy" decoding="async" />
                       <figcaption>At home, a question became a measurement.</figcaption>
                     </motion.figure>
                   )}

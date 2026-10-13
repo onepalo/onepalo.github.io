@@ -3,8 +3,8 @@ import { ArrowLeft, ArrowRight, ChevronDown, MapPin, X } from 'lucide-react'
 import { featuredProjects, journeyCvProfile, journeyItems, journeyStatement, leadershipProofs } from '../../content/content'
 import type { ExperienceId } from '../../content/contentTypes'
 import { useDialogController } from '../../utils/useDialogController'
-import designerBridge from '../../assets/candidate/DesignerRN.png'
-import leaderIllustration from '../../assets/candidate/Leader.png'
+import designerBridge from '../../assets/candidate/optimized/DesignerRN.webp'
+import leaderIllustration from '../../assets/candidate/optimized/Leader.webp'
 import manuelSwoProjectGraph from '../../assets/candidate/manuel-swo-project-graph.png'
 import usFlag from 'flag-icons/flags/4x3/us.svg'
 import nlFlag from 'flag-icons/flags/4x3/nl.svg'
@@ -451,26 +451,32 @@ function TestimonialCarousel({ testimonialSlug, onOpenTestimonial, onCloseTestim
     const linkedTestimonialIndex = testimonials.findIndex((testimonial) => testimonial.slug === testimonialSlug)
     return linkedTestimonialIndex === -1 ? 0 : linkedTestimonialIndex
   })
-  const [openRecommendation, setOpenRecommendation] = useState(() => testimonials.find((testimonial) => testimonial.slug === testimonialSlug) ?? null)
+  const openRecommendation = testimonials.find((testimonial) => testimonial.slug === testimonialSlug) ?? null
+  const [previousSlug, setPreviousSlug] = useState(testimonialSlug)
   const [isProjectGraphVisible, setIsProjectGraphVisible] = useState(false)
+  if (previousSlug !== testimonialSlug) {
+    setPreviousSlug(testimonialSlug)
+    setIsProjectGraphVisible(false)
+    const linkedTestimonialIndex = testimonials.findIndex((testimonial) => testimonial.slug === testimonialSlug)
+    if (linkedTestimonialIndex !== -1) setActiveTestimonialIndex(linkedTestimonialIndex)
+  }
   const activeTestimonial = testimonials[activeTestimonialIndex]
   const previousTestimonialIndex = (activeTestimonialIndex - 1 + testimonials.length) % testimonials.length
   const nextTestimonialIndex = (activeTestimonialIndex + 1) % testimonials.length
   const previousTestimonial = testimonials[previousTestimonialIndex]
   const nextTestimonial = testimonials[nextTestimonialIndex]
   const closeRecommendation = () => {
-    setOpenRecommendation(null)
     setIsProjectGraphVisible(false)
     onCloseTestimonial()
   }
   const closeRecommendationButtonRef = useDialogController<HTMLButtonElement>(openRecommendation !== null, closeRecommendation)
+  if (!activeTestimonial || !previousTestimonial || !nextTestimonial) return null
   const testimonialRibbonLabel = (testimonial: Testimonial) => testimonial.isDraft ? 'DRAFT' : testimonial.endorsementType?.toUpperCase()
   const ribbonLabel = testimonialRibbonLabel(activeTestimonial)
   const testimonialVariantClass = (testimonial: Testimonial) => testimonial.isDraft ? ' is-draft' : testimonial.endorsementType ? ` is-${testimonial.endorsementType}` : ''
 
   function openFullRecommendation(testimonial: Testimonial) {
     setIsProjectGraphVisible(false)
-    setOpenRecommendation(testimonial)
     onOpenTestimonial(testimonial.slug)
   }
 
@@ -570,7 +576,7 @@ interface HowIWorkProps {
 function HowIWork({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: HowIWorkProps) {
   return (
     <section className="how-i-work-view" aria-label="Testimonial">
-      <TestimonialCarousel key={testimonialSlug ?? 'carousel'} testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />
+      <TestimonialCarousel testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />
     </section>
   )
 }
@@ -585,7 +591,7 @@ function CoverLetter() {
           <p>I work across geoscience, technology, product, and design to integrate evidence, evaluate subsurface studies, and make uncertainty visible. The aim is simple: connect the right perspectives around a clear problem and keep the work moving toward a useful outcome.</p>
         </div>
         <figure className="leadership-designer-bridge">
-          <img src={designerBridge} alt="A person connecting subsurface expertise with technology and AI." />
+          <img src={designerBridge} alt="A person connecting subsurface expertise with technology and AI." loading="lazy" decoding="async" />
         </figure>
       </section>
 
@@ -622,7 +628,7 @@ function CoverLetter() {
         </div>
         <blockquote className="leadership-pullquote">I want people to leave this team more capable, more confident, and more connected than when they joined.</blockquote>
         <figure className="leadership-shared-effort">
-          <img src={leaderIllustration} alt="A leader and team sharing the effort of moving forward." />
+          <img src={leaderIllustration} alt="A leader and team sharing the effort of moving forward." loading="lazy" decoding="async" />
           <figcaption>Good work moves faster when no one has to pull alone.</figcaption>
         </figure>
       </section>

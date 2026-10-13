@@ -4,10 +4,10 @@ An interactive React portfolio for Rafael Navarro, an AI Exploration Geoscientis
 
 ## Run locally
 
-Prerequisite: Node.js 20 or later.
+Prerequisite: Node.js 22.13+ (22.x LTS), 24.x LTS, or 26+.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -20,6 +20,8 @@ Vite prints the local URL in the terminal, normally `http://localhost:5173`.
 | `npm run dev`        | Start the local development server.                      |
 | `npm run build`      | Type-check and create the production bundle in`dist/`. |
 | <br />`npm run lint` | Run ESLint across the project.                           |
+| `npm test`          | Check hash navigation, recommendation state, and dialog focus. |
+| `npm run optimize:images` | Regenerate optimized WebP images from the original PNG assets. |
 | `npm run preview`    | Serve the production bundle locally.                     |
 
 ## Project structure
@@ -52,6 +54,7 @@ Below $760px$, each interactive component uses its established compact layout fo
 ## Content and assets
 
 - Candidate images live in `src/assets/candidate/`.
+- Runtime WebP copies live in `src/assets/candidate/optimized/`. After replacing an original image, run `npm run optimize:images` and commit the regenerated copies. Keep the original PNG files for future edits.
 - `CoverLetterLeadAIEmbedment.txt`, `cover-letter-template.md`, `guide-me.html`, and the source documents in `src/content/` are local working material. They are excluded from Git to avoid publishing non-runtime source material.
 
 ## Publishing to GitHub Pages

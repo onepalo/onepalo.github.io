@@ -1,6 +1,6 @@
 import { Home, UserRound } from 'lucide-react'
 import type { ExperienceId } from '../../content/contentTypes'
-import rafaelPortrait from '../../assets/candidate/rafael-navarro-portrait.png'
+import rafaelPortrait from '../../assets/candidate/optimized/rafael-navarro-portrait.webp'
 
 interface NavigationProps {
   activeExperience: ExperienceId
@@ -48,7 +48,7 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
   return (
     <header className="site-header">
       <button className="wordmark" type="button" onClick={() => navigateTo('home')} aria-label="Exploration Rafael Navarro home">
-        <span className="wordmark-mark" aria-hidden="true"><img src={rafaelPortrait} alt="" /></span>
+        <span className="wordmark-mark" aria-hidden="true"><img src={rafaelPortrait} alt="" width={54} height={54} decoding="async" /></span>
         <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>Geoscientist</em></span>
       </button>
       <nav className="primary-nav" aria-label="Primary navigation">

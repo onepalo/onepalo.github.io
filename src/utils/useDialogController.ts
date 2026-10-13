@@ -11,6 +11,11 @@ export function useDialogController<T extends HTMLElement>(isOpen: boolean, onCl
     returnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
     initialFocusRef.current?.focus()
 
+    const keepFocusInDialog = (event: FocusEvent) => {
+      const dialog = initialFocusRef.current?.closest<HTMLElement>('[role="dialog"]')
+      if (dialog && event.target instanceof Node && !dialog.contains(event.target)) initialFocusRef.current?.focus()
+    }
+
     const handleDialogKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault()
@@ -36,9 +41,11 @@ export function useDialogController<T extends HTMLElement>(isOpen: boolean, onCl
     }
 
     window.addEventListener('keydown', handleDialogKeyDown, { capture: true })
+    window.addEventListener('focusin', keepFocusInDialog)
     return () => {
       window.removeEventListener('keydown', handleDialogKeyDown, { capture: true })
-      returnFocusRef.current?.focus()
+      window.removeEventListener('focusin', keepFocusInDialog)
+      if (returnFocusRef.current?.isConnected) returnFocusRef.current.focus()
       returnFocusRef.current = null
     }
   }, [isOpen])

@@ -62,7 +62,9 @@ export default function App() {
   useEffect(() => {
     document.title = titles[activeExperience]
     if (activeExperience !== 'home') {
-      const focusTimer = window.setTimeout(() => stageHeadingRef.current?.focus(), 550)
+      const focusTimer = window.setTimeout(() => {
+        if (!document.querySelector('[role="dialog"][aria-modal="true"]')) stageHeadingRef.current?.focus()
+      }, 550)
       return () => window.clearTimeout(focusTimer)
     }
   }, [activeExperience])
