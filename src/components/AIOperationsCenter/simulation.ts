@@ -30,7 +30,7 @@ export interface Travel {
   duration: number
   path: Point[]
   resumeStatus: AgentStatus
-  purpose?: 'relocate' | 'deliver' | 'return'
+  purpose?: 'deliver' | 'return'
 }
 
 export interface Agent {
@@ -42,9 +42,13 @@ export interface Agent {
   progress: number
   travel?: Travel
   completedAt?: number
-  /** Set while the agent stands at the director's desk handing over a deliverable. */
-  visit?: { since: number }
+  /** Set while the agent stands at a colleague's desk handing over a deliverable. */
+  visit?: { since: number; roomId: string }
+  /** Deliverables handed to the director. */
   deliveries?: number
+  waitingSince?: number
+  /** A hand-off received while busy; picked up as soon as the current job is delivered. */
+  inbox?: { item: string; from: string }
 }
 
 export interface PathPosition extends Point {
@@ -55,6 +59,7 @@ export const WORLD_WIDTH = 1040
 export const WORLD_HEIGHT = 790
 export const WALK_SPEED = 54
 export const VISIT_DURATION_MS = 4_000
+export const WAIT_TIMEOUT_MS = 60_000
 
 export const ROOM_WIDTH = 300
 export const ROOM_HEIGHT = 220
@@ -108,7 +113,7 @@ export const initialAgents: Agent[] = [
   { id: 'DIR', name: 'RAFAEL', roomId: DIRECTOR_ROOM_ID, task: 'Overseeing team operations', status: 'Reviewing', progress: 62 },
   { id: '01', name: 'NOVA', roomId: 'ingestion', task: 'Syncing 14 well files', status: 'Working', progress: 68 },
   { id: '02', name: 'CORE', roomId: 'logs', task: 'Checking curve coverage', status: 'Reviewing', progress: 84 },
-  { id: '03', name: 'MICA', roomId: 'petrophysics', task: 'Waiting for log QC', status: 'Waiting', progress: 32 },
+  { id: '03', name: 'MICA', roomId: 'petrophysics', task: 'Waiting for normalized log curves from Well Log Analysis', status: 'Waiting', progress: 32 },
   { id: '04', name: 'ATLAS', roomId: 'gis', task: 'Updating surface layers', status: 'Working', progress: 49 },
   { id: '05', name: 'FLUX', roomId: 'reservoir', task: 'Running 3 model cases', status: 'Working', progress: 73 },
   { id: '06', name: 'IRIS', roomId: 'economics', task: 'Reviewing price deck', status: 'Idle', progress: 21 },
@@ -119,48 +124,50 @@ export const initialAgents: Agent[] = [
 export interface SimulationStep {
   agents: Agent[]
   lastProgressAt: number
-  nextMovementAt: number
 }
 
-// Open-space walking loop; the director's office is never a destination.
-const nearbyRooms: Record<string, string> = {
+/** Subsurface workflow: each desk hands its finished deliverable to the next specialist, ending with Rafael. */
+export const HANDOFF_TARGETS: Record<string, string> = {
   ingestion: 'logs',
-  logs: 'reservoir',
-  reservoir: 'geophysics',
-  geophysics: 'economics',
-  economics: 'geology',
-  geology: 'petrophysics',
-  petrophysics: 'gis',
-  gis: 'ingestion',
+  logs: 'petrophysics',
+  petrophysics: 'reservoir',
+  reservoir: 'economics',
+  economics: DIRECTOR_ROOM_ID,
+  geophysics: 'geology',
+  geology: 'gis',
+  gis: DIRECTOR_ROOM_ID,
 }
 
-function makeTravel(agent: Agent, to: string, time: number): Agent {
-  const path = createWalkingPath(agent.roomId, to)
-  const duration = pathLength(path) / WALK_SPEED * 1000
-  return {
-    ...agent,
-    status: 'Waiting',
-    travel: {
-      from: agent.roomId,
-      to,
-      startTime: time,
-      duration,
-      path,
-      resumeStatus: agent.status,
-      purpose: 'relocate',
-    },
-  }
+export const DELIVERABLES: Record<string, string> = {
+  ingestion: 'QC-checked well data',
+  logs: 'normalized log curves',
+  petrophysics: 'porosity & saturation results',
+  reservoir: 'production forecast',
+  economics: 'economic scenarios',
+  geophysics: 'interpreted seismic horizons',
+  geology: 'facies model',
+  gis: 'prospect maps',
+}
+
+export function upstreamRoomId(roomId: string) {
+  return Object.keys(HANDOFF_TARGETS).find((source) => HANDOFF_TARGETS[source] === roomId && roomId !== DIRECTOR_ROOM_ID)
+}
+
+function waitingTask(roomId: string) {
+  const upstream = upstreamRoomId(roomId)
+  return upstream ? `Waiting for ${DELIVERABLES[upstream]} from ${roomById.get(upstream)?.name ?? upstream}` : undefined
 }
 
 function startDelivery(agent: Agent, time: number): Agent {
-  const path = createWalkingPath(agent.roomId, DIRECTOR_ROOM_ID, { toVisitor: true })
+  const target = HANDOFF_TARGETS[agent.roomId] ?? DIRECTOR_ROOM_ID
+  const path = createWalkingPath(agent.roomId, target, { toVisitor: true })
   return {
     ...agent,
     status: 'Completed',
     completedAt: undefined,
     travel: {
       from: agent.roomId,
-      to: DIRECTOR_ROOM_ID,
+      to: target,
       startTime: time,
       duration: pathLength(path) / WALK_SPEED * 1000,
       path,
@@ -171,14 +178,14 @@ function startDelivery(agent: Agent, time: number): Agent {
 }
 
 function startReturn(agent: Agent, time: number): Agent {
-  const path = createWalkingPath(DIRECTOR_ROOM_ID, agent.roomId, { fromVisitor: true })
+  const from = agent.visit?.roomId ?? DIRECTOR_ROOM_ID
+  const path = createWalkingPath(from, agent.roomId, { fromVisitor: true })
   return {
     ...agent,
     visit: undefined,
     progress: 10,
-    task: roomById.get(agent.roomId)?.task ?? agent.task,
     travel: {
-      from: DIRECTOR_ROOM_ID,
+      from,
       to: agent.roomId,
       startTime: time,
       duration: pathLength(path) / WALK_SPEED * 1000,
@@ -189,33 +196,57 @@ function startReturn(agent: Agent, time: number): Agent {
   }
 }
 
-export function advanceSimulation(
-  agents: Agent[],
-  time: number,
-  lastProgressAt: number,
-  nextMovementAt: number,
-): SimulationStep {
+/** Back at their desk, specialists start on any queued input, otherwise wait for upstream; source desks stand by. */
+function settleAtDesk(agent: Agent, time: number): Agent {
+  if (agent.inbox) {
+    return { ...agent, ...integrating(agent.inbox), travel: undefined, inbox: undefined }
+  }
+  const task = waitingTask(agent.roomId)
+  return task
+    ? { ...agent, status: 'Waiting', task, travel: undefined, waitingSince: time }
+    : { ...agent, status: 'Idle', task: roomById.get(agent.roomId)?.task ?? agent.task, travel: undefined }
+}
+
+function integrating(input: { item: string; from: string }) {
+  return {
+    status: 'Working' as const,
+    task: `Integrating ${input.item} from ${input.from}`,
+    progress: 10,
+    completedAt: undefined,
+    waitingSince: undefined,
+  }
+}
+
+function receiveHandoff(receiver: Agent, courier: Agent): Agent {
+  const item = DELIVERABLES[courier.roomId] ?? 'deliverable'
+  if (receiver.roomId === DIRECTOR_ROOM_ID) {
+    return { ...receiver, status: 'Reviewing', task: `Reviewing ${courier.name}'s ${item}`, progress: 20, completedAt: undefined }
+  }
+  // Busy specialists queue the input and pick it up after delivering their current job.
+  if (receiver.status === 'Working' || receiver.status === 'Reviewing') {
+    return { ...receiver, inbox: { item, from: courier.name } }
+  }
+  return { ...receiver, ...integrating({ item, from: courier.name }) }
+}
+
+export function advanceSimulation(agents: Agent[], time: number, lastProgressAt: number): SimulationStep {
   const seconds = Math.floor(time / 1000)
   const arrivedDeliveries: Agent[] = []
   let next = agents.map((agent, index) => {
     if (agent.travel && time >= agent.travel.startTime + agent.travel.duration) {
       if (agent.travel.purpose === 'deliver') {
+        const target = agent.travel.to
         const delivered = {
           ...agent,
           status: 'Completed' as const,
           travel: undefined,
-          visit: { since: time },
-          deliveries: (agent.deliveries ?? 0) + 1,
+          visit: { since: time, roomId: target },
+          deliveries: (agent.deliveries ?? 0) + (target === DIRECTOR_ROOM_ID ? 1 : 0),
         }
         arrivedDeliveries.push(delivered)
         return delivered
       }
-      return {
-        ...agent,
-        roomId: agent.travel.to,
-        status: agent.travel.resumeStatus,
-        travel: undefined,
-      }
+      return settleAtDesk({ ...agent, roomId: agent.travel.to }, time)
     }
     if (agent.travel) return agent
     if (agent.visit) {
@@ -227,18 +258,20 @@ export function advanceSimulation(
       }
       return agent
     }
+    if (agent.status === 'Waiting' && time - (agent.waitingSince ?? 0) >= WAIT_TIMEOUT_MS) {
+      // Nobody should stall forever: after a while the specialist carries on with the data already on hand.
+      return { ...agent, status: 'Working' as const, task: roomById.get(agent.roomId)?.task ?? agent.task, waitingSince: undefined }
+    }
     if (agent.status === 'Idle' && seconds > 0 && seconds % (22 + index * 3) === index * 2) {
       return { ...agent, status: 'Working' as const, task: roomById.get(agent.roomId)?.task ?? agent.task }
     }
     return agent
   })
 
-  if (arrivedDeliveries.length > 0) {
-    const latest = arrivedDeliveries[arrivedDeliveries.length - 1]
-    next = next.map((agent) => agent.roomId === DIRECTOR_ROOM_ID
-      ? { ...agent, status: 'Reviewing' as const, task: `Reviewing ${latest.name}'s deliverable`, progress: 20, completedAt: undefined }
-      : agent)
-  }
+  arrivedDeliveries.forEach((courier) => {
+    const target = courier.visit!.roomId
+    next = next.map((agent) => agent.roomId === target && !agent.travel && !agent.visit ? receiveHandoff(agent, courier) : agent)
+  })
 
   if (time >= lastProgressAt + 1000) {
     lastProgressAt = time
@@ -247,7 +280,7 @@ export function advanceSimulation(
       if (agent.status !== 'Working' && agent.status !== 'Reviewing') return agent
       const progress = Math.min(100, agent.progress + 1)
       if (progress >= 100) {
-        // Finished deliverables are walked over to Rafael's office; the director just closes his review.
+        // Finished deliverables are walked to the next specialist; the director just closes his review.
         return agent.roomId === DIRECTOR_ROOM_ID
           ? { ...agent, progress, status: 'Completed' as const, completedAt: time }
           : startDelivery({ ...agent, progress }, time)
@@ -256,23 +289,7 @@ export function advanceSimulation(
     })
   }
 
-  if (time >= nextMovementAt && !next.some((agent) => agent.travel || agent.visit)) {
-    const candidate = next.find((agent) => agent.roomId !== DIRECTOR_ROOM_ID && (agent.status === 'Working' || agent.status === 'Reviewing'))
-    if (candidate) {
-      next = next.map((agent) => agent.id === candidate.id
-        ? makeTravel(agent, nextRoomId(agent.roomId), time)
-        : agent)
-      nextMovementAt = time + 18_000
-    } else {
-      nextMovementAt = time + 5_000
-    }
-  }
-
-  return { agents: next, lastProgressAt, nextMovementAt }
-}
-
-export function nextRoomId(roomId: string) {
-  return nearbyRooms[roomId] ?? 'ingestion'
+  return { agents: next, lastProgressAt }
 }
 
 export interface WalkingPathOptions {
@@ -340,8 +357,8 @@ export function positionAlongPath(path: Point[], progress: number): PathPosition
 
 export function positionForAgent(agent: Agent, time: number): PathPosition {
   if (agent.visit) {
-    const visitor = roomById.get(DIRECTOR_ROOM_ID)?.visitor
-    if (!visitor) throw new Error('The director office is missing its visitor spot')
+    const visitor = roomById.get(agent.visit.roomId)?.visitor
+    if (!visitor) throw new Error(`Unknown visit room for agent ${agent.id}: ${agent.visit.roomId}`)
     return { ...visitor, direction: 'right' }
   }
   if (!agent.travel) {

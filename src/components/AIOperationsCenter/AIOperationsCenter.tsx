@@ -5,6 +5,7 @@ import { Application, Container, Graphics, Rectangle, Sprite, Text, TextStyle, T
 import {
   advanceSimulation,
   CORRIDOR_WIDTH,
+  DELIVERABLES,
   DIRECTOR_ROOM_ID,
   CORRIDOR_Y,
   initialAgents,
@@ -35,8 +36,68 @@ interface AgentDisplay {
   nameplate: Container
   name: Text
   progress: Graphics
+  bubble: Container
+  bubbleGlyph: Graphics
+  bubbleKey?: string
   frames: AnimationFrames
   lastTexture?: Texture
+}
+
+type BubbleKind = 'waiting' | 'thinking' | 'done' | 'carrying' | 'idle'
+
+const BUBBLE_FRAME = [
+  '.ooooooooo.',
+  'owwwwwwwwwo',
+  'owwwwwwwwwo',
+  'owwwwwwwwwo',
+  'owwwwwwwwwo',
+  'owwwwwwwwwo',
+  'owwwwwwwwwo',
+  'owwwwwwwwwo',
+  '.owwoooooo.',
+  '..owo......',
+  '...o.......',
+]
+
+const BUBBLE_GLYPHS: Record<Exclude<BubbleKind, 'thinking'>, { rows: string[]; color: number }> = {
+  waiting: { rows: ['.###.', '#...#', '..##.', '.....', '..#..'], color: 0xb7801f },
+  done: { rows: ['....#', '...##', '#.##.', '###..', '.#...'], color: 0x3f8a55 },
+  // A page with a folded corner and text lines: the deliverable being handed over.
+  carrying: { rows: ['###..', '#.##.', '#-..#', '#---#', '#-..#', '#####'], color: 0x2e6f95 },
+  idle: { rows: ['####.', '..#..', '.#...', '####.', '.....'], color: 0x8a959c },
+}
+
+function drawBitmap(graphics: Graphics, rows: string[], palette: Record<string, number>, offsetX = 0, offsetY = 0) {
+  rows.forEach((row, y) => [...row].forEach((cell, x) => {
+    const color = palette[cell]
+    if (color !== undefined) graphics.rect(offsetX + x, offsetY + y, 1, 1).fill(color)
+  }))
+}
+
+/** Pixel-art speech bubble glyph; the "thinking" dots fill in one by one. */
+function paintBubbleGlyph(glyph: Graphics, kind: BubbleKind, frame: number) {
+  glyph.clear()
+  if (kind === 'thinking') {
+    const dots = frame % 4
+    for (let dot = 0; dot < 3; dot += 1) {
+      glyph.rect(2 + dot * 3, 4, 1, 1).fill(dot < dots ? 0x2e6f95 : 0xc9d3d8)
+    }
+    return
+  }
+  const { rows, color } = BUBBLE_GLYPHS[kind]
+  drawBitmap(glyph, rows, { '#': color, '-': 0x9fb7c6 }, 3, rows.length > 5 ? 1 : 2)
+}
+
+function bubbleKindFor(agent: Agent): BubbleKind | undefined {
+  if (agent.visit || agent.travel?.purpose === 'deliver') return 'carrying'
+  if (agent.travel) return undefined
+  switch (agent.status) {
+    case 'Waiting': return 'waiting'
+    case 'Reviewing': return 'thinking'
+    case 'Completed': return 'done'
+    case 'Idle': return 'idle'
+    default: return undefined
+  }
 }
 
 interface RoomDisplay {
@@ -648,6 +709,15 @@ function addAgentDisplays(root: Container, frames: Map<number, AnimationFrames>,
     indicator.position.set(-3, -89)
     container.addChild(indicator)
 
+    const bubble = new Container()
+    const bubbleFrame = new Graphics()
+    drawBitmap(bubbleFrame, BUBBLE_FRAME, { o: 0x2a3540, w: 0xfdfbf5 })
+    const bubbleGlyph = new Graphics()
+    bubble.addChild(bubbleFrame, bubbleGlyph)
+    bubble.scale.set(PIXEL_SCALE)
+    bubble.visible = false
+    container.addChild(bubble)
+
     container.eventMode = 'static'
     container.cursor = 'pointer'
     container.hitArea = new Rectangle(-20, -88, 40, 88)
@@ -659,6 +729,8 @@ function addAgentDisplays(root: Container, frames: Map<number, AnimationFrames>,
       nameplate,
       name,
       progress: indicator,
+      bubble,
+      bubbleGlyph,
       frames: agentFrames,
     })
     root.addChild(container)
@@ -674,8 +746,15 @@ function updateAgentScene(
   selectedId: string,
 ) {
   const occupants = new Map<string, Agent[]>()
+  const visitors = new Map<string, Agent[]>()
   agents.forEach((agent) => {
-    if (agent.travel || agent.visit) return
+    if (agent.visit) {
+      const roomVisitors = visitors.get(agent.visit.roomId) ?? []
+      roomVisitors.push(agent)
+      visitors.set(agent.visit.roomId, roomVisitors)
+      return
+    }
+    if (agent.travel) return
     const roomAgents = occupants.get(agent.roomId) ?? []
     roomAgents.push(agent)
     occupants.set(agent.roomId, roomAgents)
@@ -686,7 +765,10 @@ function updateAgentScene(
     if (!display) return
     const position = positionForAgent(agent, time)
     const roomAgents = occupants.get(agent.roomId) ?? []
-    const offset = agent.travel || agent.visit ? 0 : (roomAgents.indexOf(agent) - (roomAgents.length - 1) / 2) * 22
+    // Simultaneous visitors queue side by side instead of stacking on the same spot.
+    const offset = agent.visit
+      ? -(visitors.get(agent.visit.roomId) ?? []).indexOf(agent) * 24
+      : agent.travel ? 0 : (roomAgents.indexOf(agent) - (roomAgents.length - 1) / 2) * 22
     display.container.position.set(position.x + offset, position.y)
     display.container.zIndex = position.y
     if (display.name.text !== agent.name) display.name.text = agent.name
@@ -695,6 +777,19 @@ function updateAgentScene(
     const showLabel = Boolean(agent.travel)
     display.nameplate.visible = showLabel
     display.progress.visible = showLabel
+
+    const bubbleKind = bubbleKindFor(agent)
+    display.bubble.visible = Boolean(bubbleKind)
+    if (bubbleKind) {
+      // Above the nameplate while walking; beside the head when seated so the monitor stays clear.
+      display.bubble.position.set(showLabel ? 16 : 14, showLabel ? -100 : -60)
+      const bubbleFrame = Math.floor(time / 320)
+      const bubbleKey = bubbleKind === 'thinking' ? `${bubbleKind}:${bubbleFrame % 4}` : bubbleKind
+      if (display.bubbleKey !== bubbleKey) {
+        display.bubbleKey = bubbleKey
+        paintBubbleGlyph(display.bubbleGlyph, bubbleKind, bubbleFrame)
+      }
+    }
     const isSelected = agent.id === selectedId
     display.selection.visible = isSelected
     if (isSelected) display.selection.alpha = 0.65 + Math.sin(time / 220) * 0.35
@@ -742,9 +837,15 @@ function updateAgentScene(
   })
 }
 
+function handoffLabel(agent: Agent) {
+  const target = agent.visit?.roomId ?? agent.travel?.to
+  const item = DELIVERABLES[agent.roomId] ?? 'results'
+  const recipient = target === DIRECTOR_ROOM_ID ? 'Rafael' : roomById.get(target ?? '')?.name ?? 'the next desk'
+  return { item, recipient }
+}
+
 function currentRoomLabel(agent: Agent) {
-  if (agent.visit) return 'Director Office · handing over results'
-  if (agent.travel?.purpose === 'deliver') return 'In aisle → Director Office'
+  if (agent.visit) return `${roomById.get(agent.visit.roomId)?.name ?? 'Colleague desk'} · handing over results`
   if (agent.travel) {
     const destination = roomById.get(agent.travel.to)?.name
     return `In aisle → ${destination ?? 'next desk'}`
@@ -753,10 +854,15 @@ function currentRoomLabel(agent: Agent) {
 }
 
 function processingLabel(agent: Agent) {
-  if (agent.visit) return 'Delivering results to Rafael'
-  if (agent.travel?.purpose === 'deliver') return 'Taking results to Rafael'
+  if (agent.visit) {
+    const { item, recipient } = handoffLabel(agent)
+    return `Handing ${item} to ${recipient}`
+  }
+  if (agent.travel?.purpose === 'deliver') {
+    const { item, recipient } = handoffLabel(agent)
+    return `Taking ${item} to ${recipient}`
+  }
   if (agent.travel?.purpose === 'return') return 'Returning to workstation'
-  if (agent.travel) return 'Walking to next workstation'
   if (agent.roomId === DIRECTOR_ROOM_ID && agent.status === 'Reviewing') return 'Reviewing team deliverables'
   switch (agent.status) {
     case 'Waiting': return 'Waiting on upstream data'
@@ -785,7 +891,6 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
   const agentsRef = useRef(initialAgents)
   const isRunningRef = useRef(true)
   const simulationTimeRef = useRef(0)
-  const nextMovementAtRef = useRef(10_000)
   const lastProgressAtRef = useRef(0)
   const lastStateSecondRef = useRef(0)
   const [agents, setAgents] = useState(initialAgents)
@@ -896,17 +1001,10 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
       const seconds = Math.floor(time / 1000)
       const currentAgents = agentsRef.current
       const hasArrived = currentAgents.some((agent) => agent.travel && time >= agent.travel.startTime + agent.travel.duration)
-      const movementDue = time >= nextMovementAtRef.current && !currentAgents.some((agent) => agent.travel || agent.visit)
-      if (seconds === lastStateSecondRef.current && !hasArrived && !movementDue) return
+      if (seconds === lastStateSecondRef.current && !hasArrived) return
       lastStateSecondRef.current = seconds
-      const step = advanceSimulation(
-        currentAgents,
-        time,
-        lastProgressAtRef.current,
-        nextMovementAtRef.current,
-      )
+      const step = advanceSimulation(currentAgents, time, lastProgressAtRef.current)
       lastProgressAtRef.current = step.lastProgressAt
-      nextMovementAtRef.current = step.nextMovementAt
       agentsRef.current = step.agents
       setElapsed(seconds)
       setAgents(step.agents)
@@ -918,7 +1016,6 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
     simulationTimeRef.current = 0
     lastProgressAtRef.current = 0
     lastStateSecondRef.current = 0
-    nextMovementAtRef.current = 10_000
     agentsRef.current = initialAgents.map((agent) => ({ ...agent }))
     setElapsed(0)
     setAgents(agentsRef.current)

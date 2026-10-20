@@ -50,7 +50,7 @@ Below $760px$, each interactive component uses its established compact layout fo
 - **How I Will Lead the Team**: Team contract, operating system, leadership practices, and working rhythm.
 - **Resume / CV**: Career narrative, profile, and expandable experience evidence.
 - **Proof of Leadership**: Personal initiative, cross-functional influence, and evidence-led examples of delivery and decision impact.
-- **AI Operations Center**: A responsive PixiJS open-plan office where eight subsurface workflow agents work in the open space and director Rafael oversees operations from his open-door office. Monitors animate with each member's status, finished deliverables are walked over to Rafael for review, and all task progress, status, and metrics are generated locally.
+- **AI Operations Center**: A responsive PixiJS open-plan office where eight subsurface workflow agents work in the open space and director Rafael oversees operations from his open-door office. Monitors animate with each member's status, finished deliverables are handed desk-to-desk along a subsurface workflow (data ingestion → well logs → petrophysics → reservoir → economics, and geophysics → geology → GIS) before reaching Rafael for review, pixel-art speech bubbles show who is waiting, reviewing, or carrying results, and all task progress, status, and metrics are generated locally.
 
 The AI Operations Center reuses the character sprites and walk/typing animation frames from [Pixel Agents](https://github.com/pablodelucca/pixel-agents), licensed under MIT. The required copyright and license notice is included in `public/assets/agent-office/LICENSE`; the floor texture, desks, computers, and office layout are original to this project.
 
