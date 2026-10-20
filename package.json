@@ -18,6 +18,7 @@
     "lottie-web": "^5.13.0",
     "lucide-react": "^1.24.0",
     "motion": "^12.42.2",
+    "pixi.js": "^8.22.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

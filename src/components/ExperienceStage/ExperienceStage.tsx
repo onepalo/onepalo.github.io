@@ -15,7 +15,7 @@ import coFlag from 'flag-icons/flags/4x3/co.svg'
 import mxFlag from 'flag-icons/flags/4x3/mx.svg'
 
 interface ExperienceStageProps {
-  experience: Exclude<ExperienceId, 'home' | 'campaign'>
+  experience: Exclude<ExperienceId, 'home' | 'campaign' | 'ai-operations'>
   headingRef: RefObject<HTMLHeadingElement | null>
   onNavigate: (experience: ExperienceId) => void
   testimonialSlug: string | null

@@ -3,7 +3,7 @@ import { experienceFromHash, hashForExperience, hashForTestimonial, testimonialS
 import type { ExperienceId } from '../content/contentTypes'
 
 describe('hash navigation', () => {
-  it.each<ExperienceId>(['home', 'cover', 'how-i-work', 'journey', 'impact', 'campaign'])('round trips %s', (experience) => {
+  it.each<ExperienceId>(['home', 'cover', 'how-i-work', 'journey', 'impact', 'campaign', 'ai-operations'])('round trips %s', (experience) => {
     expect(experienceFromHash(hashForExperience(experience))).toBe(experience)
   })
 

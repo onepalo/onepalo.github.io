@@ -1,4 +1,4 @@
-import { Home, UserRound } from 'lucide-react'
+import { Cpu, Home, UserRound } from 'lucide-react'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/optimized/rafael-navarro-portrait.webp'
 
@@ -22,6 +22,7 @@ const navigationItems: NavigationItem[] = [
   { id: 'how-i-work', label: 'Testimonial', materialIcon: 'taunt' },
   { id: 'journey', label: 'Resume', materialIcon: 'work_history' },
   { id: 'impact', label: 'Beyond my role', materialIcon: 'cheer' },
+  { id: 'ai-operations', label: 'AI Operations', icon: Cpu },
 ]
 
 function NavigationButton({ item: { id, label, icon: Icon, materialIcon }, isActive, onSelect }: NavigationButtonProps) {
@@ -47,10 +48,12 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
 
   return (
     <header className="site-header">
-      <button className="wordmark" type="button" onClick={() => navigateTo('home')} aria-label="Exploration Rafael Navarro home">
-        <span className="wordmark-mark" aria-hidden="true"><img src={rafaelPortrait} alt="" width={54} height={54} decoding="async" /></span>
-        <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>Geoscientist</em></span>
-      </button>
+      {activeExperience !== 'ai-operations' && (
+        <button className="wordmark" type="button" onClick={() => navigateTo('home')} aria-label="Exploration Rafael Navarro home">
+          <span className="wordmark-mark" aria-hidden="true"><img src={rafaelPortrait} alt="" width={54} height={54} decoding="async" /></span>
+          <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>Geoscientist</em></span>
+        </button>
+      )}
       <nav className="primary-nav" aria-label="Primary navigation">
         <NavigationButton item={homeNavigationItem} isActive={activeExperience === homeNavigationItem.id} onSelect={navigateTo} />
         {navigationItems.map((item) => <NavigationButton item={item} isActive={activeExperience === item.id} onSelect={navigateTo} key={item.id} />)}
