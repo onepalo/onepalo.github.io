@@ -4,10 +4,10 @@ An interactive React portfolio for Rafael Navarro, an AI Exploration Geoscientis
 
 ## Run locally
 
-Prerequisite: Node.js 20 or later.
+Prerequisite: Node.js 22.13+ (22.x LTS), 24.x LTS, or 26+.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -20,6 +20,8 @@ Vite prints the local URL in the terminal, normally `http://localhost:5173`.
 | `npm run dev`        | Start the local development server.                      |
 | `npm run build`      | Type-check and create the production bundle in`dist/`. |
 | <br />`npm run lint` | Run ESLint across the project.                           |
+| `npm test`          | Check hash navigation, recommendation state, and dialog focus. |
+| `npm run optimize:images` | Regenerate optimized WebP images from the original PNG assets. |
 | `npm run preview`    | Serve the production bundle locally.                     |
 
 ## Project structure
@@ -28,7 +30,7 @@ Vite prints the local URL in the terminal, normally `http://localhost:5173`.
 src/
 	app/          Application state, hash navigation, and stage transitions
 	assets/       Candidate imagery used by the experience
-	components/   Navigation, landing visual, and experience sections
+	components/   Navigation, landing visual, experience sections, and PixiJS AI Operations Center
 	content/      CV content, types, and source notes
 	styles/       Design tokens and global responsive styles
 	utils/        Hash navigation helpers
@@ -48,10 +50,14 @@ Below $760px$, each interactive component uses its established compact layout fo
 - **How I Will Lead the Team**: Team contract, operating system, leadership practices, and working rhythm.
 - **Resume / CV**: Career narrative, profile, and expandable experience evidence.
 - **Proof of Leadership**: Personal initiative, cross-functional influence, and evidence-led examples of delivery and decision impact.
+- **AI Operations Center**: A responsive PixiJS open-plan office where eight subsurface workflow agents work in the open space and director Rafael oversees operations from his open-door office. Monitors animate with each member's status, finished deliverables are walked over to Rafael for review, and all task progress, status, and metrics are generated locally.
+
+The AI Operations Center reuses the character sprites and walk/typing animation frames from [Pixel Agents](https://github.com/pablodelucca/pixel-agents), licensed under MIT. The required copyright and license notice is included in `public/assets/agent-office/LICENSE`; the floor texture, desks, computers, and office layout are original to this project.
 
 ## Content and assets
 
 - Candidate images live in `src/assets/candidate/`.
+- Runtime WebP copies live in `src/assets/candidate/optimized/`. After replacing an original image, run `npm run optimize:images` and commit the regenerated copies. Keep the original PNG files for future edits.
 - `CoverLetterLeadAIEmbedment.txt`, `cover-letter-template.md`, `guide-me.html`, and the source documents in `src/content/` are local working material. They are excluded from Git to avoid publishing non-runtime source material.
 
 ## Publishing to GitHub Pages
