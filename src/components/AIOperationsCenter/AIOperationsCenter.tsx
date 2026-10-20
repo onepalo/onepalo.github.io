@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties, RefObject } from 'react'
 import { Activity, Cpu, FileCheck, Gauge, Pause, Play, RotateCcw, Users } from 'lucide-react'
-import { Assets, Application, Container, Graphics, Rectangle, Sprite, Text, TextStyle, Texture, TilingSprite } from 'pixi.js'
+import { Application, Container, Graphics, Rectangle, Sprite, Text, TextStyle, Texture, TilingSprite } from 'pixi.js'
 import {
   advanceSimulation,
   CORRIDOR_WIDTH,
@@ -16,13 +16,13 @@ import {
   WORLD_WIDTH,
 } from './simulation'
 import type { Agent, AgentStatus, PathPosition, Room } from './simulation'
+import { buildCharacterSheets, lookForAgent } from './characterLooks'
 import './ai-operations-center.css'
 
 const FRAME_WIDTH = 16
 const FRAME_HEIGHT = 32
 const WALK_FRAMES = [0, 1, 2, 1]
 const PIXEL_SCALE = 2
-const CHARACTER_COUNT = 6
 const CHARACTER_FRAME_MS = 150
 const TYPE_FRAME_MS = 360
 type Facing = PathPosition['direction']
@@ -212,17 +212,25 @@ function createCarpetTexture() {
   return Texture.from(canvas)
 }
 
-function addAisle(root: Container, texture: Texture, x: number, y: number, width: number, height: number) {
-  const aisle = new TilingSprite({ texture, width, height })
-  aisle.position.set(x, y)
-  root.addChild(aisle)
-  const edges = new Graphics()
-  if (width > height) {
-    edges.rect(x, y, width, 2).fill(0x9fa9a7).rect(x, y + height - 2, width, 2).fill(0x9fa9a7)
-  } else {
-    edges.rect(x, y, 2, height).fill(0x9fa9a7).rect(x + width - 2, y, 2, height).fill(0x9fa9a7)
-  }
-  root.addChild(edges)
+function addCarpet(root: Container, texture: Texture, x: number, y: number, width: number, height: number) {
+  const carpet = new TilingSprite({ texture, width, height })
+  carpet.position.set(x, y)
+  // Anchor the pattern to world coordinates so crossing aisles tile seamlessly.
+  carpet.tilePosition.set(-x, -y)
+  root.addChild(carpet)
+}
+
+/** Draws a horizontal edge strip, skipping the openings where vertical aisles join. */
+function addHorizontalEdge(edges: Graphics, x: number, y: number, width: number, openings: number[]) {
+  let cursor = x
+  openings
+    .map((centerX) => [centerX - CORRIDOR_WIDTH / 2, centerX + CORRIDOR_WIDTH / 2])
+    .sort((a, b) => a[0] - b[0])
+    .forEach(([start, end]) => {
+      if (start > cursor) edges.rect(cursor, y, start - cursor, 2).fill(0x9fa9a7)
+      cursor = Math.max(cursor, end)
+    })
+  if (cursor < x + width) edges.rect(cursor, y, x + width - cursor, 2).fill(0x9fa9a7)
 }
 
 function drawFloor(root: Container) {
@@ -232,12 +240,32 @@ function drawFloor(root: Container) {
 
   const carpet = createCarpetTexture()
   carpet.source.scaleMode = 'nearest'
+  const half = CORRIDOR_WIDTH / 2
+  const aisleLeft = 28
+  const aisleWidth = WORLD_WIDTH - 56
+  const [topY, bottomY] = CORRIDOR_Y
   VERTICAL_CORRIDOR_X.forEach((centerX) => {
-    addAisle(root, carpet, centerX - CORRIDOR_WIDTH / 2, CORRIDOR_Y[0], CORRIDOR_WIDTH, CORRIDOR_Y[1] - CORRIDOR_Y[0])
+    addCarpet(root, carpet, centerX - half, topY, CORRIDOR_WIDTH, bottomY - topY)
   })
   CORRIDOR_Y.forEach((centerY) => {
-    addAisle(root, carpet, 28, centerY - CORRIDOR_WIDTH / 2, WORLD_WIDTH - 56, CORRIDOR_WIDTH)
+    addCarpet(root, carpet, aisleLeft, centerY - half, aisleWidth, CORRIDOR_WIDTH)
   })
+
+  // Edges outline the combined aisle shape, leaving junctions open so the carpet reads as one piece.
+  const edges = new Graphics()
+  CORRIDOR_Y.forEach((centerY, index) => {
+    const openingsAbove = index === 1 ? VERTICAL_CORRIDOR_X : []
+    const openingsBelow = index === 0 ? VERTICAL_CORRIDOR_X : []
+    addHorizontalEdge(edges, aisleLeft, centerY - half, aisleWidth, openingsAbove)
+    addHorizontalEdge(edges, aisleLeft, centerY + half - 2, aisleWidth, openingsBelow)
+  })
+  VERTICAL_CORRIDOR_X.forEach((centerX) => {
+    const start = topY + half
+    const length = bottomY - half - start
+    edges.rect(centerX - half, start, 2, length).fill(0x9fa9a7)
+    edges.rect(centerX + half - 2, start, 2, length).fill(0x9fa9a7)
+  })
+  root.addChild(edges)
 }
 
 function drawDirectorOffice(root: Container, room: Room) {
@@ -583,8 +611,7 @@ function addAgentDisplays(root: Container, frames: Map<number, AnimationFrames>,
   const displays = new Map<string, AgentDisplay>()
   agents.forEach((agent, index) => {
     const room = roomById.get(agent.roomId)
-    const palette = index % CHARACTER_COUNT
-    const agentFrames = frames.get(palette)
+    const agentFrames = frames.get(index % frames.size)
     if (!room || !agentFrames) throw new Error(`Missing room or sprite palette for agent ${agent.id}`)
 
     const container = new Container()
@@ -744,8 +771,9 @@ function hexColor(color: number) {
   return `#${color.toString(16).padStart(6, '0')}`
 }
 
-function SpritePortrait({ index }: { index: number }) {
-  return <span className="agent-sprite" aria-hidden="true" style={{ backgroundImage: `url(${assetPath(`characters/char_${index % CHARACTER_COUNT}.png`)})` }} />
+function SpritePortrait({ index, urls }: { index: number; urls: string[] }) {
+  const url = urls[index] ?? assetPath(`characters/char_${lookForAgent(index).base}.png`)
+  return <span className="agent-sprite" aria-hidden="true" style={{ backgroundImage: `url(${url})` }} />
 }
 
 function statusLabel(status: AgentStatus) {
@@ -766,6 +794,7 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
   const [isRunning, setIsRunning] = useState(true)
   const [elapsed, setElapsed] = useState(0)
   const [canvasError, setCanvasError] = useState(false)
+  const [portraitUrls, setPortraitUrls] = useState<string[]>([])
 
   useEffect(() => {
     agentsRef.current = agents
@@ -801,11 +830,10 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
 
     const initialize = async () => {
       try {
-        const characterSheets = await Promise.all(
-          Array.from({ length: CHARACTER_COUNT }, (_, index) =>
-            Assets.load<Texture>(assetPath(`characters/char_${index}.png`))),
-        )
+        const sheetCanvases = await buildCharacterSheets((base) => assetPath(`characters/char_${base}.png`))
         if (disposed) return
+        setPortraitUrls(sheetCanvases.map((sheet) => sheet.toDataURL()))
+        const characterSheets = sheetCanvases.map((sheet) => Texture.from(sheet))
 
         const pixiApp = new Application()
         await pixiApp.init({
@@ -939,7 +967,7 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
             <section className="agent-detail-card">
               <div className="sidebar-heading"><span className="panel-kicker">SELECTED MEMBER</span><span className="agent-id">{selectedIsDirector ? 'DIRECTOR' : `UNIT ${selectedAgent.id}`}</span></div>
               <div className="selected-agent">
-                <div className="agent-avatar" style={{ '--agent-accent': hexColor(roomById.get(selectedAgent.roomId)?.color ?? 0x2e6f95) } as CSSProperties}><SpritePortrait index={selectedIndex} /></div>
+                <div className="agent-avatar" style={{ '--agent-accent': hexColor(roomById.get(selectedAgent.roomId)?.color ?? 0x2e6f95) } as CSSProperties}><SpritePortrait index={selectedIndex} urls={portraitUrls} /></div>
                 <div><h2>{selectedAgent.name}</h2><p>{currentRoomLabel(selectedAgent)}</p></div>
               </div>
               <div className={`agent-status status-${selectedAgent.status.toLowerCase()}`}><span className="status-pulse" />{statusLabel(selectedAgent.status)}</div>
@@ -958,7 +986,7 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
                   const isDirector = agent.roomId === DIRECTOR_ROOM_ID
                   return (
                     <button className={`agent-list-item${isDirector ? ' is-director' : ''}${selectedAgent.id === agent.id ? ' is-selected' : ''}`} type="button" key={agent.id} onClick={() => setSelectedAgentId(agent.id)} aria-pressed={selectedAgent.id === agent.id}>
-                      <span className="agent-list-mark" style={{ '--agent-accent': hexColor(room.color) } as CSSProperties}><SpritePortrait index={agents.indexOf(agent)} /></span>
+                      <span className="agent-list-mark" style={{ '--agent-accent': hexColor(room.color) } as CSSProperties}><SpritePortrait index={agents.indexOf(agent)} urls={portraitUrls} /></span>
                       <span className="agent-list-copy"><strong>{agent.name}<small>{isDirector ? 'Director · ' + (agent.task) : currentRoomLabel(agent)}</small></strong><span className="mini-progress"><i style={{ width: `${agent.progress}%`, backgroundColor: hexColor(room.color) }} /></span></span>
                       <span className={`agent-list-status status-${agent.status.toLowerCase()}`}>{agent.status === 'Completed' ? 'DONE' : agent.status === 'Reviewing' ? 'REVIEW' : agent.status.toUpperCase()}</span>
                     </button>
