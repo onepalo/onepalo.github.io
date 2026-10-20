@@ -515,7 +515,7 @@ html:has(.testimonial-dialog), body:has(.testimonial-dialog) { overflow: hidden;
 
 @media (max-width: 760px) {
 	.site-header { flex-wrap: wrap; gap: 12px; }
-	.primary-nav { display: grid; grid-template-columns: repeat(5, minmax(44px, 1fr)); width: 100%; max-width: none; padding: 0; }
+	.primary-nav { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(44px, 1fr); width: 100%; max-width: none; padding: 0; }
 	.nav-disclosure { min-width: 0; }
 	.nav-item, .nav-disclosure-trigger { min-width: 44px; min-height: 44px; justify-content: center; }
 	.nav-disclosure-trigger { width: 100%; }
