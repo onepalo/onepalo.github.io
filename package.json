@@ -10,6 +10,7 @@
     "test": "vitest run --environment jsdom",
     "preview": "vite preview",
     "generate:social-preview": "node scripts/generate-social-preview.mjs",
+    "generate:spare-characters": "node scripts/generate-spare-characters.mjs",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {

@@ -18,6 +18,10 @@ import {
 } from './simulation'
 import type { Agent, AgentStatus, PathPosition, Room } from './simulation'
 import { buildCharacterSheets, lookForAgent } from './characterLooks'
+import { BackupTeam } from './BackupTeam'
+import { OfficeVisitors } from './OfficeVisitors'
+import { assignReserveMission, missionPhase } from './backupSimulation'
+import type { ReserveVisit } from './backupSimulation'
 import './ai-operations-center.css'
 
 const FRAME_WIDTH = 16
@@ -900,6 +904,9 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
   const [elapsed, setElapsed] = useState(0)
   const [canvasError, setCanvasError] = useState(false)
   const [portraitUrls, setPortraitUrls] = useState<string[]>([])
+  const [resetCount, setResetCount] = useState(0)
+  const [reserveVisits, setReserveVisits] = useState<ReserveVisit[]>([])
+  const visitingReserves = reserveVisits.filter((visit) => missionPhase(visit, elapsed * 1000) !== 'complete')
 
   useEffect(() => {
     agentsRef.current = agents
@@ -1013,6 +1020,8 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
   }, [])
 
   const resetSimulation = () => {
+    setResetCount((count) => count + 1)
+    setReserveVisits([])
     simulationTimeRef.current = 0
     lastProgressAtRef.current = 0
     lastStateSecondRef.current = 0
@@ -1056,7 +1065,9 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
             </div>
             <div className="operations-map" ref={mapHostRef} role="img" aria-label={`Pixel-art open-plan exploration office with ${rooms.length - 1} workstations, geologist and geophysicist desks, and director Rafael's office with an open door`}>
               {canvasError && <p className="map-error">The office scene could not be initialized. Check that the local Pixel Agents sprite assets are available.</p>}
+              <OfficeVisitors key={resetCount} visits={reserveVisits} clock={simulationTimeRef} isRunning={isRunning} />
             </div>
+            {visitingReserves.length > 0 && <div className="office-guest-status" role="status">{visitingReserves.length} TEMPORARY {visitingReserves.length === 1 ? 'GUEST' : 'GUESTS'} · Separate demo missions. Main team metrics unchanged.</div>}
             <div className="map-footer"><span><i className="status-pulse" /> LIVE SIMULATION</span><span>{rooms.length - 1} OPEN-SPACE DESKS <b>·</b> DIRECTOR OFFICE</span><span>LOCAL MOCK DATA</span></div>
           </section>
 
@@ -1093,6 +1104,25 @@ export function AIOperationsCenter({ headingRef }: AIOperationsCenterProps) {
             </section>
             <p className="simulation-note">Illustrative simulation · All tasks and metrics are generated locally.</p>
           </aside>
+
+          <BackupTeam
+            key={resetCount}
+            isRunning={isRunning}
+            onToggleRunning={() => setIsRunning((running) => !running)}
+            time={elapsed * 1000}
+            visits={reserveVisits}
+            onAssignMission={(missionId, memberIndex) => setReserveVisits((current) => {
+              try {
+                return assignReserveMission(current, missionId, memberIndex, simulationTimeRef.current)
+              } catch (error) {
+                // A fast double-click can race the disabled state; keep the existing visits.
+                console.error('Reserve mission could not be assigned.', error)
+                return current
+              }
+            })}
+            onViewOffice={() => mapHostRef.current?.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })}
+            assignmentBlockedReason={canvasError ? 'The office scene must load before a guest can visit.' : undefined}
+          />
         </div>
         <footer className="operations-footnote"><span><Cpu size={13} /> HUMAN JUDGMENT STAYS IN THE LOOP</span><span>AI supports exploration workflows. It does not replace subsurface expertise.</span></footer>
       </div>
