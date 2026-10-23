@@ -13,9 +13,8 @@ const AIOperationsCenter = lazy(() => import('../components/AIOperationsCenter/A
 const titles: Record<ExperienceId, string> = {
   home: "Rafael's Exploration Journal",
   cover: "Why Me | Rafael's Exploration Journal",
-  'how-i-work': "Testimonial | Rafael's Exploration Journal",
   journey: "Resume | Rafael's Exploration Journal",
-  impact: "Leadership Beyond My Role | Rafael's Exploration Journal",
+  impact: "Beyond | Rafael's Exploration Journal",
   campaign: "Environmental Awareness Campaign | Rafael's Exploration Journal",
   'ai-operations': "AI Operations Center | Rafael's Exploration Journal",
 }
@@ -34,12 +33,12 @@ export default function App() {
 
   const openTestimonial = (slug: string) => {
     window.history.pushState(null, '', hashForTestimonial(slug))
-    setActiveExperience('how-i-work')
+    setActiveExperience('cover')
     setTestimonialSlug(slug)
   }
 
   const closeTestimonial = () => {
-    window.history.replaceState(null, '', hashForExperience('how-i-work'))
+    window.history.replaceState(null, '', hashForExperience('cover'))
     setTestimonialSlug(null)
   }
 
@@ -47,7 +46,7 @@ export default function App() {
     const syncWithHash = () => {
       const experience = experienceFromHash(window.location.hash)
       const slug = testimonialSlugFromHash(window.location.hash)
-      if (window.location.hash === '#how-i-work') {
+      if (window.location.hash === '#how-i-work' || window.location.hash === '#testimonial') {
         window.history.replaceState(null, '', hashForExperience(experience))
       }
       setActiveExperience(experience)
@@ -103,7 +102,7 @@ export default function App() {
           <EnvironmentalCampaign headingRef={stageHeadingRef} onReturn={() => openExperience('impact')} />
         ) : activeExperience === 'ai-operations' ? (
           <Suspense fallback={<main className="operations-page"><p className="operations-subtitle">Loading AI Operations Center...</p></main>}>
-            <AIOperationsCenter headingRef={stageHeadingRef} />
+            <AIOperationsCenter headingRef={stageHeadingRef} onNavigate={openExperience} />
           </Suspense>
         ) : (
           <motion.main

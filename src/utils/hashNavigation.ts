@@ -1,16 +1,16 @@
 import type { ExperienceId } from '../content/contentTypes'
 
-const experiences: ExperienceId[] = ['home', 'cover', 'how-i-work', 'journey', 'impact', 'campaign', 'ai-operations']
+const experiences: ExperienceId[] = ['home', 'cover', 'journey', 'impact', 'campaign', 'ai-operations']
 
 export function experienceFromHash(hash: string): ExperienceId {
   const candidate = hash.replace('#', '')
-  if (candidate === 'testimonial' || candidate.startsWith('testimonial/')) return 'how-i-work'
+  if (candidate === 'how-i-work' || candidate === 'testimonial' || candidate.startsWith('testimonial/')) return 'cover'
   return experiences.find((experience) => experience === candidate) ?? 'home'
 }
 
 export function hashForExperience(experience: ExperienceId): string {
   if (experience === 'home') return '#'
-  return experience === 'how-i-work' ? '#testimonial' : `#${experience}`
+  return `#${experience}`
 }
 
 export function testimonialSlugFromHash(hash: string): string | null {

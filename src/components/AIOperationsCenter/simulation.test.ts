@@ -107,7 +107,7 @@ describe('AI Operations Center walking paths', () => {
     expect(visitor.deliveries ?? 0).toBe(0)
     expect(positionForAgent(visitor, arrivalTime)).toMatchObject(petrophysics.visitor)
     const receiver = arrived.agents.find((agent) => agent.id === '03')!
-    expect(receiver).toMatchObject({ status: 'Working', task: 'Integrating normalized log curves from CORE' })
+    expect(receiver).toMatchObject({ status: 'Working', task: 'Integrating normalized log curves from Palo' })
     expect(receiver.progress).toBeLessThanOrEqual(11)
 
     const leaving = advanceSimulation(arrived.agents, arrivalTime + VISIT_DURATION_MS, arrived.lastProgressAt)

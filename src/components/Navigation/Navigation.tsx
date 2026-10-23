@@ -19,10 +19,9 @@ const homeNavigationItem: NavigationItem = { id: 'home', label: 'Home', icon: Ho
 
 const navigationItems: NavigationItem[] = [
   { id: 'cover', label: 'Why Me?', icon: UserRound },
-  { id: 'how-i-work', label: 'Testimonial', materialIcon: 'taunt' },
   { id: 'journey', label: 'Resume', materialIcon: 'work_history' },
-  { id: 'impact', label: 'Beyond my role', materialIcon: 'cheer' },
   { id: 'ai-operations', label: 'AI Operations', icon: Cpu },
+  { id: 'impact', label: 'Beyond', materialIcon: 'cheer' },
 ]
 
 function NavigationButton({ item: { id, label, icon: Icon, materialIcon }, isActive, onSelect }: NavigationButtonProps) {

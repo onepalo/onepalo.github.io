@@ -25,7 +25,6 @@ interface ExperienceStageProps {
 
 const stageMeta = {
   cover: { eyebrow: 'Professional profile', title: 'Why me. Why us.', intro: 'Subsurface expertise, integrated evaluation, and practical decisions.' },
-  'how-i-work': { eyebrow: 'Professional recommendations', title: 'Testimonials', intro: 'What colleagues have experienced working alongside me.' },
   journey: { eyebrow: 'Experience and study capability', title: 'Resume', intro: '' },
   impact: { eyebrow: 'Beyond the day job', title: 'Leadership beyond my role', intro: '' },
 } as const
@@ -267,8 +266,10 @@ export function ExperienceStage({ experience, headingRef, onNavigate, testimonia
           {meta.intro && <p>{meta.intro}</p>}
         </>
       </header>
-      {experience === 'cover' && <CoverLetter />}
-      {experience === 'how-i-work' && <HowIWork testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />}
+      {experience === 'cover' && <>
+        <CoverLetter />
+        <Testimonials testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />
+      </>}
       {experience === 'journey' && <Journey />}
       {experience === 'impact' && <LeadershipProof onOpenCampaign={() => onNavigate('campaign')} />}
       <div className="stage-next">
@@ -567,15 +568,14 @@ function TestimonialCarousel({ testimonialSlug, onOpenTestimonial, onCloseTestim
   )
 }
 
-interface HowIWorkProps {
-  testimonialSlug: string | null
-  onOpenTestimonial: (slug: string) => void
-  onCloseTestimonial: () => void
-}
-
-function HowIWork({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: HowIWorkProps) {
+function Testimonials({ testimonialSlug, onOpenTestimonial, onCloseTestimonial }: TestimonialCarouselProps) {
   return (
-    <section className="how-i-work-view" aria-label="Testimonial">
+    <section className="testimonials-section" aria-labelledby="testimonials-title">
+      <header className="testimonials-heading">
+        <p className="eyebrow">Professional recommendations</p>
+        <h2 id="testimonials-title">What colleagues say</h2>
+        <p>What colleagues have experienced working alongside me.</p>
+      </header>
       <TestimonialCarousel testimonialSlug={testimonialSlug} onOpenTestimonial={onOpenTestimonial} onCloseTestimonial={onCloseTestimonial} />
     </section>
   )
@@ -664,6 +664,6 @@ function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
 }
 
 function nextExperience(current: Exclude<ExperienceId, 'home' | 'campaign'>): Exclude<ExperienceId, 'home' | 'campaign'> {
-  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'how-i-work', 'journey', 'impact']
+  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'journey', 'ai-operations', 'impact']
   return order[(order.indexOf(current) + 1) % order.length]
 }

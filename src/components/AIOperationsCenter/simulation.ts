@@ -111,14 +111,14 @@ export const roomById = new Map(rooms.map((room) => [room.id, room]))
 
 export const initialAgents: Agent[] = [
   { id: 'DIR', name: 'RAFAEL', roomId: DIRECTOR_ROOM_ID, task: 'Overseeing team operations', status: 'Reviewing', progress: 62 },
-  { id: '01', name: 'NOVA', roomId: 'ingestion', task: 'Syncing 14 well files', status: 'Working', progress: 68 },
-  { id: '02', name: 'CORE', roomId: 'logs', task: 'Checking curve coverage', status: 'Reviewing', progress: 84 },
-  { id: '03', name: 'MICA', roomId: 'petrophysics', task: 'Waiting for normalized log curves from Well Log Analysis', status: 'Waiting', progress: 32 },
-  { id: '04', name: 'ATLAS', roomId: 'gis', task: 'Updating surface layers', status: 'Working', progress: 49 },
-  { id: '05', name: 'FLUX', roomId: 'reservoir', task: 'Running 3 model cases', status: 'Working', progress: 73 },
+  { id: '01', name: 'Joel', roomId: 'ingestion', task: 'Syncing 14 well files', status: 'Working', progress: 68 },
+  { id: '02', name: 'Palo', roomId: 'logs', task: 'Checking curve coverage', status: 'Reviewing', progress: 84 },
+  { id: '03', name: 'Igor', roomId: 'petrophysics', task: 'Waiting for normalized log curves from Well Log Analysis', status: 'Waiting', progress: 32 },
+  { id: '04', name: 'Sun Y', roomId: 'gis', task: 'Updating surface layers', status: 'Working', progress: 49 },
+  { id: '05', name: 'Luke', roomId: 'reservoir', task: 'Running 3 model cases', status: 'Working', progress: 73 },
   { id: '06', name: 'IRIS', roomId: 'economics', task: 'Reviewing price deck', status: 'Idle', progress: 21 },
-  { id: '07', name: 'STRATA', roomId: 'geology', task: 'Mapping depositional facies', status: 'Working', progress: 41 },
-  { id: '08', name: 'WAVE', roomId: 'geophysics', task: 'Picking seismic horizons', status: 'Working', progress: 57 },
+  { id: '07', name: 'Lisa W', roomId: 'geology', task: 'Mapping depositional facies', status: 'Working', progress: 41 },
+  { id: '08', name: 'Victor', roomId: 'geophysics', task: 'Picking seismic horizons', status: 'Working', progress: 57 },
 ]
 
 export interface SimulationStep {
