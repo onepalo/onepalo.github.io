@@ -16,13 +16,16 @@ afterEach(() => {
 })
 
 describe('backup team lounge', () => {
-  it('shows all ten characters across activities, each selectable inline without a popup', async () => {
+  it('shows all twenty characters across activities, each selectable inline without a popup', async () => {
     const user = userEvent.setup()
     const { container } = render(<BackupTeam {...defaults()} />)
     expect(screen.getByRole('region', { name: 'NEXT MISSION / DEPARTURE LOUNGE' })).toBeTruthy()
     const characters = screen.getAllByRole('button', { name: /^Meet / })
-    expect(characters).toHaveLength(10)
-    expect(container.querySelectorAll('.backup-reserve img')).toHaveLength(10)
+    expect(characters).toHaveLength(20)
+    expect(container.querySelectorAll('.backup-reserve img')).toHaveLength(20)
+    expect(container.querySelectorAll('.backup-collection')).toHaveLength(20)
+    expect(screen.getAllByText('ACTION · COMBAT')).toHaveLength(5)
+    expect(screen.getAllByText('SUPERHERO')).toHaveLength(5)
     for (const button of characters) {
       await user.click(button)
       expect(button.getAttribute('aria-pressed')).toBe('true')
@@ -31,7 +34,7 @@ describe('backup team lounge', () => {
       expect(screen.getByRole('heading', { level: 2, name })).toBeTruthy()
       expect(screen.queryByRole('dialog')).toBeNull()
     }
-    expect(screen.getByText(/Looking for a clear brief/)).toBeTruthy()
+    expect(screen.getByText(/Quiet help counts, too/)).toBeTruthy()
   })
 
   it('keeps mission text out of the page until the board is requested', async () => {
@@ -64,8 +67,8 @@ describe('backup team lounge', () => {
     const user = userEvent.setup()
     const visits = assignReserveMission([], 'data-rescue', 2, 0)
     const { container } = render(<BackupTeam {...defaults()} visits={visits} />)
-    expect(container.querySelectorAll('.backup-reserve')).toHaveLength(9)
-    expect(screen.getByText('9 READY · 1 UPSTAIRS')).toBeTruthy()
+    expect(container.querySelectorAll('.backup-reserve')).toHaveLength(19)
+    expect(screen.getByText('19 READY · 1 UPSTAIRS')).toBeTruthy()
     const chip = screen.getByRole('button', { name: 'Cleo, Heading upstairs' })
     await user.click(chip)
     expect(screen.getByText('GUEST MISSION')).toBeTruthy()
@@ -83,7 +86,7 @@ describe('backup team lounge', () => {
     const user = userEvent.setup()
     const visits = assignReserveMission([], 'decision-brief', 0, 0)
     const { container } = render(<BackupTeam {...defaults()} visits={visits} time={100_000} />)
-    expect(container.querySelectorAll('.backup-reserve')).toHaveLength(10)
+    expect(container.querySelectorAll('.backup-reserve')).toHaveLength(20)
     expect(screen.getByText('MISSION COMPLETE · CV UPDATED')).toBeTruthy()
     expect(screen.getByText(/Thirteen calendar invites rescued/)).toBeTruthy()
     const board = await openBoard(user)

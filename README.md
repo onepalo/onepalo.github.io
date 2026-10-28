@@ -22,7 +22,7 @@ Vite prints the local URL in the terminal, normally `http://localhost:5173`.
 | <br />`npm run lint` | Run ESLint across the project.                           |
 | `npm test`          | Check hash navigation, recommendation state, and dialog focus. |
 | `npm run optimize:images` | Regenerate optimized WebP images from the original PNG assets. |
-| `npm run generate:spare-characters` | Regenerate and verify the 10 spare character sprite sheets and preview. |
+| `npm run generate:spare-characters` | Regenerate and verify all 20 reserve character sprite sheets and preview. |
 | `npm run preview`    | Serve the production bundle locally.                     |
 
 ## Project structure
