@@ -117,10 +117,6 @@
 .office-case-dialog { width: min(100%, 1050px); }
 .office-case-dialog > header { align-items: center; }
 .office-case-dialog .workflow-demo { padding: 12px 0 0; border: 0; }
-.office-download-dialog ul { margin: 20px 0 0; padding: 0; list-style: none; }
-.office-download-dialog li { padding: 14px 0; border-top: 1px solid var(--ops-line); }
-.office-download-dialog li a { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; color: var(--blue); font-size: 13px; overflow-wrap: anywhere; }
-.office-download-dialog li p { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .workflow-demo :is(button, a, textarea, summary):focus-visible, .office-download-dialog :is(button, a):focus-visible { outline: 2px solid #2e6f95; outline-offset: 3px; }
 @media (max-width: 820px) {
   .workflow-body { grid-template-columns: minmax(0, 1fr); gap: 22px; }

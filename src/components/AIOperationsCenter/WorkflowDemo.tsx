@@ -91,7 +91,7 @@ export function WorkflowDemo({ onVisitDesk }: WorkflowDemoProps) {
           <div className="workflow-table-scroll"><table><caption>synthetic-porosity-v1 / Depth: m / Porosity: fraction</caption><thead><tr><th scope="col">Sample</th><th scope="col">Depth</th><th scope="col">Porosity</th><th scope="col">QC</th></tr></thead><tbody>
             {dataset.map((row) => <tr key={row.id} className={excludedRows.includes(row) ? 'workflow-flagged' : ''}><th scope="row">{row.id}</th><td>{row.depthM}</td><td>{row.porosity}</td><td>{excludedRows.includes(row) ? (step >= 2 ? 'Excluded' : 'Flagged') : 'Pass'}</td></tr>)}
           </tbody></table></div>
-          <p className="workflow-disclaimer">Fictional samples. Local, deterministic demonstration, not a live AI model or an execution of the downloadable Python tools.</p>
+          <p className="workflow-disclaimer">Fictional samples. Local, deterministic demonstration, not a live AI model or Python execution.</p>
         </div>
         <div className="workflow-review" key={step} ref={reviewRef} tabIndex={-1} role="group" aria-label={steps[step]}>
           {step === 0 && <>

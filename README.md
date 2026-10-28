@@ -60,25 +60,11 @@ The AI Operations Center reuses the character sprites and walk/typing animation 
 
 Existing `#testimonial` and `#how-i-work` links open **Why Me?** (`#cover`). Direct `#testimonial/<slug>` links still open the matching recommendation with **Why Me?** active; closing the dialog returns to `#cover`.
 
-### Inspectable workflow case and Python downloads
+### Inspectable workflow case
 
 The bookshelf in Rafael's office reveals a visitor-controlled synthetic porosity case, separate from the ambient simulation and its metrics. Its transparent hotspot has only a subtle gold hover/focus highlight. The case opens in a focus-trapped dialog and retains its progress when closed. Joel registers five fictional samples; Palo flags a porosity value outside the declared fraction range. The visitor can return to the source or accept its exclusion without silently correcting units. Igor's deterministic proposal reports the arithmetic mean of the four accepted samples, the demo screening threshold, and the missing evidence. The visitor, acting as Rafael, must enter a rationale before approving a limited handoff to Luke or rejecting the proposal.
 
 The downloadable JSON record includes the original rows, dataset and schema versions, quality rule, accepted and excluded rows, calculation, limitations, human decision, rationale, and timestamped provenance. It is a local illustration, not a live AI call, Python execution, authenticated sign-off, or development recommendation. Restart clears the case; the office Reset clears both the case and the ambient simulation.
-
-The Well Logs printer itself is a hidden, keyboard-accessible download action with a subtle gold hover/focus highlight, no visible button or action bar. It offers four Spotfire data functions individually and together as a ZIP:
-
-- [PP-Porosity-Trend.py](public/downloads/well-logs/PP-Porosity-Trend.py)
-- [PP-RSPSequence.py](public/downloads/well-logs/PP-RSPSequence.py)
-- [PP-GridInt.py](public/downloads/well-logs/PP-GridInt.py): Spatial grid generation, clipping, and IDW or minimum-curvature TPS interpolation.
-- [PP-Countruns.py](public/downloads/well-logs/PP-Countruns.py): Contour lines and binned heatmaps from interpolated grid data.
-- [Well-Logs-Python-Tools.zip](public/downloads/well-logs/Well-Logs-Python-Tools.zip)
-
-The scripts require their configured Spotfire inputs, NumPy, and pandas; the porosity trend optionally uses SciPy. Grid interpolation and contours additionally require `spotfire_geospatial`. `PP-Countruns.py` is the original root-level `PP-Countruns` file with a Python extension added; its contents are unchanged. Their algorithms are not run or validated by the site. These files are public deployment assets. After editing any script, regenerate the ZIP from the repository root (PowerShell):
-
-```powershell
-Compress-Archive -Path public/downloads/well-logs/*.py -DestinationPath public/downloads/well-logs/Well-Logs-Python-Tools.zip -Force
-```
 
 ### Spare characters
 

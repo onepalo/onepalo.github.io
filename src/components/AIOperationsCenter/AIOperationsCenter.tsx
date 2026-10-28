@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties, RefObject } from 'react'
-import { Activity, ArrowLeft, ArrowRight, Cpu, Download, FileCheck, Gauge, Pause, Play, RotateCcw, Users, X } from 'lucide-react'
+import { Activity, ArrowLeft, ArrowRight, Cpu, FileCheck, Gauge, Pause, Play, RotateCcw, Users, X } from 'lucide-react'
 import { Application, Container, Graphics, Rectangle, Sprite, Text, TextStyle, Texture, TilingSprite } from 'pixi.js'
 import { useDialogController } from '../../utils/useDialogController'
 import type { ExperienceId } from '../../content/contentTypes'
@@ -898,8 +898,6 @@ export function AIOperationsCenter({ headingRef, onNavigate }: AIOperationsCente
   const mapHostRef = useRef<HTMLDivElement>(null)
   const [workflowOpen, setWorkflowOpen] = useState(false)
   const workflowCloseRef = useDialogController<HTMLButtonElement>(workflowOpen, () => setWorkflowOpen(false))
-  const [downloadsOpen, setDownloadsOpen] = useState(false)
-  const downloadCloseRef = useDialogController<HTMLButtonElement>(downloadsOpen, () => setDownloadsOpen(false))
   const agentsRef = useRef(initialAgents)
   const isRunningRef = useRef(true)
   const simulationTimeRef = useRef(0)
@@ -1029,7 +1027,6 @@ export function AIOperationsCenter({ headingRef, onNavigate }: AIOperationsCente
 
   const resetSimulation = () => {
     setResetCount((count) => count + 1)
-    setDownloadsOpen(false)
     setWorkflowOpen(false)
     setReserveVisits([])
     simulationTimeRef.current = 0
@@ -1077,7 +1074,6 @@ export function AIOperationsCenter({ headingRef, onNavigate }: AIOperationsCente
               {canvasError && <p className="map-error">The office scene could not be initialized. Check that the local Pixel Agents sprite assets are available.</p>}
               <OfficeVisitors key={resetCount} visits={reserveVisits} clock={simulationTimeRef} isRunning={isRunning} />
               <svg className="office-desk-actions" viewBox={`0 0 ${WORLD_WIDTH} ${WORLD_HEIGHT}`} aria-label="Desk actions">
-                <foreignObject x="620" y="204" width="44" height="44"><button type="button" className="office-object-action" title="Palo's printer" aria-label="Open Well Logs printer downloads" onClick={() => { setSelectedAgentId('02'); setDownloadsOpen(true) }} /></foreignObject>
                 <foreignObject x="938" y="34" width="60" height="44"><button type="button" className="office-object-action" title="Rafael's case files" aria-label="Open Rafael's case files" onClick={() => { setSelectedAgentId('DIR'); setWorkflowOpen(true) }} /></foreignObject>
               </svg>
             </div>
@@ -1147,19 +1143,6 @@ export function AIOperationsCenter({ headingRef, onNavigate }: AIOperationsCente
             }} />
           </section>
         </div>
-        {downloadsOpen && <div className="office-download-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setDownloadsOpen(false) }}>
-          <section className="office-download-dialog" role="dialog" aria-modal="true" aria-labelledby="office-download-title">
-            <header><div><p className="panel-kicker">PALO / WELL LOGS PRINTER</p><h2 id="office-download-title">Well Logs Python tools</h2></div><button ref={downloadCloseRef} type="button" title="Close downloads" aria-label="Close downloads" onClick={() => setDownloadsOpen(false)}><X size={20} /></button></header>
-            <p>Spotfire Python data functions. Configure the required input tables and document properties in Spotfire. NumPy and pandas are required; the porosity trend optionally uses SciPy. Grid interpolation and contours also require spotfire_geospatial. These files do not execute in this website.</p>
-            <a className="workflow-download" href={`${import.meta.env.BASE_URL}downloads/well-logs/Well-Logs-Python-Tools.zip`} download="Well-Logs-Python-Tools.zip"><Download size={17} /> Download all 4 scripts (.zip)</a>
-            <ul>
-              <li><a href={`${import.meta.env.BASE_URL}downloads/well-logs/PP-Porosity-Trend.py`} download="PP-Porosity-Trend.py"><Download size={16} /> PP-Porosity-Trend.py</a><p>Porosity-depth trends, spatial weighting, and quality exclusions.</p></li>
-              <li><a href={`${import.meta.env.BASE_URL}downloads/well-logs/PP-RSPSequence.py`} download="PP-RSPSequence.py"><Download size={16} /> PP-RSPSequence.py</a><p>Reservoir sand-package sequences and optional hydrocarbon screening.</p></li>
-              <li><a href={`${import.meta.env.BASE_URL}downloads/well-logs/PP-GridInt.py`} download="PP-GridInt.py"><Download size={16} /> PP-GridInt.py</a><p>Spatial grid generation, clipping, and interpolation using IDW or minimum-curvature TPS.</p></li>
-              <li><a href={`${import.meta.env.BASE_URL}downloads/well-logs/PP-Countruns.py`} download="PP-Countruns.py"><Download size={16} /> PP-Countruns.py</a><p>Contour lines and binned heatmaps from interpolated grid data.</p></li>
-            </ul>
-          </section>
-        </div>}
         <footer className="operations-footnote"><span><Cpu size={13} /> HUMAN JUDGMENT STAYS IN THE LOOP</span><span>AI supports exploration workflows. It does not replace subsurface expertise.</span></footer>
         <div className="stage-next">
           <button type="button" className="stage-return" aria-label="Return to universe" onClick={() => onNavigate('home')}>
