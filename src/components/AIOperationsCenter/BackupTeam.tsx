@@ -117,6 +117,7 @@ export function BackupTeam({ isRunning, onToggleRunning, time, visits, onAssignM
         {thought && <span className="backup-thought" aria-hidden="true">{thought}</span>}
         {sprite(index, variant)}
         <span className="backup-name">{member.name}</span>
+        <span className="backup-collection">{member.collection}</span>
       </button>
     )
   }
@@ -174,7 +175,7 @@ export function BackupTeam({ isRunning, onToggleRunning, time, visits, onAssignM
           <div className="backup-lane-label"><span>NETWORKING LOOP · LAP {Math.floor(time / 32_000) + 1}</span><span>STILL NOT A MEETING</span></div>
           <div className="backup-lane">
             {networking.map((member, position) => (
-              <div className="backup-marcher" key={member.name} style={{ '--march-delay': `${-position * 16}s`, '--step-delay': `${-member.index * 0.07}s`, '--rest-position': `${position * 50}%` } as CSSProperties}>
+              <div className="backup-marcher" key={member.name} style={{ '--march-delay': `${-position * (32 / networking.length)}s`, '--step-delay': `${-member.index * 0.07}s`, '--rest-position': `${position * (100 / networking.length)}%` } as CSSProperties}>
                 {memberButton(member.index, 'walk', member.line)}
               </div>
             ))}
@@ -261,7 +262,7 @@ export function BackupTeam({ isRunning, onToggleRunning, time, visits, onAssignM
         <div className="sidebar-heading"><span className="panel-kicker">SELECTED RESERVE</span><span className="agent-id">{selectedVisit ? 'ON A MISSION' : 'OPEN TO WORK'}</span></div>
         <div className="selected-agent">
           {sprite(selectedIndex, 'portrait')}
-          <div aria-live="polite" aria-atomic="true"><h2>{selected.name}</h2><p>{selected.role}</p></div>
+          <div aria-live="polite" aria-atomic="true"><h2>{selected.name}</h2><p>{selected.role}</p><small className="backup-selected-collection">{selected.collection}</small></div>
         </div>
         <div className={`agent-status backup-status${selectedVisit ? ' is-away' : selectedLastDone ? ' is-done' : ''}`}><span className="status-pulse" />{selectedStatus.toUpperCase()}</div>
         <p className="task-label">{selectedVisit ? 'GUEST MISSION' : selectedLastDone ? 'LAST MISSION' : 'ELEVATOR PITCH'}</p>

@@ -2,16 +2,26 @@ import { pathLength, positionAlongPath, roomById, VERTICAL_CORRIDOR_X, WALK_SPEE
 import type { Point } from './simulation'
 
 export const RESERVE_TEAM = [
-  { name: 'Ada', role: 'Data detective', line: 'Will work for clean data.', pitch: 'I find missing values. Still looking for whoever named a column "final_final_2".' },
-  { name: 'Bruno', role: 'Workflow mechanic', line: 'Have CV. Will travel.', pitch: 'If your workflow needs seventeen manual steps, I have a few polite questions.' },
-  { name: 'Cleo', role: 'Map whisperer', line: 'Plot twist: I am available.', pitch: 'I can put the opportunity on the map. The coffee machine is already mapped.' },
-  { name: 'Diego', role: 'Quality-check enthusiast', line: 'References? Ask my tests.', pitch: 'I brought a CV, a checklist, and a spare checklist in case the first one fails QA.' },
-  { name: 'Emi', role: 'Reservoir daydreamer', line: 'Seeking a deeper role.', pitch: 'Comfortable with uncertainty. Less comfortable with meetings that have no agenda.' },
-  { name: 'Felix', role: 'Automation optimist', line: 'Less clicking. More thinking.', pitch: 'Happy to do the repetitive task once. After that, we should probably talk automation.' },
-  { name: 'Gia', role: 'Signal spotter', line: 'Open to work. And snacks.', pitch: 'I separate signal from noise. Except at the snack table, where I keep an open mind.' },
-  { name: 'Hugo', role: 'Scenario explorer', line: 'My next scenario: hired.', pitch: 'Base case: a useful project. Upside case: a useful project with biscuits.' },
-  { name: 'Iris', role: 'Insight translator', line: 'Fluent in charts and humans.', pitch: 'I turn a wall of plots into a conversation. Ideally one that ends with a decision.' },
-  { name: 'Jules', role: 'Delivery wrangler', line: 'Ready when the brief is.', pitch: 'Looking for a clear brief, a good team, and a folder that is not called "misc".' },
+  { name: 'Ada', role: 'Data detective', collection: 'ORIGINAL', line: 'Will work for clean data.', pitch: 'I find missing values. Still looking for whoever named a column "final_final_2".' },
+  { name: 'Bruno', role: 'Workflow mechanic', collection: 'ORIGINAL', line: 'Have CV. Will travel.', pitch: 'If your workflow needs seventeen manual steps, I have a few polite questions.' },
+  { name: 'Cleo', role: 'Map whisperer', collection: 'ORIGINAL', line: 'Plot twist: I am available.', pitch: 'I can put the opportunity on the map. The coffee machine is already mapped.' },
+  { name: 'Diego', role: 'Quality-check enthusiast', collection: 'ORIGINAL', line: 'References? Ask my tests.', pitch: 'I brought a CV, a checklist, and a spare checklist in case the first one fails QA.' },
+  { name: 'Emi', role: 'Reservoir daydreamer', collection: 'ORIGINAL', line: 'Seeking a deeper role.', pitch: 'Comfortable with uncertainty. Less comfortable with meetings that have no agenda.' },
+  { name: 'Felix', role: 'Automation optimist', collection: 'ORIGINAL', line: 'Less clicking. More thinking.', pitch: 'Happy to do the repetitive task once. After that, we should probably talk automation.' },
+  { name: 'Gia', role: 'Signal spotter', collection: 'ORIGINAL', line: 'Open to work. And snacks.', pitch: 'I separate signal from noise. Except at the snack table, where I keep an open mind.' },
+  { name: 'Hugo', role: 'Scenario explorer', collection: 'ORIGINAL', line: 'My next scenario: hired.', pitch: 'Base case: a useful project. Upside case: a useful project with biscuits.' },
+  { name: 'Iris', role: 'Insight translator', collection: 'ORIGINAL', line: 'Fluent in charts and humans.', pitch: 'I turn a wall of plots into a conversation. Ideally one that ends with a decision.' },
+  { name: 'Jules', role: 'Delivery wrangler', collection: 'ORIGINAL', line: 'Ready when the brief is.', pitch: 'Looking for a clear brief, a good team, and a folder that is not called "misc".' },
+  { name: 'Arin', role: 'Aura sparring partner', collection: 'ACTION · COMBAT', line: 'Focus up. Then leap.', pitch: 'I train for the tough round, keep my cool, and never skip the recovery day.' },
+  { name: 'Jade', role: 'Tournament tactician', collection: 'ACTION · COMBAT', line: 'Every move has a reason.', pitch: 'I study the field before the bell. Strategy is a strength, not a shortcut.' },
+  { name: 'Indigo', role: 'Precision martial artist', collection: 'ACTION · COMBAT', line: 'Calm mind. Clean form.', pitch: 'Discipline beats drama. I save the big entrance for the right moment.' },
+  { name: 'Sora', role: 'Sky-step striker', collection: 'ACTION · COMBAT', line: 'Find your footing. Fly.', pitch: 'Fast on my feet, steady under pressure, and always ready for the next challenge.' },
+  { name: 'Ren', role: 'Mountain-style grappler', collection: 'ACTION · COMBAT', line: 'Strong roots. Clear aim.', pitch: 'Patience builds power. I bring persistence, not a shortcut to victory.' },
+  { name: 'Beacon', role: 'Rescue flight lead', collection: 'SUPERHERO', line: 'A brighter way through.', pitch: 'I make a clear path, bring people together, and leave the spotlight to the team.' },
+  { name: 'Aegis', role: 'Shield-field specialist', collection: 'SUPERHERO', line: 'Cover first. Then advance.', pitch: 'Protecting people starts with listening. The dramatic cape is optional.' },
+  { name: 'Prism', role: 'Light-bending designer', collection: 'SUPERHERO', line: 'See every side of it.', pitch: 'I turn a complicated picture into a new perspective and a practical next step.' },
+  { name: 'Current', role: 'Electrokinetic responder', collection: 'SUPERHERO', line: 'Quick charge. Steady hands.', pitch: 'I bring a spark to the hard problems, without short-circuiting the plan.' },
+  { name: 'Umbra', role: 'Night-shift protector', collection: 'SUPERHERO', line: 'Quiet help counts, too.', pitch: 'I keep watch, stay grounded, and make sure no one has to handle the hard part alone.' },
 ]
 
 export const RESERVE_ACTIVITIES = [

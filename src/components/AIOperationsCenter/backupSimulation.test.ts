@@ -3,10 +3,12 @@ import { activityForReserve, activeVisitForMember, assignReserveMission, mission
 import { initialAgents, WORLD_HEIGHT, WORLD_WIDTH } from './simulation'
 
 describe('reserve lounge activities', () => {
-  it('keeps ten distinct characters in pairs and visits every activity on a 60-second cycle', () => {
-    expect(RESERVE_TEAM).toHaveLength(10)
-    expect(new Set(RESERVE_TEAM.map((member) => member.name)).size).toBe(10)
-    for (let index = 0; index < 10; index += 2) {
+  it('keeps twenty distinct characters in pairs and visits every activity on a 60-second cycle', () => {
+    expect(RESERVE_TEAM).toHaveLength(20)
+    expect(new Set(RESERVE_TEAM.map((member) => member.name)).size).toBe(20)
+    expect(RESERVE_TEAM.slice(10, 15).every((member) => member.collection === 'ACTION · COMBAT')).toBe(true)
+    expect(RESERVE_TEAM.slice(15).every((member) => member.collection === 'SUPERHERO')).toBe(true)
+    for (let index = 0; index < RESERVE_TEAM.length; index += 2) {
       const activities = Array.from({ length: 5 }, (_, step) => activityForReserve(index, step * 12_000).id)
       expect(new Set(activities).size).toBe(RESERVE_ACTIVITIES.length)
       expect(activityForReserve(index, 12_000)).toEqual(activityForReserve(index + 1, 12_000))
@@ -67,7 +69,7 @@ describe('temporary reserve missions', () => {
   })
 
   it('rejects invalid member identifiers explicitly', () => {
-    for (const index of [-1, 10, 1.5, NaN]) {
+    for (const index of [-1, RESERVE_TEAM.length, 1.5, NaN]) {
       expect(() => assignReserveMission([], 'data-rescue', index, 0)).toThrow('Unknown reserve member')
     }
   })
