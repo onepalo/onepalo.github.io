@@ -175,7 +175,7 @@ export function BackupTeam({ isRunning, onToggleRunning, time, visits, onAssignM
           <div className="backup-lane-label"><span>NETWORKING LOOP · LAP {Math.floor(time / 32_000) + 1}</span><span>STILL NOT A MEETING</span></div>
           <div className="backup-lane">
             {networking.map((member, position) => (
-              <div className="backup-marcher" key={member.name} style={{ '--march-delay': `${-position * (32 / networking.length)}s`, '--step-delay': `${-member.index * 0.07}s`, '--rest-position': `${position * (100 / networking.length)}%` } as CSSProperties}>
+              <div className="backup-marcher" key={member.name} style={{ '--march-delay': `${-position * (32 / networking.length)}s`, '--step-delay': `${-member.index * 0.07}s`, '--rest-fraction': position / Math.max(1, networking.length - 1) } as CSSProperties}>
                 {memberButton(member.index, 'walk', member.line)}
               </div>
             ))}

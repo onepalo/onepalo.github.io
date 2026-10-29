@@ -1078,7 +1078,7 @@ export function AIOperationsCenter({ headingRef, onNavigate }: AIOperationsCente
               </svg>
             </div>
             {visitingReserves.length > 0 && <div className="office-guest-status" role="status">{visitingReserves.length} TEMPORARY {visitingReserves.length === 1 ? 'GUEST' : 'GUESTS'} · Separate demo missions. Main team metrics unchanged.</div>}
-            <div className="map-footer"><span><i className="status-pulse" /> LIVE SIMULATION</span><span>{rooms.length - 1} OPEN-SPACE DESKS <b>·</b> DIRECTOR OFFICE</span><span>LOCAL MOCK DATA</span></div>
+            <div className="map-footer"><span><i className="status-pulse" /> {isRunning ? 'LIVE SIMULATION' : 'SIMULATION PAUSED'}</span><span>{rooms.length - 1} OPEN-SPACE DESKS <b>·</b> DIRECTOR OFFICE</span><span>LOCAL MOCK DATA</span></div>
           </section>
 
           <aside className="operations-sidebar" aria-label="Agent task details">

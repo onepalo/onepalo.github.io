@@ -86,9 +86,9 @@
 .backup-sprite-portrait img { top: -20px; left: -56px; width: 392px; height: 336px; }
 
 .backup-lane-label { display: flex; justify-content: space-between; gap: 10px; padding: 8px 14px 0; color: var(--backup-sand); font-size: 9px; font-weight: 700; letter-spacing: .8px; }
-.backup-lane { position: relative; height: 134px; margin: 0 8px; border-bottom: 2px dashed #b9ad96; }
+.backup-lane { --marcher-width: 104px; position: relative; height: 134px; margin: 0 8px; border-bottom: 2px dashed #b9ad96; }
 .backup-marcher { position: absolute; top: 4px; left: 0; width: 100%; pointer-events: none; animation: backup-march 32s linear infinite; animation-delay: var(--march-delay); will-change: transform; }
-.backup-marcher .backup-reserve { width: 104px; pointer-events: auto; }
+.backup-marcher .backup-reserve { width: var(--marcher-width); pointer-events: auto; }
 .backup-thought { display: grid; align-items: center; min-height: 32px; box-sizing: border-box; width: 98px; padding: 5px 6px; border: 1px solid #c6b8ca; border-radius: 8px 8px 8px 0; color: #594960; background: #fffdf8; font-size: 10px; line-height: 1.3; text-align: center; box-shadow: 2px 2px 0 #70547912; }
 /* Hovering or focusing the loop lets people catch a marcher without chasing them. */
 .backup-lane:hover .backup-marcher, .backup-lane:focus-within .backup-marcher, .backup-lane:hover .backup-sprite-walk img, .backup-lane:focus-within .backup-sprite-walk img { animation-play-state: paused; }
@@ -142,7 +142,7 @@
   .backup-mobile-bar strong { color: var(--ink); }
   .backup-mobile-bar button { width: 100%; white-space: normal; }
   .backup-stations { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-inline: 10px; }
-  .backup-marcher .backup-reserve { width: 78px; }
+  .backup-lane { --marcher-width: 78px; }
   .backup-thought { width: 74px; font-size: 9px; }
   .backup-dialog-backdrop { align-items: end; padding: 10px; }
   .backup-dialog { max-height: calc(100dvh - 20px); }
@@ -153,7 +153,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .backup-marcher { animation: none; transform: translateX(var(--rest-position)); will-change: auto; }
+  .backup-marcher { animation: none; transform: translateX(calc((100% - var(--marcher-width)) * var(--rest-fraction))); will-change: auto; }
   .backup-sprite-walk img, .backup-station-cv .backup-sprite-stand img, .backup-station-board .backup-sprite-stand img { animation: none; }
   .backup-thought { display: none; }
   .backup-lane { height: 96px; }
