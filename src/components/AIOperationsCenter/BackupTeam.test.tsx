@@ -142,6 +142,16 @@ describe('backup team lounge', () => {
     expect(container.querySelector('.backup-station-cv')?.textContent).toContain('Ada')
   })
 
+  it('distributes resting marchers across the space remaining after their own width', () => {
+    const { container, rerender } = render(<BackupTeam {...defaults()} />)
+    const fractions = () => [...container.querySelectorAll<HTMLElement>('.backup-marcher')]
+      .map((marcher) => Number(marcher.style.getPropertyValue('--rest-fraction')))
+    expect(fractions()).toEqual([0, 1 / 3, 2 / 3, 1])
+    const visits = assignReserveMission([], 'data-rescue', 8, 0)
+    rerender(<BackupTeam {...defaults()} visits={visits} />)
+    expect(fractions()).toEqual([0, 0.5, 1])
+  })
+
   it('reports missing sprite assets and blocks sending', async () => {
     const user = userEvent.setup()
     const error = vi.spyOn(console, 'error').mockImplementation(() => {})
