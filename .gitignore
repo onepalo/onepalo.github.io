@@ -22,3 +22,5 @@ src/content/ExecutionPlan.tx
 src/content/ExperienceEvidence.md
 src/content/LeadershipPrinciples.md
 src/content/sourceNotes.md
+# Local npm cache
+.npm-cache/

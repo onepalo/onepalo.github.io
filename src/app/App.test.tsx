@@ -26,24 +26,24 @@ afterEach(() => {
 })
 
 describe('story navigation', () => {
-  it('offers AI Operations as a home planet instead of Testimonials', async () => {
+  it('offers the three CV story planets', async () => {
     const user = userEvent.setup()
     const onOpenWorld = vi.fn()
     const { container } = render(<WorldNav onOpenWorld={onOpenWorld} />)
     expect(screen.getAllByRole('button').map((button) => button.getAttribute('aria-label'))).toEqual([
-      'Why Me?', 'Resume', 'AI Operations', 'Beyond',
+      'Why Me?', 'Resume', 'Beyond',
     ])
-    expect(container.querySelector('.world-ai-operations')).toBeTruthy()
-    await user.click(screen.getByRole('button', { name: 'AI Operations' }))
-    expect(onOpenWorld).toHaveBeenCalledWith('ai-operations')
+    expect(container.querySelectorAll('.world-node')).toHaveLength(3)
+    await user.click(screen.getByRole('button', { name: 'Resume' }))
+    expect(onOpenWorld).toHaveBeenCalledWith('journey')
   })
 
-  it('orders the tabs with AI Operations before Beyond', async () => {
+  it('orders the CV navigation tabs', async () => {
     const user = userEvent.setup()
     render(<App />)
     const navigation = screen.getByRole('navigation', { name: 'Primary navigation' })
     expect(within(navigation).getAllByRole('button').map((button) => button.getAttribute('aria-label'))).toEqual([
-      'Home', 'Why Me?', 'Resume', 'AI Operations', 'Beyond',
+      'Home', 'Why Me?', 'Resume', 'Beyond',
     ])
     await user.click(within(navigation).getByRole('button', { name: 'Beyond' }))
     expect(window.location.hash).toBe('#impact')
@@ -52,7 +52,7 @@ describe('story navigation', () => {
   })
 
   it.each([
-    ['journey', 'ai-operations'],
+    ['journey', 'impact'],
     ['impact', 'cover'],
   ] as const)('continues from %s to %s', async (experience, next) => {
     const user = userEvent.setup()
@@ -68,7 +68,7 @@ describe('testimonial navigation', () => {
     const user = userEvent.setup()
     render(<App />)
     const navigation = screen.getByRole('navigation', { name: 'Primary navigation' })
-    expect(within(navigation).getAllByRole('button')).toHaveLength(5)
+    expect(within(navigation).getAllByRole('button')).toHaveLength(4)
     expect(within(navigation).queryByRole('button', { name: 'Testimonial' })).toBeNull()
     expect(within(navigation).getByRole('button', { name: 'Why Me?' }).getAttribute('aria-current')).toBe('page')
     expect(screen.getByRole('heading', { name: 'Why me. Why us.', level: 1 })).toBeTruthy()

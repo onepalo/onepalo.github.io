@@ -1,4 +1,4 @@
-export type ExperienceId = 'home' | 'cover' | 'journey' | 'impact' | 'campaign' | 'ai-operations'
+export type ExperienceId = 'home' | 'cover' | 'journey' | 'impact' | 'campaign'
 
 export interface HeroContent {
   eyebrow: string

@@ -1,4 +1,4 @@
-import { Cpu, Home, UserRound } from 'lucide-react'
+import { Home, UserRound } from 'lucide-react'
 import type { ExperienceId } from '../../content/contentTypes'
 import rafaelPortrait from '../../assets/candidate/optimized/rafael-navarro-portrait.webp'
 
@@ -20,7 +20,6 @@ const homeNavigationItem: NavigationItem = { id: 'home', label: 'Home', icon: Ho
 const navigationItems: NavigationItem[] = [
   { id: 'cover', label: 'Why Me?', icon: UserRound },
   { id: 'journey', label: 'Resume', materialIcon: 'work_history' },
-  { id: 'ai-operations', label: 'AI Operations', icon: Cpu },
   { id: 'impact', label: 'Beyond', materialIcon: 'cheer' },
 ]
 
@@ -47,12 +46,10 @@ export function Navigation({ activeExperience, onNavigate }: NavigationProps) {
 
   return (
     <header className="site-header">
-      {activeExperience !== 'ai-operations' && (
-        <button className="wordmark" type="button" onClick={() => navigateTo('home')} aria-label="Exploration Rafael Navarro home">
-          <span className="wordmark-mark" aria-hidden="true"><img src={rafaelPortrait} alt="" width={54} height={54} decoding="async" /></span>
-          <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>Geoscientist</em></span>
-        </button>
-      )}
+      <button className="wordmark" type="button" onClick={() => navigateTo('home')} aria-label="Exploration Rafael Navarro home">
+        <span className="wordmark-mark" aria-hidden="true"><img src={rafaelPortrait} alt="" width={54} height={54} decoding="async" /></span>
+        <span className="wordmark-copy"><strong>Rafael Navarro</strong><em>Geoscientist</em></span>
+      </button>
       <nav className="primary-nav" aria-label="Primary navigation">
         <NavigationButton item={homeNavigationItem} isActive={activeExperience === homeNavigationItem.id} onSelect={navigateTo} />
         {navigationItems.map((item) => <NavigationButton item={item} isActive={activeExperience === item.id} onSelect={navigateTo} key={item.id} />)}
