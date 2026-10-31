@@ -15,7 +15,7 @@ import coFlag from 'flag-icons/flags/4x3/co.svg'
 import mxFlag from 'flag-icons/flags/4x3/mx.svg'
 
 interface ExperienceStageProps {
-  experience: Exclude<ExperienceId, 'home' | 'campaign' | 'ai-operations'>
+  experience: Exclude<ExperienceId, 'home' | 'campaign'>
   headingRef: RefObject<HTMLHeadingElement | null>
   onNavigate: (experience: ExperienceId) => void
   testimonialSlug: string | null
@@ -664,6 +664,6 @@ function LeadershipProof({ onOpenCampaign }: { onOpenCampaign: () => void }) {
 }
 
 function nextExperience(current: Exclude<ExperienceId, 'home' | 'campaign'>): Exclude<ExperienceId, 'home' | 'campaign'> {
-  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'journey', 'ai-operations', 'impact']
+  const order: Array<Exclude<ExperienceId, 'home' | 'campaign'>> = ['cover', 'journey', 'impact']
   return order[(order.indexOf(current) + 1) % order.length]
 }

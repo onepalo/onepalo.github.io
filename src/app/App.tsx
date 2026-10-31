@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Hero } from '../components/Hero/Hero'
 import { Navigation } from '../components/Navigation/Navigation'
@@ -8,7 +8,6 @@ import { heroContent } from '../content/content'
 import type { ExperienceId } from '../content/contentTypes'
 import { experienceFromHash, hashForExperience, hashForTestimonial, testimonialSlugFromHash } from '../utils/hashNavigation'
 
-const AIOperationsCenter = lazy(() => import('../components/AIOperationsCenter/AIOperationsCenter').then(({ AIOperationsCenter: component }) => ({ default: component })))
 
 const titles: Record<ExperienceId, string> = {
   home: "Rafael's Exploration Journal",
@@ -16,7 +15,6 @@ const titles: Record<ExperienceId, string> = {
   journey: "Resume | Rafael's Exploration Journal",
   impact: "Beyond | Rafael's Exploration Journal",
   campaign: "Environmental Awareness Campaign | Rafael's Exploration Journal",
-  'ai-operations': "AI Operations Center | Rafael's Exploration Journal",
 }
 
 export default function App() {
@@ -81,7 +79,7 @@ export default function App() {
   }, [activeExperience])
 
   return (
-    <div className={`app-shell${activeExperience === 'ai-operations' ? ' app-shell-ai-operations' : ''}`}>
+    <div className="app-shell">
       {activeExperience !== 'campaign' && <Navigation activeExperience={activeExperience} onNavigate={openExperience} />}
       <AnimatePresence mode="wait" initial={false}>
         {activeExperience === 'home' ? (
@@ -100,10 +98,6 @@ export default function App() {
           </motion.main>
         ) : activeExperience === 'campaign' ? (
           <EnvironmentalCampaign headingRef={stageHeadingRef} onReturn={() => openExperience('impact')} />
-        ) : activeExperience === 'ai-operations' ? (
-          <Suspense fallback={<main className="operations-page"><p className="operations-subtitle">Loading AI Operations Center...</p></main>}>
-            <AIOperationsCenter headingRef={stageHeadingRef} onNavigate={openExperience} />
-          </Suspense>
         ) : (
           <motion.main
             key={activeExperience}

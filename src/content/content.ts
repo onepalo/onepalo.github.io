@@ -11,7 +11,6 @@ export const heroContent: HeroContent = {
 export const worlds: World[] = [
   { id: 'cover', title: 'Why Me?', shortTitle: 'Why Me?', description: 'How my experience connects subsurface judgment, digital product delivery, and multidisciplinary collaboration.', accentColor: '#2e6f95', visualHint: 'personal statement' },
   { id: 'journey', title: 'Resume', shortTitle: 'Resume', description: 'From field geophysics to global product and analytics delivery.', accentColor: '#d6a94a', visualHint: 'constellation route' },
-  { id: 'ai-operations', title: 'AI Operations', shortTitle: 'AI Operations', description: 'An interactive simulation of subsurface workflows with human judgment in the loop.', accentColor: '#42a5a5', visualHint: 'connected exploration office' },
   { id: 'impact', title: 'Beyond', shortTitle: 'Beyond', description: 'Work I have led, built, and carried beyond my day job.', accentColor: '#e07a5f', visualHint: 'proof points' },
 ]
 
