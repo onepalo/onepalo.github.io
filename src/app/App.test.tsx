@@ -61,6 +61,30 @@ describe('story navigation', () => {
     await user.click(screen.getByRole('button', { name: 'Continue the story' }))
     expect(onNavigate).toHaveBeenCalledWith(next)
   })
+
+  it('shows education in the integrated studies overview', () => {
+    render(<ExperienceStage experience="journey" headingRef={createRef<HTMLHeadingElement>()} onNavigate={vi.fn()} testimonialSlug={null} onOpenTestimonial={vi.fn()} onCloseTestimonial={vi.fn()} />)
+    const overview = screen.getByRole('region', { name: 'Experience behind integrated studies' })
+    expect(within(overview).getByText(/Geophysical Engineering \| Universidad Simón Bolívar \| 2007/)).toBeTruthy()
+  })
+
+  it('presents the three expertise areas and the ARMPlay context', async () => {
+    const user = userEvent.setup()
+    render(<ExperienceStage experience="journey" headingRef={createRef<HTMLHeadingElement>()} onNavigate={vi.fn()} testimonialSlug={null} onOpenTestimonial={vi.fn()} onCloseTestimonial={vi.fn()} />)
+    expect(screen.getByText(/intersection of subsurface decisions, digital transformation, and AI/)).toBeTruthy()
+    expect(screen.getByText(/Seismic acquisition & processing/)).toBeTruthy()
+    await user.click(screen.getByText('Digital products'))
+    expect(screen.getByText(/Product strategy & ownership/)).toBeTruthy()
+    await user.click(screen.getByText('Data & AI'))
+    expect(screen.getByText(/Spotfire \| Databricks/)).toBeTruthy()
+    await user.click(screen.getByText('Senior X-Digi Geoscientist (Product Owner)'))
+    expect(screen.getByText(/Delivered ARMPlay for Corporate ARM opportunity screening, bringing subsurface, commercial, and economic information into one platform/)).toBeTruthy()
+  })
+
+  it('links to the EmpathyAI website from Beyond', () => {
+    render(<ExperienceStage experience="impact" headingRef={createRef<HTMLHeadingElement>()} onNavigate={vi.fn()} testimonialSlug={null} onOpenTestimonial={vi.fn()} onCloseTestimonial={vi.fn()} />)
+    expect(screen.getByRole('link', { name: /Explore EmpathyAI/ }).getAttribute('href')).toBe('https://www.empathyailab.com/')
+  })
 })
 
 describe('testimonial navigation', () => {

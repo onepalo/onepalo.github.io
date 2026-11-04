@@ -301,6 +301,7 @@ function Journey() {
               <h2 id="career-statement-title">Experience behind integrated studies</h2>
             <p>{journeyStatement.firstParagraph}</p>
             <p><span className="journey-statement-key">{journeyStatement.keyStatement}</span>{journeyStatement.conclusion}</p>
+            <p><strong>Education:</strong> {journeyCvProfile.education}</p>
             <p className="journey-evolving">
               <button className="journey-evolving-button" type="button" onClick={() => setEvolvingPhraseIndex((currentIndex) => (currentIndex + 1) % evolvingPhrases.length)} aria-label="Reveal the next evolving thought" title="Psst... click me.">
                 <span className="journey-evolving-phrase" key={evolvingPhraseIndex}>{evolvingPhrases[evolvingPhraseIndex]}</span>
@@ -415,7 +416,7 @@ function FeaturedProjects() {
 }
 
 function CvProfile() {
-  const profileSections = ['Digital core', 'Subsurface domain', 'Achievements', 'Education & certifications', 'References'] as const
+  const profileSections = ['Subsurface & exploration', 'Digital products', 'Data & AI', 'Achievements', 'Education & certifications', 'References'] as const
   const [activeProfileIndex, setActiveProfileIndex] = useState(0)
 
   return (
@@ -428,11 +429,12 @@ function CvProfile() {
           <details className="cv-profile-stack" key={profileSection} open={activeProfileIndex === index} onToggle={(event) => { if (event.currentTarget.open) setActiveProfileIndex(index) }}>
             <summary><span>{profileSection}</span><ChevronDown size={16} aria-hidden="true" /></summary>
             <div className="cv-profile-stack-content">
-              {index === 0 && <p>{journeyCvProfile.digitalCore}</p>}
-              {index === 1 && <p>{journeyCvProfile.subsurfaceDomain}</p>}
-              {index === 2 && <ul className="cv-profile-achievements">{journeyCvProfile.achievements.map((achievement) => <li key={achievement}>{achievement}</li>)}</ul>}
-              {index === 3 && <p>{journeyCvProfile.education}</p>}
-              {index === 4 && <ul className="cv-references">{journeyCvProfile.references.map((reference) => <li key={reference.name}><strong>{reference.name}</strong><span>{reference.role}</span></li>)}</ul>}
+              {index === 0 && <p>{journeyCvProfile.subsurfaceDomain}</p>}
+              {index === 1 && <p>{journeyCvProfile.digitalProducts}</p>}
+              {index === 2 && <p>{journeyCvProfile.dataAndAi}</p>}
+              {index === 3 && <ul className="cv-profile-achievements">{journeyCvProfile.achievements.map((achievement) => <li key={achievement}>{achievement}</li>)}</ul>}
+              {index === 4 && <p>{journeyCvProfile.education}</p>}
+              {index === 5 && <ul className="cv-references">{journeyCvProfile.references.map((reference) => <li key={reference.name}><strong>{reference.name}</strong><span>{reference.role}</span></li>)}</ul>}
             </div>
           </details>
         ))}
