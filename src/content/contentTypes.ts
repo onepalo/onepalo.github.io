@@ -36,7 +36,8 @@ export interface JourneyItem {
 }
 
 export interface JourneyCvProfile {
-  digitalCore: string
+  digitalProducts: string
+  dataAndAi: string
   subsurfaceDomain: string
   achievements: string[]
   education: string
